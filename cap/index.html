@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九年級會考複習戰士：第一～六冊・幫你達 B</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  body { font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; background:#fafaf9; color:#292524; }
+  .fade-in { animation: fadeIn .25s ease-out; }
+  @keyframes fadeIn { from { opacity:.3; transform: translateY(4px);} to {opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce) { .fade-in { animation:none; } }
+  .btn-correct { background:#dcfce7 !important; border-color:#22c55e !important; color:#166534 !important; }
+  .btn-wrong { background:#fee2e2 !important; border-color:#ef4444 !important; color:#991b1b !important; }
+  .katex { font-size: 1.08em; }
+  .fig svg { max-width:100%; height:auto; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+  .lv { display:inline-flex; align-items:center; justify-content:center; min-width:2.6em; padding:1px 8px; border-radius:999px; font-weight:900; font-size:.8rem; letter-spacing:.02em; white-space:nowrap; }
+  .lv-A { background:#d1fae5; color:#065f46; } .lv-B { background:#fef3c7; color:#92400e; } .lv-C { background:#ffe4e6; color:#9f1239; } .lv-none { background:#f5f5f4; color:#a8a29e; }
+  .fm-item { break-inside: avoid; }
+
+  /* ===== 學習單預覽與列印 ===== */
+  #print-overlay { position: fixed; inset: 0; z-index: 80; background: #57534e; overflow-y: auto; }
+  .sheet { background: #fff; color:#111; width: 210mm; max-width: calc(100% - 24px); margin: 16px auto; padding: 14mm 14mm 12mm; box-shadow: 0 6px 24px rgba(0,0,0,.35); font-size: 11.5pt; line-height: 1.55; }
+  .sheet-head { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; border-bottom: 2px solid #111; padding-bottom: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .sheet-title { font-size: 16pt; font-weight: 800; letter-spacing: .02em; }
+  .sheet-sub { font-size: 9.5pt; color:#444; }
+  .sheet-fields { font-size: 10.5pt; display:flex; gap: 14px; white-space: nowrap; }
+  .sheet-fields span { border-bottom: 1px solid #111; display:inline-block; min-width: 18mm; }
+  .ver-tag { display:inline-block; border:1.5px solid #111; border-radius: 4px; padding: 0 6px; font-size: 9pt; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .sheet-guide { font-size: 9.5pt; color:#333; background:#f5f5f4; border-radius: 6px; padding: 5px 9px; margin-bottom: 8px; }
+  .pq { break-inside: avoid; page-break-inside: avoid; padding: 8px 0 10px; border-bottom: 1px dashed #bbb; display: flow-root; }
+  .pq-head { display:flex; gap: 6px; align-items:flex-start; }
+  .pq-no { font-weight: 800; min-width: 1.8em; }
+  .pq-adv { font-size: 8.5pt; border: 1px solid #111; border-radius: 3px; padding: 0 4px; margin-left: 4px; white-space: nowrap; }
+  .pq-g { display: grid; grid-template-columns: minmax(0, 1fr) 46mm; gap: 10px; align-items: start; }
+  .pq-fig { padding-top: 4px; }
+  .pq-fig svg { width: 100%; height: auto; max-height: 46mm; }
+  .pq-opts { display:flex; flex-wrap: wrap; gap: 4px 22px; margin: 4px 0 2px 2em; font-size: 10.5pt; }
+  .pq-hint { margin: 5px 0 0 2em; border: 1.5px dashed #777; border-radius: 6px; padding: 3px 8px; font-size: 10.5pt; background: #fafafa; }
+  .pq-hint b { margin-right: 4px; }
+  .pq-work { margin: 6px 0 0 2em; position: relative; }
+  .pq-work .ans { position:absolute; right: 0; bottom: 0; font-size: 10.5pt; }
+  .pq-work .ans span { display:inline-block; border-bottom: 1px solid #111; min-width: 34mm; }
+  .key-table { width:100%; border-collapse: collapse; font-size: 10pt; }
+  .key-table td, .key-table th { border: 1px solid #999; padding: 3px 6px; vertical-align: top; text-align:left; }
+  .key-table tr { break-inside: avoid; }
+  @page { size: A4; margin: 12mm 12mm 12mm 12mm; }
+  @media print {
+    body > *:not(#print-overlay) { display: none !important; }
+    html, body { background: #fff !important; }
+    #print-overlay { position: static !important; background: none !important; overflow: visible !important; }
+    .no-print { display: none !important; }
+    .sheet { box-shadow: none; margin: 0; padding: 0; width: auto; max-width: none; }
+    .sheet + .sheet { break-before: page; page-break-before: always; }
+    .pq-hint { background: none; }
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- 手機頂部列 -->
+<header class="lg:hidden sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-stone-200 flex items-center justify-between px-4 py-3">
+  <div class="font-black text-stone-800">會考複習戰士</div>
+  <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-xl bg-stone-100 text-stone-700 text-xl" aria-label="開啟選單">☰</button>
+</header>
+
+<div class="flex">
+  <!-- 側邊欄 -->
+  <aside id="sidebar" class="hidden lg:flex fixed lg:sticky top-0 left-0 z-40 lg:z-10 h-screen w-80 bg-white border-r border-stone-200 flex-col overflow-y-auto">
+    <div class="px-7 pt-8 pb-6 bg-amber-50 border-b border-amber-100">
+      <div class="text-3xl font-black tracking-wide text-amber-600">CAP MATH</div>
+      <div class="text-lg font-black text-stone-600 mt-1">九年級會考複習戰士</div>
+      <div class="text-xs font-bold text-stone-400 mt-1">第一～六冊・基礎題・幫你達 B</div>
+    </div>
+    <nav id="nav-list" class="flex-1 px-4 pt-5 space-y-1"></nav>
+    <div class="p-4 space-y-2 border-t border-stone-100">
+      <button onclick="openFormula()" class="w-full text-left px-4 py-3 rounded-2xl bg-sky-50 text-sky-900 font-bold hover:bg-sky-100">📘 會考公式查找</button>
+      <button onclick="openPrintSetup()" class="w-full text-left px-4 py-3 rounded-2xl bg-stone-800 text-white font-bold hover:bg-stone-700">🖨️ 列印紙本學習單</button>
+      <div id="user-info" class="text-sm"></div>
+      <button onclick="openTeacherVerification()" class="w-full text-left px-4 py-2.5 rounded-2xl text-stone-500 hover:bg-stone-100 text-sm font-bold">👨‍🏫 教師後台</button>
+    </div>
+  </aside>
+  <div id="sidebar-backdrop" class="hidden fixed inset-0 bg-black/40 z-30 lg:hidden" onclick="toggleMobileMenu()"></div>
+
+  <main id="main-content" class="flex-1 min-w-0 px-4 sm:px-8 lg:px-12 py-6 lg:py-10 pb-28 max-w-7xl mx-auto w-full"></main>
+</div>
+
+<!-- 隨時可按的公式按鈕 -->
+<button id="formula-fab" onclick="openFormula()" class="fixed bottom-5 right-5 z-40 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-full shadow-xl px-5 py-4 flex items-center gap-2" aria-label="打開會考公式">📘<span>公式</span></button>
+
+<!-- 公式查找 -->
+<div id="formula-modal" class="hidden fixed inset-0 z-[60] bg-black/40 flex items-center justify-center p-3 sm:p-4" onclick="if(event.target===this)closeFormula()">
+  <div class="bg-white rounded-[28px] w-full max-w-3xl shadow-xl max-h-[92vh] flex flex-col">
+    <div class="p-5 sm:p-6 border-b border-stone-100">
+      <div class="flex items-center justify-between gap-3">
+        <div class="text-xl font-black text-stone-800">📘 會考公式查找</div>
+        <button onclick="closeFormula()" class="w-10 h-10 rounded-xl bg-stone-100 text-stone-600 font-black" aria-label="關閉">✕</button>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-4" id="fm-tabs"></div>
+      <input id="fm-search" oninput="renderFormula()" class="mt-3 w-full border-2 border-stone-200 rounded-2xl px-4 py-2.5" placeholder="搜尋，例如：畢氏、機率、平方、內角">
+    </div>
+    <div id="fm-body" class="p-5 sm:p-6 overflow-y-auto"></div>
+  </div>
+</div>
+
+<!-- 離開確認 -->
+<div id="leave-modal" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-7 max-w-sm w-full shadow-xl">
+    <div class="text-lg font-black text-stone-800 mb-2">還沒寫完喔！</div>
+    <p class="text-stone-600 text-sm mb-6">現在離開，這一回的作答不會記錄成績。確定要離開嗎？</p>
+    <div class="flex gap-3">
+      <button onclick="closeLeaveModal()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">繼續作答</button>
+      <button onclick="confirmLeave()" class="flex-1 py-3 rounded-2xl bg-rose-500 font-bold text-white">離開</button>
+    </div>
+  </div>
+</div>
+
+<!-- 教師密碼 -->
+<div id="password-modal" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-7 max-w-sm w-full shadow-xl">
+    <div class="text-lg font-black text-stone-800 mb-4">教師後台驗證</div>
+    <input id="teacher-pw" type="password" class="w-full border-2 border-stone-200 rounded-2xl px-4 py-3 mb-2" placeholder="請輸入教師密碼" onkeydown="if(event.key==='Enter')verifyTeacherPassword()">
+    <div id="pw-error" class="hidden text-sm text-rose-600 mb-2">密碼不正確，請再試一次。</div>
+    <div class="flex gap-3 mt-3">
+      <button onclick="closePasswordModal()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">取消</button>
+      <button onclick="verifyTeacherPassword()" class="flex-1 py-3 rounded-2xl bg-amber-500 font-bold text-white">進入</button>
+    </div>
+  </div>
+</div>
+
+<!-- 學習單設定 -->
+<div id="print-setup" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-6 sm:p-7 max-w-2xl w-full shadow-xl max-h-[92vh] overflow-y-auto">
+    <div class="text-lg font-black text-stone-800">🖨️ 列印紙本學習單</div>
+    <p class="text-sm text-stone-500 mb-5">選好單元與版本後按「預覽」，確認版面再列印（也可在列印視窗選「另存為 PDF」）。</p>
+
+    <div class="font-bold text-stone-700 mb-2">1. 單元（可複選，依冊次分組）</div>
+    <div id="ps-units" class="space-y-3 mb-5"></div>
+
+    <div class="font-bold text-stone-700 mb-2">2. 版本</div>
+    <div class="space-y-2 mb-5" id="ps-versions">
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="A" class="mt-1" checked>
+        <span><b>A 版｜挑戰</b><span class="block text-xs text-stone-500">只有題目，沒有提示，作答空間最大。</span></span>
+      </label>
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="B" class="mt-1">
+        <span><b>B 版｜引導</b><span class="block text-xs text-stone-500">每題附「第一步」提示，幫忙起頭。</span></span>
+      </label>
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="C" class="mt-1">
+        <span><b>C 版｜鷹架</b><span class="block text-xs text-stone-500">每題附「第一步＋第二步」提示，答案幾乎呼之欲出，只差最後一步。</span></span>
+      </label>
+    </div>
+
+    <div class="font-bold text-stone-700 mb-2">3. 其他設定</div>
+    <div class="space-y-2 mb-6 text-sm text-stone-700">
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-adv" checked> 包含 ★進階題（會考題型）</label>
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-opts"> 附選項（改成選擇題形式）</label>
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-key"> 最後附解答頁（教師用）</label>
+    </div>
+    <div id="ps-error" class="hidden text-sm text-rose-600 mb-3">請至少選一個單元。</div>
+    <div class="flex gap-3">
+      <button onclick="closePrintSetup()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">取消</button>
+      <button onclick="buildWorksheet()" class="flex-1 py-3 rounded-2xl bg-amber-500 font-bold text-white">預覽學習單</button>
+    </div>
+  </div>
+</div>
+
+<!-- 學習單預覽 -->
+<div id="print-overlay" class="hidden">
+  <div class="no-print sticky top-0 z-10 bg-stone-900 text-white px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+    <div class="font-bold" id="print-summary">學習單預覽</div>
+    <div class="flex gap-2">
+      <button onclick="closeWorksheet()" class="px-4 py-2 rounded-xl bg-stone-700 font-bold">← 返回</button>
+      <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-amber-500 font-bold">🖨️ 列印</button>
+    </div>
+  </div>
+  <div id="print-root" class="pb-10"></div>
+</div>
+
+<script>
+// ===== 題庫：九年級會考複習（第一～六冊）=====
+// 出題依據：老師提供的「幫你達 B 講義（第一～六冊）」「115 會考幫你達 B 300 題」「102-113 歷屆會考幫你達 B」「會考幫你達 B 終極版 12 個必考重點」與考前暖身操。
+// 每單元題數依「111-115 會考前 10 題單元出現率」配置：出現越多的單元題目越多（10～18 題）。全部是基礎概念題，★進階 為會考原題或稍有變化的題型。
+// 格式：q 題目、o 選項（第一個是正確答案，網站會自動打亂）、h 三層提示（第一步、第二步、最後一步）、s 觀念、fig 圖形（可省略）、lv: 2 為 ★進階
+const R = String.raw;
+const RAW_MODULES = [];
+// ===== 第一冊 =====
+RAW_MODULES.push(
+{
+  code: "01", book: 1, title: "簡單計算", chap: "第一冊 第 1、2 章", freq: 5,
+  subtitle: "整數與分數的四則運算、先乘除後加減、正負號判斷",
+  tips: {
+    "四則運算順序": "先括號 → 再乘除 → 最後加減；絕對值也要先算出來（練功房 1）。",
+    "正負號判斷": "連乘除時先數負號：偶數個負號為正、奇數個為負（練功房 1 第 1 題）。",
+    "分數的加減": "負號放分子、通分、分子相加減，分母不相加（練功房 2）。",
+    "分數的乘除": "帶分數先化假分數；除以一個數＝乘以它的倒數（練功房 2）。",
+    "分數比大小": "全部化成小數或通分後再比；負數比大小要反過來（練功房 2 第 1 題）。",
+    "分配律簡算": "看到相近的數字，用分配律湊整再算（練功房 1 第 4 題）。"
+  },
+  practice: [
+    { q: R`算式 $(-2)\times|-5|-|-3|$ 之值為何？`, s: "四則運算順序",
+      o: [R`$-13$`, R`$7$`, R`$13$`, R`$-7$`],
+      h: [R`先把絕對值算出來：$|-5|=5$、$|-3|=3$。`, R`$(-2)\times5-3=-10-3$。`, R`答案是 $-13$。（106 會考第 1 題）`] },
+    { q: R`計算 $12\div(-3)-2\times(-3)$ 之值為何？`, s: "四則運算順序",
+      o: [R`$2$`, R`$-10$`, R`$18$`, R`$-18$`],
+      h: [R`先乘除後加減，兩段分開算。`, R`$12\div(-3)=-4$；$2\times(-3)=-6$，所以 $-4-(-6)=-4+6$。`, R`答案是 $2$。（102 基測第 1 題）`] },
+    { q: R`算式 $|3-2\times2|-(2-5)$ 之值為何？`, s: "四則運算順序",
+      o: [R`$4$`, R`$5$`, R`$-5$`, R`$-6$`],
+      h: [R`絕對值裡面也要先乘除後加減：$3-2\times2=3-4$。`, R`$|-1|-(-3)=1+3$。`, R`答案是 $4$。`] },
+    { q: R`計算 $(-12)+(-18)\div(-6)-(-3)\times2$ 之值為何？`, s: "四則運算順序",
+      o: [R`$-3$`, R`$-15$`, R`$11$`, R`$16$`],
+      h: [R`先算除法和乘法：$(-18)\div(-6)$、$(-3)\times2$。`, R`$(-18)\div(-6)=3$，$(-3)\times2=-6$，所以 $-12+3-(-6)=-12+3+6$。`, R`答案是 $-3$。（95 基測第 1 題）`] },
+    { q: R`計算 $9+(-2)\times[18-(-3)\times2]\div4$ 之值為何？`, s: "四則運算順序",
+      o: [R`$-3$`, R`$3$`, R`$21$`, R`$42$`],
+      h: [R`先算中括號裡面：$18-(-3)\times2$，裡面也是先乘後減。`, R`$18-(-6)=24$，再算 $(-2)\times24\div4=-12$。`, R`$9+(-12)=-3$。（91 基測第 1 題）`] },
+    { q: R`計算 $(-1)\times(-2)\times(-3)\times(-4)\times(-5)$ 之值為何？`, s: "正負號判斷",
+      o: [R`$-120$`, R`$120$`, R`$-15$`, R`$15$`],
+      h: [R`先數負號個數：共 $5$ 個負號。`, R`奇數個負號 → 答案是負的；數字部分 $1\times2\times3\times4\times5=120$。`, R`答案是 $-120$。`] },
+    { q: R`已知 $10\times11\times12\times13\times14=240240$，則 $(-11)\times(-12)\times(-13)\times(-14)\times(-15)=$？`, s: "正負號判斷", lv: 2,
+      o: [R`$-360360$`, R`$360360$`, R`$-320320$`, R`$320320$`],
+      h: [R`5 個負號 → 結果是負的。數字部分可以用 $240240$ 改寫：$11\times12\times13\times14=240240\div10$。`, R`$11\times12\times13\times14=24024$，再乘 $15$：$24024\times15$。`, R`$24024\times15=360360$，加上負號得 $-360360$。（96 基測）`] },
+    { q: R`算式 $-\frac{5}{3}-\left(-\frac{1}{6}\right)$ 之值為何？`, s: "分數的加減",
+      o: [R`$-\frac{3}{2}$`, R`$-\frac{11}{6}$`, R`$-\frac{4}{3}$`, R`$-\frac{2}{3}$`],
+      h: [R`減去一個負數＝加上它的相反數：$-\frac{5}{3}+\frac{1}{6}$。`, R`通分：$-\frac{10}{6}+\frac{1}{6}=-\frac{9}{6}$。`, R`約分得 $-\frac{3}{2}$。（108 會考第 1 題）`] },
+    { q: R`計算 $\frac{5}{6}-\frac{3}{8}+\left(-2\frac{7}{8}\right)$ 之值為何？`, s: "分數的加減",
+      o: [R`$-2\frac{5}{12}$`, R`$-\frac{2}{3}$`, R`$-2\frac{1}{12}$`, R`$-3\frac{5}{12}$`],
+      h: [R`帶分數化成假分數：$-2\frac{7}{8}=-\frac{23}{8}$。分母 $8$ 的兩項可以先合併。`, R`$-\frac{3}{8}-\frac{23}{8}=-\frac{26}{8}=-\frac{13}{4}$，再算 $\frac{5}{6}-\frac{13}{4}=\frac{10}{12}-\frac{39}{12}$。`, R`$=-\frac{29}{12}=-2\frac{5}{12}$。`] },
+    { q: R`計算 $\left(-1\frac{1}{2}\right)\times\left(-3\frac{1}{4}\right)\times\frac{2}{3}$ 之值為何？`, s: "分數的乘除",
+      o: [R`$\frac{13}{4}$`, R`$-\frac{13}{4}$`, R`$\frac{11}{4}$`, R`$\frac{13}{8}$`],
+      h: [R`兩個負號 → 結果為正。帶分數化假分數：$-\frac{3}{2}$、$-\frac{13}{4}$。`, R`$\frac{3}{2}\times\frac{13}{4}\times\frac{2}{3}$，$\frac{3}{2}$ 和 $\frac{2}{3}$ 可以先約掉。`, R`答案是 $\frac{13}{4}$（$=3\frac{1}{4}$）。（104 會考第 1 題）`] },
+    { q: R`計算 $4\frac{3}{8}\div2\frac{1}{4}\div2$ 之值為何？`, s: "分數的乘除",
+      o: [R`$\frac{35}{36}$`, R`$\frac{35}{9}$`, R`$\frac{7}{4}$`, R`$\frac{5}{2}$`],
+      h: [R`化成假分數：$\frac{35}{8}\div\frac{9}{4}\div2$，除法改成乘倒數。`, R`$\frac{35}{8}\times\frac{4}{9}\times\frac{1}{2}=\frac{35\times4}{8\times9\times2}$。`, R`$=\frac{140}{144}=\frac{35}{36}$。（99 基測）`] },
+    { q: R`計算 $\left(-\frac{1}{7}\right)\div\frac{1}{42}\times\frac{5}{6}\div\left(-\frac{5}{8}\right)$ 之值為何？`, s: "分數的乘除",
+      o: [R`$8$`, R`$-8$`, R`$\frac{288}{25}$`, R`$-\frac{288}{25}$`],
+      h: [R`兩個負號 → 結果為正。全部改成乘法：$\frac{1}{7}\times42\times\frac{5}{6}\times\frac{8}{5}$。`, R`$\frac{1}{7}\times42=6$；$6\times\frac{5}{6}=5$；$5\times\frac{8}{5}$。`, R`答案是 $8$。（93 基測）`] },
+    { q: R`計算 $3\times(-9)-18\times\left(\frac{1}{9}-\frac{1}{3}\right)$ 之值為何？`, s: "分配律簡算",
+      o: [R`$-23$`, R`$-31$`, R`$-10$`, R`$10$`],
+      h: [R`後半段用分配律：$18\times\frac{1}{9}-18\times\frac{1}{3}$。`, R`$18\times\frac{1}{9}-18\times\frac{1}{3}=2-6=-4$，所以算式 $=-27-(-4)$。`, R`$=-27+4=-23$。（94 基測）`] },
+    { q: R`已知甲 $=-2\frac{3}{8}$，乙 $=-2+\frac{3}{8}$，丙 $=-1.375$，下列哪一個選項正確？`, s: "分數比大小",
+      o: [R`甲＜乙＜丙`, R`甲＝乙`, R`乙＝丙`, R`甲＜丙＜乙`],
+      h: [R`全部化成小數：$\frac{3}{8}=0.375$。注意 $-2\frac{3}{8}=-(2+\frac{3}{8})$，不是 $-2+\frac{3}{8}$。`, R`甲 $=-2.375$，乙 $=-1.625$，丙 $=-1.375$。`, R`負數：絕對值越大越小，所以甲＜乙＜丙。（91 基測）`] },
+    { q: R`計算 $743\times369-741\times370$ 之值為何？`, s: "分配律簡算", lv: 2,
+      o: [R`$-3$`, R`$-2$`, R`$2$`, R`$3$`],
+      h: [R`把 $743$ 拆成 $741+2$，把 $370$ 拆成 $369+1$，用分配律。`, R`$(741+2)\times369-741\times(369+1)=741\times369+738-741\times369-741$。`, R`$=738-741=-3$。（103 會考第 5 題）`] }
+  ]
+},
+{
+  code: "02", book: 1, title: "數線與絕對值", chap: "第一冊 第 1 章", freq: 1,
+  subtitle: "數線上的點、兩點距離、中點、絕對值、相反數",
+  tips: {
+    "數線上的點": "先算每一小格代表多少，再從已知點數格子（練功房 1 第 1 題）。",
+    "絕對值": "絕對值＝到原點的距離，一定 ≥ 0；|x|=4 有兩個答案（練功房 1）。",
+    "兩點距離與中點": "距離＝大減小（或相減取絕對值）；中點＝兩數相加除以 2。",
+    "數線上的移動": "向右加、向左減；分數移動先通分或化小數。",
+    "由數線判斷正負": "看點在原點左邊（負）或右邊（正），離原點越遠絕對值越大。"
+  },
+  practice: [
+    { q: R`如圖，數線上 $-2$ 和 $-1$ 之間平分成 $8$ 等分，$A$ 點在其中一條刻度線上，則 $A$ 點表示的數為何？`, s: "數線上的點",
+      fig: { t: "nl", min: -2, max: -1, div: 8, labels: [[-2, "-2"], [-1, "-1"]], pts: [["A", -1.25]] },
+      o: [R`$-1\frac{1}{4}$`, R`$-1\frac{3}{4}$`, R`$-2\frac{1}{4}$`, R`$-2\frac{3}{4}$`],
+      h: [R`$1$ 單位分成 $8$ 格，每一格是 $\frac{1}{8}$。`, R`$A$ 在 $-2$ 往右第 $6$ 格：$-2+\frac{6}{8}=-2+\frac{3}{4}$。`, R`$A=-1\frac{1}{4}$。（不是 $-2\frac{3}{4}$，往右是加）（99 基測）`] },
+    { q: R`計算 $|-7|-|+3|+|-2|$ 之值為何？`, s: "絕對值",
+      o: [R`$6$`, R`$-8$`, R`$2$`, R`$12$`],
+      h: [R`絕對值都是正的（或 0）：$|-7|=7$、$|+3|=3$、$|-2|=2$。`, R`$7-3+2$。`, R`答案是 $6$。`] },
+    { q: R`數線上 $A(-5)$、$B(3)$ 兩點的距離為何？`, s: "兩點距離與中點",
+      o: [R`$8$`, R`$2$`, R`$-8$`, R`$15$`],
+      h: [R`兩點距離＝大的數減小的數。`, R`$3-(-5)=3+5$。`, R`距離是 $8$。（距離不會是負的）`] },
+    { q: R`若 $|x|=4$，則 $x=$？`, s: "絕對值",
+      o: [R`$4$ 或 $-4$`, R`$4$`, R`$-4$`, R`$0$`],
+      h: [R`$|x|=4$ 表示 $x$ 到原點的距離是 $4$。`, R`原點右邊 $4$ 單位、左邊 $4$ 單位各有一點。`, R`$x=4$ 或 $-4$。`] },
+    { q: R`數線上 $A$ 點表示 $2\frac{1}{4}$，從 $A$ 點先向右移動 $3\frac{1}{3}$ 單位，再向左移動 $6\frac{1}{5}$ 單位到達 $B$ 點，則 $B$ 點介於哪兩數之間？`, s: "數線上的移動",
+      o: [R`$0$ 和 $-1$`, R`$-1$ 和 $-2$`, R`$-2$ 和 $-3$`, R`$0$ 和 $1$`],
+      h: [R`向右是加、向左是減：$B=2\frac{1}{4}+3\frac{1}{3}-6\frac{1}{5}$。`, R`先算整數 $2+3-6=-1$，再算分數 $\frac{1}{4}+\frac{1}{3}-\frac{1}{5}=\frac{15+20-12}{60}=\frac{23}{60}$。`, R`$B=-1+\frac{23}{60}=-\frac{37}{60}$，介於 $0$ 和 $-1$ 之間。（98 基測）`] },
+    { q: R`數線上 $A(-7)$、$B(3)$，則 $\overline{AB}$ 的中點表示的數為何？`, s: "兩點距離與中點",
+      o: [R`$-2$`, R`$-5$`, R`$2$`, R`$5$`],
+      h: [R`中點＝兩數相加再除以 $2$。`, R`$\dfrac{(-7)+3}{2}=\dfrac{-4}{2}$。`, R`中點是 $-2$。`] },
+    { q: R`$-3$ 的相反數為 $a$，絕對值為 $5$ 的負數為 $b$，則 $a+b=$？`, s: "絕對值",
+      o: [R`$-2$`, R`$8$`, R`$2$`, R`$-8$`],
+      h: [R`相反數：只改變正負號；絕對值為 $5$ 的數有 $5$ 和 $-5$。`, R`$a=3$，$b=-5$。`, R`$a+b=3+(-5)=-2$。`] },
+    { q: R`將 $-0.3$、$-\frac{1}{3}$、$-0.33$ 由小到大排列，下列何者正確？`, s: "由數線判斷正負",
+      o: [R`$-\frac{1}{3}<-0.33<-0.3$`, R`$-0.3<-0.33<-\frac{1}{3}$`, R`$-0.33<-\frac{1}{3}<-0.3$`, R`$-\frac{1}{3}<-0.3<-0.33$`],
+      h: [R`$-\frac{1}{3}=-0.333\cdots$，先比較它們的絕對值。`, R`絕對值：$0.333\cdots>0.33>0.3$。`, R`負數絕對值越大越小：$-\frac{1}{3}<-0.33<-0.3$。`] },
+    { q: R`數線上由左至右依序有 $A$、$B$、$C$ 三點，$B$ 點坐標為 $-1$，$C$ 點坐標為 $3$。若 $\overline{AC}=3\overline{BC}$，則 $A$ 點坐標為何？`, s: "兩點距離與中點",
+      o: [R`$-9$`, R`$-5$`, R`$-7$`, R`$-13$`],
+      h: [R`先求 $\overline{BC}=3-(-1)$。`, R`$\overline{BC}=4$，所以 $\overline{AC}=12$；$A$ 在 $C$ 的左邊 $12$ 單位。`, R`$A=3-12=-9$。（109 會考補考）`] },
+    { q: R`如圖，數線上 $O$ 為原點，$A$、$B$ 兩點表示的數分別為 $a$、$b$。下列何者正確？`, s: "由數線判斷正負",
+      fig: { t: "nl", min: -4, max: 3, div: 7, labels: [[0, "O"]], pts: [["A", -3], ["B", 1.5]], nonum: true },
+      o: [R`$a+b<0$`, R`$a\times b>0$`, R`$b-a<0$`, R`$|a|<|b|$`],
+      h: [R`$A$ 在原點左邊 → $a<0$；$B$ 在原點右邊 → $b>0$；而且 $A$ 離原點比較遠。`, R`所以 $|a|>|b|$；一正一負相乘為負；$b-a$＝正數減負數＝正數。`, R`$a+b$ 的正負跟著絕對值大的 $a$，所以 $a+b<0$。`] },
+    { q: R`數線上與 $2$ 距離為 $3$ 單位的點，表示的數為何？`, s: "兩點距離與中點",
+      o: [R`$5$ 或 $-1$`, R`$5$`, R`$1$ 或 $-5$`, R`$-1$`],
+      h: [R`距離 $3$：往右 $3$ 或往左 $3$，兩邊都要考慮。`, R`$2+3$ 和 $2-3$。`, R`答案是 $5$ 或 $-1$。`] }
+  ]
+},
+{
+  code: "03", book: 1, title: "指數與科學記號", chap: "第一冊 第 1 章", freq: 5,
+  subtitle: "乘方、指數律、科學記號的表示與運算",
+  tips: {
+    "乘方計算": "$-3^2$ 是 $-(3\times3)$，$(-3)^2$ 才是 $(-3)\times(-3)$（練功房 1）。",
+    "指數律": "同底數相乘指數相加、相除指數相減、乘方的乘方指數相乘；$a^0=1$（練功房 2）。",
+    "科學記號表示": "$a\times10^n$ 中 $1\le a<10$；小數點往左移 $n$ 位 → $10^n$，往右移 → $10^{-n}$。",
+    "科學記號運算": "前面的數和前面的數算、$10$ 的次方用指數律算，最後再調整成 $1\le a<10$。",
+    "乘方比大小": "把指數或底數化成一樣再比，例如 $2^{30}=(2^3)^{10}=8^{10}$。"
+  },
+  practice: [
+    { q: R`計算 $7^3+(-4)^3$ 之值為何？`, s: "乘方計算",
+      o: [R`$279$`, R`$27$`, R`$9$`, R`$407$`],
+      h: [R`$7^3=7\times7\times7$；$(-4)^3$ 有 $3$ 個負號，是負的。`, R`$7^3=343$，$(-4)^3=-64$。`, R`$343-64=279$。（100 基測）`] },
+    { q: R`計算 $-3^2+(-2)^3$ 之值為何？`, s: "乘方計算",
+      o: [R`$-17$`, R`$1$`, R`$17$`, R`$-1$`],
+      h: [R`$-3^2$ 的負號不在括號裡，是 $-(3^2)$。`, R`$-3^2=-9$，$(-2)^3=-8$。`, R`$-9+(-8)=-17$。`] },
+    { q: R`將 $0.00052$ 以科學記號表示，下列何者正確？`, s: "科學記號表示",
+      o: [R`$5.2\times10^{-4}$`, R`$5.2\times10^{-3}$`, R`$52\times10^{-5}$`, R`$5.2\times10^{4}$`],
+      h: [R`科學記號 $a\times10^n$，$1\le a<10$，所以 $a=5.2$。`, R`小數點從 $0.00052$ 往右移 $4$ 位才變 $5.2$。`, R`$0.00052=5.2\times10^{-4}$。（$52\times10^{-5}$ 數值相等，但不是科學記號）`] },
+    { q: R`將 $3200000$ 以科學記號表示，下列何者正確？`, s: "科學記號表示",
+      o: [R`$3.2\times10^{6}$`, R`$3.2\times10^{5}$`, R`$32\times10^{5}$`, R`$3.2\times10^{7}$`],
+      h: [R`$a$ 要介於 $1$ 和 $10$ 之間：$a=3.2$。`, R`小數點從個位數後面往左移 $6$ 位。`, R`$3200000=3.2\times10^6$。`] },
+    { q: R`$(2^3)^4$ 可以化簡成下列何者？`, s: "指數律",
+      o: [R`$2^{12}$`, R`$2^{7}$`, R`$2^{81}$`, R`$6^{4}$`],
+      h: [R`乘方的乘方：指數相乘。`, R`$(2^3)^4=2^3\times2^3\times2^3\times2^3=2^{3+3+3+3}$。`, R`$=2^{12}$。（不是指數相加 $2^7$）`] },
+    { q: R`$\dfrac{3^8}{3^5}\times3^2$ 可以化簡成下列何者？`, s: "指數律",
+      o: [R`$3^5$`, R`$3^{11}$`, R`$3^1$`, R`$3^{15}$`],
+      h: [R`同底數相除，指數相減；相乘，指數相加。`, R`$3^{8-5}\times3^2=3^3\times3^2=3^{3+2}$。`, R`$=3^5$。`] },
+    { q: R`已知 $a=3.1\times10^{-4}$，$b=5.2\times10^{-5}$，下列何者正確？`, s: "科學記號運算",
+      o: [R`$a>b$`, R`$a<b$`, R`$a=b$`, R`無法比較`],
+      h: [R`科學記號比大小：先比 $10$ 的次方，次方大的比較大。`, R`$10^{-4}$ 比 $10^{-5}$ 大（$0.0001>0.00001$）。`, R`所以 $a>b$。（不要只看 $3.1<5.2$）`] },
+    { q: R`$1$ 奈米 $=10^{-9}$ 公尺，則 $25$ 奈米等於多少公尺？`, s: "科學記號表示",
+      o: [R`$2.5\times10^{-8}$`, R`$2.5\times10^{-10}$`, R`$25\times10^{-8}$`, R`$2.5\times10^{-9}$`],
+      h: [R`$25$ 奈米 $=25\times10^{-9}$ 公尺，再改成科學記號。`, R`$25=2.5\times10^1$，所以 $2.5\times10^{1}\times10^{-9}=2.5\times10^{1+(-9)}$。`, R`$=2.5\times10^{-8}$ 公尺。`] },
+    { q: R`計算 $(2\times10^{3})\times(4\times10^{5})$，結果以科學記號表示為何？`, s: "科學記號運算",
+      o: [R`$8\times10^{8}$`, R`$8\times10^{15}$`, R`$6\times10^{8}$`, R`$8\times10^{2}$`],
+      h: [R`前面的數相乘、$10$ 的次方相乘（指數相加）。`, R`$2\times4=8$，$10^3\times10^5=10^{3+5}$。`, R`$=8\times10^8$。`] },
+    { q: R`計算 $\dfrac{6\times10^{8}}{3\times10^{-2}}$，結果以科學記號表示為何？`, s: "科學記號運算",
+      o: [R`$2\times10^{10}$`, R`$2\times10^{6}$`, R`$3\times10^{10}$`, R`$2\times10^{-4}$`],
+      h: [R`前面的數相除、$10$ 的次方相除（指數相減）。`, R`$6\div3=2$，$10^{8}\div10^{-2}=10^{8-(-2)}$。`, R`$=2\times10^{10}$。（減去負數要變加）`] },
+    { q: R`計算 $3^0+(-1)^5$ 之值為何？`, s: "乘方計算",
+      o: [R`$0$`, R`$2$`, R`$-1$`, R`$4$`],
+      h: [R`任何不為 $0$ 的數的 $0$ 次方都是 $1$。`, R`$3^0=1$，$(-1)^5=-1$（奇數個負號）。`, R`$1+(-1)=0$。`] },
+    { q: R`$a=2^{30}$，$b=3^{20}$，$c=5^{10}$，下列何者正確？`, s: "乘方比大小", lv: 2,
+      o: [R`$b>a>c$`, R`$a>b>c$`, R`$c>b>a$`, R`$a>c>b$`],
+      h: [R`把指數都化成 $10$：$2^{30}=(2^3)^{10}$，$3^{20}=(3^2)^{10}$。`, R`$a=8^{10}$，$b=9^{10}$，$c=5^{10}$。`, R`指數一樣比底數：$9>8>5$，所以 $b>a>c$。`] },
+    { q: R`計算 $(-2)^3\times(-2)^4$ 之值為何？`, s: "指數律",
+      o: [R`$-128$`, R`$128$`, R`$4096$`, R`$-64$`],
+      h: [R`同底數相乘，指數相加：$(-2)^{3+4}$。`, R`$(-2)^7$，$7$ 個負號 → 負的，$2^7=128$。`, R`答案是 $-128$。`] },
+    { q: R`下列哪一個是正確的科學記號？`, s: "科學記號表示",
+      o: [R`$3.5\times10^{7}$`, R`$35\times10^{6}$`, R`$0.35\times10^{8}$`, R`$10.5\times10^{3}$`],
+      h: [R`科學記號 $a\times10^n$ 的規定：$1\le a<10$。`, R`$35$、$0.35$、$10.5$ 都不在 $1$～$10$ 之間（$10$ 也不行）。`, R`只有 $3.5\times10^7$ 是科學記號。`] },
+    { q: R`某細菌長 $0.000003$ 公尺，以科學記號表示為何？`, s: "科學記號表示",
+      o: [R`$3\times10^{-6}$`, R`$3\times10^{-5}$`, R`$3\times10^{6}$`, R`$3\times10^{-7}$`],
+      h: [R`$a=3$，數一數小數點要往右移幾位才變成 $3$。`, R`$0.000003$ → 往右移 $6$ 位。`, R`$3\times10^{-6}$ 公尺。`] }
+  ]
+},
+{
+  code: "04", book: 1, title: "因數與倍數", chap: "第一冊 第 2 章", freq: 4,
+  subtitle: "因數、質數、標準分解式、最大公因數與最小公倍數、應用題",
+  tips: {
+    "因數與倍數": "因數一對一對找，別漏了 $1$ 和本身；$3$、$9$ 的倍數看數字和（練功房 1）。",
+    "質數與標準分解式": "質數只有 $1$ 和本身兩個因數；$1$ 不是質數。短除法除到商是質數為止。",
+    "最大公因數": "標準分解式中相同的質因數，次方取「小」的（練功房 2）。",
+    "最小公倍數": "所有質因數都要有，次方取「大」的（練功房 2）。",
+    "公因數公倍數應用": "切、分、裝 → 公因數；相遇、排滿、同時 → 公倍數。"
+  },
+  practice: [
+    { q: R`$12$ 的正因數共有幾個？`, s: "因數與倍數",
+      o: [R`$6$ 個`, R`$4$ 個`, R`$5$ 個`, R`$12$ 個`],
+      h: [R`一對一對找：兩數相乘等於 $12$。`, R`$1\times12$、$2\times6$、$3\times4$。`, R`正因數有 $1,2,3,4,6,12$，共 $6$ 個。`] },
+    { q: R`下列哪一個數是質數？`, s: "質數與標準分解式",
+      o: [R`$47$`, R`$51$`, R`$57$`, R`$91$`],
+      h: [R`試著用 $2$、$3$、$5$、$7$ 去除，能整除就不是質數。`, R`$51=3\times17$，$57=3\times19$，$91=7\times13$。`, R`$47$ 只有 $1$ 和 $47$ 兩個因數，是質數。`] },
+    { q: R`$360$ 的標準分解式為何？`, s: "質數與標準分解式",
+      o: [R`$2^3\times3^2\times5$`, R`$2^2\times3^2\times10$`, R`$2^3\times3\times15$`, R`$2^3\times3^2\times5^2$`],
+      h: [R`用短除法，一直除以質數：$360\div2\div2\div2$。`, R`$360=2\times2\times2\times45=2^3\times3\times3\times5$。`, R`$360=2^3\times3^2\times5$。（$10$、$15$ 不是質數，不能寫在標準分解式）`] },
+    { q: R`$84$ 和 $126$ 的最大公因數為何？`, s: "最大公因數",
+      o: [R`$42$`, R`$21$`, R`$14$`, R`$252$`],
+      h: [R`分解：$84=2^2\times3\times7$，$126=2\times3^2\times7$。`, R`相同質因數取次方小的：$2^1\times3^1\times7$。`, R`最大公因數 $=42$。`] },
+    { q: R`$12$ 和 $18$ 的最小公倍數為何？`, s: "最小公倍數",
+      o: [R`$36$`, R`$6$`, R`$72$`, R`$216$`],
+      h: [R`$12=2^2\times3$，$18=2\times3^2$。`, R`所有質因數都要，次方取大的：$2^2\times3^2$。`, R`最小公倍數 $=36$。（$216=12\times18$ 是公倍數，但不是最小）`] },
+    { q: R`已知 $a=2^3\times3^2\times5$，$b=2^2\times3^3\times7$，則 $a$、$b$ 的最大公因數為何？`, s: "最大公因數",
+      o: [R`$2^2\times3^2$`, R`$2^3\times3^3$`, R`$2^3\times3^3\times5\times7$`, R`$2^2\times3^2\times5\times7$`],
+      h: [R`最大公因數：只取兩數「都有」的質因數，次方取小的。`, R`都有的質因數是 $2$ 和 $3$；$2$ 取 $2^2$，$3$ 取 $3^2$。`, R`最大公因數 $=2^2\times3^2$。`] },
+    { q: R`已知 $a=2^3\times3^2\times5$，$b=2^2\times3^3\times7$，則 $a$、$b$ 的最小公倍數為何？`, s: "最小公倍數",
+      o: [R`$2^3\times3^3\times5\times7$`, R`$2^2\times3^2$`, R`$2^3\times3^3$`, R`$2^5\times3^5\times5\times7$`],
+      h: [R`最小公倍數：所有出現過的質因數都要有，次方取大的。`, R`$2$ 取 $2^3$，$3$ 取 $3^3$，$5$、$7$ 都要。`, R`最小公倍數 $=2^3\times3^3\times5\times7$。（次方不是相加）`] },
+    { q: R`若四位數 $592\square$ 是 $9$ 的倍數，則 $\square=$？`, s: "因數與倍數",
+      o: [R`$2$`, R`$7$`, R`$0$`, R`$4$`],
+      h: [R`$9$ 的倍數：各位數字相加是 $9$ 的倍數。`, R`$5+9+2+\square=16+\square$，最接近的 $9$ 的倍數是 $18$。`, R`$\square=2$。`] },
+    { q: R`$1$ 到 $50$ 的正整數中，$6$ 的倍數共有幾個？`, s: "因數與倍數",
+      o: [R`$8$ 個`, R`$9$ 個`, R`$7$ 個`, R`$6$ 個`],
+      h: [R`算 $50\div6$ 的商。`, R`$50\div6=8\cdots2$，也就是 $6\times8=48\le50$，$6\times9=54>50$。`, R`共 $8$ 個。`] },
+    { q: R`把長 $48$ 公分、寬 $36$ 公分的長方形紙張，剪成大小相同且面積最大的正方形（沒有剩餘），則正方形的邊長為多少公分？`, s: "公因數公倍數應用",
+      o: [R`$12$`, R`$6$`, R`$144$`, R`$4$`],
+      h: [R`「剪成正方形、沒有剩餘」→ 邊長要同時是 $48$ 和 $36$ 的因數 → 公因數。`, R`面積最大 → 最大公因數：$48=2^4\times3$，$36=2^2\times3^2$。`, R`最大公因數 $=2^2\times3=12$，邊長 $12$ 公分。`] },
+    { q: R`甲每 $6$ 天去一次圖書館，乙每 $8$ 天去一次。今天兩人同時去，至少再過幾天兩人又會同一天去？`, s: "公因數公倍數應用",
+      o: [R`$24$ 天`, R`$48$ 天`, R`$14$ 天`, R`$2$ 天`],
+      h: [R`「再次同時」→ 公倍數；「至少」→ 最小公倍數。`, R`$6=2\times3$，$8=2^3$，最小公倍數 $=2^3\times3$。`, R`$24$ 天後。`] },
+    { q: R`下列哪一個數是 $2^3\times3^2$ 的因數？`, s: "因數與倍數",
+      o: [R`$2^2\times3$`, R`$2^4\times3$`, R`$2\times3^3$`, R`$2\times5$`],
+      h: [R`因數的質因數，次方不能超過原數的次方，也不能有原數沒有的質因數。`, R`$2^4$ 超過 $2^3$；$3^3$ 超過 $3^2$；$5$ 不是原數的質因數。`, R`$2^2\times3$ 是因數。`] },
+    { q: R`下列哪一組數互質？`, s: "最大公因數",
+      o: [R`$8$ 和 $15$`, R`$9$ 和 $12$`, R`$14$ 和 $21$`, R`$10$ 和 $25$`],
+      h: [R`互質：最大公因數是 $1$。`, R`$9$、$12$ 有公因數 $3$；$14$、$21$ 有 $7$；$10$、$25$ 有 $5$。`, R`$8=2^3$、$15=3\times5$，沒有共同質因數，互質。（互質的數不一定是質數）`] },
+    { q: R`有 $24$ 顆蘋果和 $36$ 顆橘子，要平分給一些小朋友，每人分到的蘋果一樣多、橘子也一樣多且都沒有剩，最多可以分給幾位小朋友？`, s: "公因數公倍數應用", lv: 2,
+      o: [R`$12$ 位`, R`$6$ 位`, R`$72$ 位`, R`$60$ 位`],
+      h: [R`人數要能整除 $24$，也要能整除 $36$ → 公因數。`, R`「最多」→ 最大公因數：$24=2^3\times3$，$36=2^2\times3^2$。`, R`最大公因數 $=2^2\times3=12$，最多 $12$ 位。`] }
+  ]
+},
+{
+  code: "05", book: 1, title: "解一元一次方程式", chap: "第一冊 第 3 章", freq: 1,
+  subtitle: "式子的化簡、移項法則、等量公理、列式與應用題",
+  tips: {
+    "式子的化簡": "分配律要乘到括號內每一項，括號前是負號要全部變號。",
+    "解方程式": "移項要變號：$+$ 變 $-$、$\times$ 變 $\div$；有分母先同乘最小公倍數。",
+    "方程式的解": "已知解，就把它代回方程式求未知的係數。",
+    "列式與應用題": "設未知數 → 找等量關係列式 → 解 → 檢查答案合不合理。"
+  },
+  practice: [
+    { q: R`解方程式 $3x-7=2x+5$，得 $x=$？`, s: "解方程式",
+      o: [R`$12$`, R`$-2$`, R`$2$`, R`$-12$`],
+      h: [R`把含 $x$ 的移到左邊、數字移到右邊，移項要變號。`, R`$3x-2x=5+7$。`, R`$x=12$。`] },
+    { q: R`解方程式 $2(x-3)=x+4$，得 $x=$？`, s: "解方程式",
+      o: [R`$10$`, R`$7$`, R`$1$`, R`$-2$`],
+      h: [R`先用分配律展開：$2(x-3)=2x-6$。`, R`$2x-6=x+4$ → $2x-x=4+6$。`, R`$x=10$。`] },
+    { q: R`解方程式 $\dfrac{x+1}{3}=\dfrac{x-1}{2}$，得 $x=$？`, s: "解方程式",
+      o: [R`$5$`, R`$-5$`, R`$1$`, R`$\frac{1}{5}$`],
+      h: [R`兩邊同乘分母的最小公倍數 $6$，把分母去掉。`, R`$2(x+1)=3(x-1)$ → $2x+2=3x-3$。`, R`$2+3=3x-2x$，$x=5$。`] },
+    { q: R`化簡 $3(2x-1)-2(x-4)$，結果為何？`, s: "式子的化簡",
+      o: [R`$4x+5$`, R`$4x-11$`, R`$4x-5$`, R`$8x+5$`],
+      h: [R`分配律：$3(2x-1)=6x-3$；$-2(x-4)$ 每一項都要乘 $-2$。`, R`$6x-3-2x+8$。`, R`$=4x+5$。（$-2\times(-4)=+8$）`] },
+    { q: R`化簡 $\dfrac{x}{5}+\dfrac{x}{3}$，結果為何？`, s: "式子的化簡",
+      o: [R`$\frac{8x}{15}$`, R`$\frac{2x}{8}$`, R`$\frac{x}{8}$`, R`$\frac{2x}{15}$`],
+      h: [R`和分數加法一樣，先通分，分母是 $15$。`, R`$\frac{3x}{15}+\frac{5x}{15}$。`, R`$=\frac{8x}{15}$。`] },
+    { q: R`若 $x=2$ 是方程式 $ax+3=7$ 的解，則 $a=$？`, s: "方程式的解",
+      o: [R`$2$`, R`$5$`, R`$\frac{1}{2}$`, R`$-2$`],
+      h: [R`$x=2$ 是解 → 把 $x=2$ 代入方程式會成立。`, R`$2a+3=7$ → $2a=4$。`, R`$a=2$。`] },
+    { q: R`某數的 $3$ 倍減 $5$ 等於 $16$，則某數為何？`, s: "列式與應用題",
+      o: [R`$7$`, R`$\frac{11}{3}$`, R`$21$`, R`$3$`],
+      h: [R`設某數為 $x$，列式：$3x-5=16$。`, R`$3x=21$。`, R`某數為 $7$。`] },
+    { q: R`小明買 $3$ 枝相同的鉛筆和 $1$ 本 $25$ 元的筆記本，共付 $70$ 元，則每枝鉛筆多少元？`, s: "列式與應用題",
+      o: [R`$15$ 元`, R`$45$ 元`, R`$\frac{95}{3}$ 元`, R`$20$ 元`],
+      h: [R`設每枝鉛筆 $x$ 元：$3x+25=70$。`, R`$3x=45$。`, R`$x=15$，每枝 $15$ 元。`] },
+    { q: R`今年爸爸 $40$ 歲、兒子 $10$ 歲，幾年後爸爸的年齡是兒子的 $3$ 倍？`, s: "列式與應用題",
+      o: [R`$5$ 年後`, R`$10$ 年後`, R`$15$ 年後`, R`$20$ 年後`],
+      h: [R`設 $x$ 年後，兩人都要加 $x$ 歲：爸爸 $40+x$，兒子 $10+x$。`, R`$40+x=3(10+x)$ → $40+x=30+3x$。`, R`$10=2x$，$x=5$，$5$ 年後。`] },
+    { q: R`解方程式 $5x-3=2x+9$，得 $x=$？`, s: "解方程式",
+      o: [R`$4$`, R`$2$`, R`$\frac{12}{7}$`, R`$-4$`],
+      h: [R`移項：$5x-2x=9+3$（$-3$ 移過去變 $+3$）。`, R`$3x=12$。`, R`$x=4$。`] },
+    { q: R`若 $a=b$，下列哪一個式子<b>不一定</b>成立？`, s: "解方程式",
+      o: [R`$\dfrac{a}{c}=\dfrac{b}{c}$`, R`$a+c=b+c$`, R`$a-c=b-c$`, R`$a\times c=b\times c$`],
+      h: [R`等量公理：兩邊同加、同減、同乘、同除（除數不為 $0$）一個數，等式仍成立。`, R`如果 $c=0$，$\frac{a}{c}$ 和 $\frac{b}{c}$ 都沒有意義。`, R`$\dfrac{a}{c}=\dfrac{b}{c}$ 不一定成立（$c$ 可能是 $0$）。`] }
+  ]
+}
+);
+
+// ===== 第二冊 =====
+RAW_MODULES.push(
+{
+  code: "06", book: 2, title: "二元一次聯立方程式", chap: "第二冊 第 1 章", freq: 3,
+  subtitle: "代入消去法、加減消去法、方程式的解、應用題列式",
+  tips: {
+    "代入消去法": "有一式寫成 $y=\cdots$ 或 $x=\cdots$ 時，直接代入另一式（練功房 2）。",
+    "加減消去法": "某個未知數係數相同就相減、相反就相加，消去一個未知數。",
+    "聯立方程式的解": "解是一組 $(x,y)$，代回兩個式子都要成立；算完記得驗算（考前暖身操 6）。",
+    "聯立方程式應用題": "兩個未知數就要找兩個等量關係，列兩條式子。"
+  },
+  practice: [
+    { q: R`若二元一次聯立方程式 $\begin{cases}7x-2y=8\\3x+y=9\end{cases}$ 的解為 $x=a$，$y=b$，則 $a+b=$？`, s: "代入消去法",
+      o: [R`$5$`, R`$6$`, R`$-6$`, R`$-5$`],
+      h: [R`由第二式得 $y=9-3x$，代入第一式。`, R`$7x-2(9-3x)=8$ → $13x-18=8$ → $x=2$，再代回得 $y=3$。`, R`$a+b=2+3=5$。（會考暖身操）`] },
+    { q: R`解聯立方程式 $\begin{cases}x+y=10\\x-y=4\end{cases}$，得 $(x,y)=$？`, s: "加減消去法",
+      o: [R`$(7,3)$`, R`$(3,7)$`, R`$(6,4)$`, R`$(14,-4)$`],
+      h: [R`兩式相加，$y$ 會消掉。`, R`$2x=14$ → $x=7$，代回 $x+y=10$。`, R`$y=3$，解為 $(7,3)$。`] },
+    { q: R`解聯立方程式 $\begin{cases}2x+3y=12\\x=3\end{cases}$，得 $y=$？`, s: "代入消去法",
+      o: [R`$2$`, R`$6$`, R`$3$`, R`$\frac{9}{2}$`],
+      h: [R`$x=3$ 直接代入第一式。`, R`$2\times3+3y=12$ → $3y=6$。`, R`$y=2$。`] },
+    { q: R`若 $x=2$，$y=-1$ 是方程式 $ax+3y=5$ 的一組解，則 $a=$？`, s: "聯立方程式的解",
+      o: [R`$4$`, R`$1$`, R`$-4$`, R`$\frac{5}{2}$`],
+      h: [R`把 $x=2$、$y=-1$ 代入方程式。`, R`$2a+3\times(-1)=5$ → $2a-3=5$。`, R`$2a=8$，$a=4$。`] },
+    { q: R`雞和兔關在同一個籠子裡，共有 $20$ 個頭、$56$ 隻腳，則兔子有幾隻？`, s: "聯立方程式應用題",
+      o: [R`$8$ 隻`, R`$12$ 隻`, R`$14$ 隻`, R`$6$ 隻`],
+      h: [R`設雞 $x$ 隻、兔 $y$ 隻：$x+y=20$，$2x+4y=56$。`, R`第二式除以 $2$：$x+2y=28$，減去第一式得 $y=$？`, R`$y=8$，兔子 $8$ 隻（雞 $12$ 隻）。`] },
+    { q: R`買 $2$ 枝筆和 $1$ 本簿子共 $50$ 元；買 $1$ 枝筆和 $2$ 本簿子共 $55$ 元。則 $1$ 枝筆多少元？`, s: "聯立方程式應用題",
+      o: [R`$15$ 元`, R`$20$ 元`, R`$35$ 元`, R`$25$ 元`],
+      h: [R`設筆 $x$ 元、簿子 $y$ 元：$2x+y=50$，$x+2y=55$。`, R`兩式相加：$3x+3y=105$ → $x+y=35$；再用 $2x+y=50$ 減它。`, R`$x=15$，筆 $15$ 元（簿子 $20$ 元）。`] },
+    { q: R`大人票每張 $x$ 元，小孩票每張 $y$ 元，大人票比小孩票貴 $50$ 元，下列哪一個式子正確？`, s: "聯立方程式應用題",
+      o: [R`$x-y=50$`, R`$y-x=50$`, R`$x+y=50$`, R`$x=50y$`],
+      h: [R`「貴 $50$ 元」→ 大人票減小孩票等於 $50$。`, R`大人票 $x$，小孩票 $y$，大減小。`, R`$x-y=50$（也可寫成 $x=y+50$）。`] },
+    { q: R`解聯立方程式 $\begin{cases}3x+2y=7\\3x-2y=5\end{cases}$，得 $y=$？`, s: "加減消去法",
+      o: [R`$\frac{1}{2}$`, R`$2$`, R`$1$`, R`$-\frac{1}{2}$`],
+      h: [R`兩式 $x$ 的係數相同，相減可以消去 $x$。`, R`第一式減第二式：$4y=2$。`, R`$y=\frac{1}{2}$（$x=2$）。`] },
+    { q: R`方程式 $2x+y=7$ 中，$x$、$y$ 都是正整數的解共有幾組？`, s: "聯立方程式的解",
+      o: [R`$3$ 組`, R`$2$ 組`, R`$4$ 組`, R`無限多組`],
+      h: [R`改寫成 $y=7-2x$，從 $x=1$ 開始試，$y$ 也要是正整數。`, R`$x=1$ 時 $y=5$；$x=2$ 時 $y=3$；$x=3$ 時 $y=1$；$x=4$ 時 $y=-1$ 不行。`, R`共 $3$ 組。`] },
+    { q: R`解聯立方程式 $\begin{cases}y=2x-1\\y=x+3\end{cases}$，則 $x+y=$？`, s: "代入消去法",
+      o: [R`$11$`, R`$7$`, R`$4$`, R`$3$`],
+      h: [R`兩式都是 $y=\cdots$，可以讓右邊相等：$2x-1=x+3$。`, R`$x=4$，代回 $y=x+3=7$。`, R`$x+y=4+7=11$。`] },
+    { q: R`用代入消去法解 $\begin{cases}y=3x\\2x+y=10\end{cases}$，代入後得到的一元一次方程式為何？`, s: "代入消去法",
+      o: [R`$2x+3x=10$`, R`$2x+3=10$`, R`$2\times3x=10$`, R`$3x+y=10$`],
+      h: [R`把第二式中的 $y$ 換成 $3x$。`, R`$2x+y=10$ → $2x+(3x)=10$。`, R`得 $2x+3x=10$，解得 $x=2$、$y=6$。`] },
+    { q: R`蘋果每顆 $a$ 元、梨子每顆 $b$ 元。$3$ 顆蘋果和 $2$ 顆梨子共 $110$ 元，$1$ 顆蘋果和 $1$ 顆梨子共 $45$ 元，則梨子每顆多少元？`, s: "聯立方程式應用題",
+      o: [R`$25$ 元`, R`$20$ 元`, R`$45$ 元`, R`$30$ 元`],
+      h: [R`列式：$3a+2b=110$，$a+b=45$。`, R`第二式乘 $2$：$2a+2b=90$，和第一式相減得 $a=20$。`, R`$b=45-20=25$，梨子每顆 $25$ 元。`] },
+    { q: R`甲、乙兩數的和是 $48$，甲是乙的 $3$ 倍，則乙為何？`, s: "聯立方程式應用題",
+      o: [R`$12$`, R`$36$`, R`$16$`, R`$24$`],
+      h: [R`列式：$x+y=48$，$x=3y$。`, R`代入：$3y+y=48$ → $4y=48$。`, R`乙 $=12$（甲 $=36$）。`] }
+  ]
+},
+{
+  code: "07", book: 2, title: "直角坐標與直線", chap: "第二冊 第 2 章", freq: 7,
+  subtitle: "象限、點的平移、到軸的距離、直線方程式與交點、坐標上的圖形",
+  tips: {
+    "象限判斷": "一象限 $(+,+)$、二 $(-,+)$、三 $(-,-)$、四 $(+,-)$；在軸上不屬於任何象限。",
+    "點的平移與距離": "左右移動改 $x$、上下移動改 $y$；點到 $x$ 軸的距離看 $|y|$。",
+    "直線上的點": "點在直線上 ↔ 代入方程式會成立（考前暖身操 5）。",
+    "直線與軸的交點": "與 $x$ 軸交點：令 $y=0$；與 $y$ 軸交點：令 $x=0$。",
+    "兩直線交點": "交點就是聯立方程式的解。",
+    "坐標上的圖形": "畫出點，水平或鉛直的邊長直接相減；面積用底 × 高。"
+  },
+  practice: [
+    { q: R`點 $(-3,4)$ 在坐標平面上的第幾象限？`, s: "象限判斷",
+      o: [R`第二象限`, R`第一象限`, R`第三象限`, R`第四象限`],
+      h: [R`看正負號：$x=-3<0$，$y=4>0$。`, R`$(-,+)$ 是左上方。`, R`第二象限。`] },
+    { q: R`若點 $P(a,b)$ 在第四象限，則點 $Q(b,a)$ 在第幾象限？`, s: "象限判斷",
+      o: [R`第二象限`, R`第一象限`, R`第三象限`, R`第四象限`],
+      h: [R`第四象限 $(+,-)$：$a>0$，$b<0$。`, R`$Q(b,a)$ 的正負號是 $(-,+)$。`, R`第二象限。`] },
+    { q: R`點 $(2,-5)$ 到 $x$ 軸的距離為何？`, s: "點的平移與距離",
+      o: [R`$5$`, R`$2$`, R`$-5$`, R`$7$`],
+      h: [R`到 $x$ 軸的距離是上下的距離，看 $y$ 坐標。`, R`$|-5|=5$。`, R`距離是 $5$。（到 $y$ 軸的距離才是 $2$）`] },
+    { q: R`將點 $(-1,2)$ 向右移動 $4$ 單位，再向下移動 $3$ 單位，得到的點坐標為何？`, s: "點的平移與距離",
+      o: [R`$(3,-1)$`, R`$(-5,5)$`, R`$(3,5)$`, R`$(2,-2)$`],
+      h: [R`向右：$x$ 加；向下：$y$ 減。`, R`$x=-1+4$，$y=2-3$。`, R`得 $(3,-1)$。`] },
+    { q: R`已知一次函數 $y=2x+a$ 的圖形通過點 $(-1,3)$，則 $a=$？`, s: "直線上的點",
+      o: [R`$5$`, R`$1$`, R`$-1$`, R`$-5$`],
+      h: [R`點在直線上 → 把 $x=-1$、$y=3$ 代入。`, R`$3=2\times(-1)+a$ → $3=-2+a$。`, R`$a=5$。（會考暖身操）`] },
+    { q: R`直線 $2x-y=4$ 與 $x$ 軸的交點坐標為何？`, s: "直線與軸的交點",
+      o: [R`$(2,0)$`, R`$(0,-4)$`, R`$(4,0)$`, R`$(0,2)$`],
+      h: [R`在 $x$ 軸上的點，$y$ 坐標是 $0$。`, R`令 $y=0$：$2x=4$。`, R`$x=2$，交點 $(2,0)$。`] },
+    { q: R`直線 $2x-y=4$ 與 $y$ 軸的交點坐標為何？`, s: "直線與軸的交點",
+      o: [R`$(0,-4)$`, R`$(0,4)$`, R`$(2,0)$`, R`$(-4,0)$`],
+      h: [R`在 $y$ 軸上的點，$x$ 坐標是 $0$。`, R`令 $x=0$：$-y=4$。`, R`$y=-4$，交點 $(0,-4)$。`] },
+    { q: R`若點 $(3,k)$ 在直線 $x+2y=7$ 上，則 $k=$？`, s: "直線上的點",
+      o: [R`$2$`, R`$4$`, R`$5$`, R`$-2$`],
+      h: [R`把 $x=3$、$y=k$ 代入方程式。`, R`$3+2k=7$ → $2k=4$。`, R`$k=2$。`] },
+    { q: R`下列哪一個點在直線 $y=-x+1$ 上？`, s: "直線上的點",
+      o: [R`$(2,-1)$`, R`$(-1,-2)$`, R`$(1,1)$`, R`$(0,-1)$`],
+      h: [R`每個點的 $x$ 代入 $-x+1$，看算出來是不是等於 $y$。`, R`$x=2$：$-2+1=-1$ ✓；$x=-1$：$2$；$x=1$：$0$；$x=0$：$1$。`, R`$(2,-1)$ 在直線上。`] },
+    { q: R`方程式 $x=3$ 的圖形為下列何者？`, s: "直線與軸的交點",
+      o: [R`通過 $(3,0)$ 且與 $y$ 軸平行的直線`, R`通過 $(0,3)$ 且與 $x$ 軸平行的直線`, R`通過原點的斜直線`, R`一個點 $(3,3)$`],
+      h: [R`$x=3$ 表示：不管 $y$ 是多少，$x$ 都是 $3$。`, R`$(3,0)$、$(3,1)$、$(3,-2)$……排成一直線，是鉛直線。`, R`與 $y$ 軸平行、通過 $(3,0)$ 的直線。`] },
+    { q: R`坐標平面上 $A(1,2)$、$B(1,-4)$ 兩點的距離為何？`, s: "點的平移與距離",
+      o: [R`$6$`, R`$2$`, R`$-6$`, R`$3$`],
+      h: [R`兩點 $x$ 坐標相同 → 在同一條鉛直線上，看 $y$ 坐標相差多少。`, R`$2-(-4)=6$。`, R`距離是 $6$。`] },
+    { q: R`直線 $y=x+1$ 與直線 $y=-x+5$ 的交點坐標為何？`, s: "兩直線交點",
+      o: [R`$(2,3)$`, R`$(3,2)$`, R`$(-2,-1)$`, R`$(4,1)$`],
+      h: [R`交點就是聯立方程式的解：$x+1=-x+5$。`, R`$2x=4$ → $x=2$，$y=2+1$。`, R`交點 $(2,3)$。`] },
+    { q: R`如圖，長方形 $ABCD$ 中，$A(-2,1)$、$B(3,1)$、$C(3,4)$，則 $D$ 點坐標為何？`, s: "坐標上的圖形",
+      fig: { t: "coord", r: [-3, 4, -1, 5], pts: { A: [-2, 1], B: [3, 1], C: [3, 4] } },
+      o: [R`$(-2,4)$`, R`$(4,-2)$`, R`$(-2,3)$`, R`$(3,-2)$`],
+      h: [R`長方形 $AD$ 是鉛直的邊，$D$ 和 $A$ 的 $x$ 相同；$DC$ 是水平的邊，$D$ 和 $C$ 的 $y$ 相同。`, R`$D$ 的 $x=-2$（同 $A$），$y=4$（同 $C$）。`, R`$D(-2,4)$。`] },
+    { q: R`坐標平面上 $O(0,0)$、$A(4,0)$、$B(0,3)$ 三點所圍成的三角形面積為何？`, s: "坐標上的圖形",
+      o: [R`$6$`, R`$12$`, R`$7$`, R`$5$`],
+      h: [R`$OA$ 在 $x$ 軸上、$OB$ 在 $y$ 軸上，兩邊互相垂直，是直角三角形。`, R`底 $\overline{OA}=4$，高 $\overline{OB}=3$，面積 $=\frac{4\times3}{2}$。`, R`面積是 $6$。`] },
+    { q: R`直線 $y=3$ 與直線 $x=-2$ 的交點坐標為何？`, s: "兩直線交點",
+      o: [R`$(-2,3)$`, R`$(3,-2)$`, R`$(-2,0)$`, R`$(0,3)$`],
+      h: [R`$x=-2$ 的點 $x$ 都是 $-2$；$y=3$ 的點 $y$ 都是 $3$。`, R`交點同時滿足兩個條件。`, R`$(-2,3)$。`] },
+    { q: R`小華家在坐標 $(0,0)$，學校在 $(0,4)$，圖書館在 $(3,4)$。從家沿著格線先走到學校、再走到圖書館，一格代表 $100$ 公尺，共走了多少公尺？`, s: "坐標上的圖形", lv: 2,
+      o: [R`$700$ 公尺`, R`$500$ 公尺`, R`$400$ 公尺`, R`$1200$ 公尺`],
+      h: [R`家到學校是鉛直方向、學校到圖書館是水平方向，分段算。`, R`家→學校：$4$ 格；學校→圖書館：$3$ 格，共 $7$ 格。`, R`$7\times100=700$ 公尺。（直線距離才是 $500$ 公尺）`] }
+  ]
+},
+{
+  code: "17", book: 2, title: "比例與不等式", chap: "第二冊 第 3、4 章", freq: 1,
+  subtitle: "比例式、正比與反比、比例尺與坡度、一元一次不等式",
+  tips: {
+    "比例式": "$a:b=c:d$ → 內項乘積＝外項乘積：$ad=bc$。",
+    "正比與反比": "正比：$\frac{y}{x}$ 固定；反比：$xy$ 固定。",
+    "比例尺與坡度": "實際＝圖上 × 比例尺倍數；坡度＝垂直高度 ÷ 水平長度（考前暖身操 7）。",
+    "解不等式": "兩邊同乘或同除以負數，不等號要變方向。",
+    "不等式應用": "「最多」「至少」都要回頭看答案是不是整數、合不合理。"
+  },
+  practice: [
+    { q: R`若 $2:3=x:12$，則 $x=$？`, s: "比例式",
+      o: [R`$8$`, R`$18$`, R`$4$`, R`$6$`],
+      h: [R`內項乘積＝外項乘積：$3x=2\times12$。`, R`$3x=24$。`, R`$x=8$。`] },
+    { q: R`$0.6:1.5$ 化成最簡整數比為何？`, s: "比例式",
+      o: [R`$2:5$`, R`$6:15$`, R`$5:2$`, R`$3:5$`],
+      h: [R`前後同乘 $10$ 去掉小數：$6:15$。`, R`再同除以最大公因數 $3$。`, R`$2:5$。`] },
+    { q: R`若一無障礙坡道的坡度（垂直高度與水平長度之比）為 $\frac{1}{12}$，且高低差為 $15$ 公分，則水平長度為多少公分？`, s: "比例尺與坡度",
+      o: [R`$180$`, R`$125$`, R`$27$`, R`$15\sqrt{145}$`],
+      h: [R`坡度 $\frac{1}{12}$：高 $1$ 公分，水平就要 $12$ 公分。`, R`高度 $15$ 公分是 $1$ 的 $15$ 倍，水平長度 $=12\times15$。`, R`$180$ 公分。（會考暖身操）`] },
+    { q: R`已知 $x:y=3:4$，且 $x+y=35$，則 $x=$？`, s: "比例式",
+      o: [R`$15$`, R`$20$`, R`$5$`, R`$12$`],
+      h: [R`設 $x=3k$、$y=4k$。`, R`$3k+4k=35$ → $k=5$。`, R`$x=3\times5=15$。`] },
+    { q: R`地圖的比例尺為 $1:50000$，圖上 $4$ 公分的實際距離是多少公里？`, s: "比例尺與坡度",
+      o: [R`$2$ 公里`, R`$20$ 公里`, R`$0.2$ 公里`, R`$200$ 公里`],
+      h: [R`實際距離 $=4\times50000$ 公分。`, R`$=200000$ 公分；$1$ 公里 $=100000$ 公分。`, R`$200000\div100000=2$ 公里。`] },
+    { q: R`若 $y$ 與 $x$ 成正比，且 $x=2$ 時 $y=6$，則 $x=5$ 時 $y=$？`, s: "正比與反比",
+      o: [R`$15$`, R`$\frac{12}{5}$`, R`$9$`, R`$30$`],
+      h: [R`正比：$y=kx$，先求 $k$。`, R`$6=2k$ → $k=3$，所以 $y=3x$。`, R`$x=5$ 時 $y=15$。`] },
+    { q: R`若 $y$ 與 $x$ 成反比，且 $x=3$ 時 $y=8$，則 $x=6$ 時 $y=$？`, s: "正比與反比",
+      o: [R`$4$`, R`$16$`, R`$11$`, R`$2$`],
+      h: [R`反比：$xy$ 是固定的數。`, R`$xy=3\times8=24$。`, R`$6y=24$，$y=4$。`] },
+    { q: R`解不等式 $2x-3>5$，得下列何者？`, s: "解不等式",
+      o: [R`$x>4$`, R`$x>1$`, R`$x<4$`, R`$x>8$`],
+      h: [R`和解方程式一樣移項：$2x>5+3$。`, R`$2x>8$，兩邊同除以正數 $2$，不等號不變。`, R`$x>4$。`] },
+    { q: R`解不等式 $-3x\le12$，得下列何者？`, s: "解不等式",
+      o: [R`$x\ge-4$`, R`$x\le-4$`, R`$x\ge4$`, R`$x\le4$`],
+      h: [R`兩邊同除以 $-3$，除以負數不等號要變方向。`, R`$x\ge12\div(-3)$。`, R`$x\ge-4$。`] },
+    { q: R`不等式 $x+2<5$ 的正整數解共有幾個？`, s: "解不等式",
+      o: [R`$2$ 個`, R`$3$ 個`, R`$1$ 個`, R`無限多個`],
+      h: [R`先解不等式：$x<3$。`, R`正整數中小於 $3$ 的有 $1$、$2$（$3$ 不包含）。`, R`共 $2$ 個。`] },
+    { q: R`筆記本每本 $40$ 元，小美帶了 $300$ 元，最多可以買幾本？`, s: "不等式應用",
+      o: [R`$7$ 本`, R`$8$ 本`, R`$7.5$ 本`, R`$6$ 本`],
+      h: [R`設買 $x$ 本：$40x\le300$。`, R`$x\le7.5$，本數要是整數。`, R`最多買 $7$ 本。`] }
+  ]
+},
+{
+  code: "08", book: 2, title: "簡單統計圖表", chap: "第二冊 第 5 章", freq: 3,
+  subtitle: "長條圖、折線圖、圓形圖、平均數、中位數、眾數",
+  tips: {
+    "讀統計圖": "先看清楚橫軸、縱軸代表什麼和單位，再讀數字（練功房 1）。",
+    "平均數": "平均數＝總和 ÷ 個數；已知平均求總和：平均 × 個數（練功房 2 第 4 題）。",
+    "中位數": "先由小到大排好；個數是偶數時取中間兩個的平均。",
+    "眾數": "出現次數最多的那個「資料值」，不是次數本身。",
+    "圓形圖": "百分率 × 總數＝人數；百分率 × $360°$＝圓心角。"
+  },
+  practice: [
+    { q: R`如圖為某班學生投籃投進球數的長條圖，則投進球數的眾數為幾球？`, s: "眾數",
+      fig: { t: "bar", labels: ["0", "1", "2", "3", "4", "5"], vals: [2, 4, 9, 6, 3, 1], xl: "投進球數（球）", yl: "人數" },
+      o: [R`$2$ 球`, R`$9$ 球`, R`$5$ 球`, R`$3$ 球`],
+      h: [R`眾數是「出現次數最多」的資料值，看哪一根長條最高。`, R`最高的長條是 $9$ 人，對應的投進球數是 $2$ 球。`, R`眾數是 $2$ 球。（$9$ 是人數，不是眾數）`] },
+    { q: R`資料 $3$、$7$、$5$、$9$、$6$ 的中位數為何？`, s: "中位數",
+      o: [R`$6$`, R`$5$`, R`$7$`, R`$6.5$`],
+      h: [R`先由小到大排列。`, R`$3,5,6,7,9$，正中間是第 $3$ 個。`, R`中位數是 $6$。（不能直接取原本的第 3 個 $5$）`] },
+    { q: R`小明五次小考成績為 $80$、$75$、$90$、$85$、$70$ 分，平均為幾分？`, s: "平均數",
+      o: [R`$80$ 分`, R`$85$ 分`, R`$78$ 分`, R`$82$ 分`],
+      h: [R`平均數＝總和 ÷ 個數。`, R`總和 $=80+75+90+85+70=400$。`, R`$400\div5=80$ 分。`] },
+    { q: R`資料 $2$、$4$、$6$、$8$ 的中位數為何？`, s: "中位數",
+      o: [R`$5$`, R`$4$`, R`$6$`, R`$10$`],
+      h: [R`共 $4$ 個（偶數個），中位數是中間兩個數的平均。`, R`中間兩個是 $4$ 和 $6$。`, R`$\frac{4+6}{2}=5$。`] },
+    { q: R`如圖為某週一到週五中午氣溫的折線圖，哪兩天之間氣溫上升最多？`, s: "讀統計圖",
+      fig: { t: "line", labels: ["一", "二", "三", "四", "五"], vals: [20, 22, 21, 26, 27], xl: "星期", yl: "氣溫（°C）", ymin: 18, ymax: 28 },
+      o: [R`週三到週四`, R`週一到週二`, R`週四到週五`, R`週二到週三`],
+      h: [R`看折線哪一段往上最陡，或把相鄰兩天相減。`, R`一→二：$+2$；二→三：$-1$；三→四：$+5$；四→五：$+1$。`, R`週三到週四上升 $5°$C 最多。`] },
+    { q: R`如圖為某城市南、北兩區 $105$～$107$ 年的人口長條圖（單位：萬人），該城市總人口的變化為何？`, s: "讀統計圖",
+      fig: { t: "bar", labels: ["105年", "106年", "107年"], vals: [30, 28, 26], vals2: [20, 25, 29], names: ["北區", "南區"], xl: "", yl: "萬人" },
+      o: [R`逐年增加`, R`逐年減少`, R`先增加再減少`, R`先減少再增加`],
+      h: [R`問的是「總人口」，每年要把北區和南區加起來。`, R`$105$ 年：$30+20=50$；$106$ 年：$28+25=53$；$107$ 年：$26+29=55$。`, R`$50\to53\to55$，逐年增加。（108 會考第 2 題題型）`] },
+    { q: R`籃球隊一、二年級共 $8$ 人，平均身高 $175$ 公分；三年級 $3$ 人。若全隊平均身高為 $178$ 公分，則三年級的平均身高為幾公分？`, s: "平均數", lv: 2,
+      o: [R`$186$`, R`$181$`, R`$183$`, R`$178$`],
+      h: [R`平均 × 人數＝總和。全隊 $11$ 人總和 $=178\times11$。`, R`$178\times11=1958$，一、二年級總和 $=175\times8=1400$，三年級總和 $=558$。`, R`$558\div3=186$ 公分。（106 會考第 9 題題型）`] },
+    { q: R`某班 $40$ 人，在「最喜歡的運動」圓形圖中，籃球占 $25\%$，則喜歡籃球的有幾人？`, s: "圓形圖",
+      o: [R`$10$ 人`, R`$25$ 人`, R`$15$ 人`, R`$4$ 人`],
+      h: [R`人數＝總人數 × 百分率。`, R`$40\times25\%=40\times\frac{1}{4}$。`, R`$10$ 人。`] },
+    { q: R`圓形圖中，某一項占全部的 $30\%$，則它的扇形圓心角為幾度？`, s: "圓形圖",
+      o: [R`$108°$`, R`$30°$`, R`$120°$`, R`$90°$`],
+      h: [R`整個圓是 $360°$，代表 $100\%$。`, R`圓心角 $=360°\times30\%$。`, R`$=108°$。`] },
+    { q: R`全班 $30$ 人，數學成績在 $70$～$80$ 分的有 $12$ 人，這一組占全班的百分率為何？`, s: "讀統計圖",
+      o: [R`$40\%$`, R`$12\%$`, R`$36\%$`, R`$25\%$`],
+      h: [R`百分率 $=\frac{\text{這組人數}}{\text{全班人數}}\times100\%$。`, R`$\frac{12}{30}=0.4$。`, R`$40\%$。`] },
+    { q: R`資料 $2$、$3$、$3$、$5$、$5$、$5$、$7$ 的眾數為何？`, s: "眾數",
+      o: [R`$5$`, R`$3$`, R`$7$`, R`$4$`],
+      h: [R`數一數每個數出現幾次。`, R`$2$：$1$ 次；$3$：$2$ 次；$5$：$3$ 次；$7$：$1$ 次。`, R`$5$ 出現最多次，眾數是 $5$。`] },
+    { q: R`如圖為甲廠牌汽車的市場占有率折線圖，$2005$ 年的占有率是 $2000$ 年的幾倍？`, s: "讀統計圖",
+      fig: { t: "line", labels: ["2000", "2001", "2002", "2003", "2004", "2005"], vals: [2, 5, 10, 14, 17, 20], xl: "年", yl: "占有率（%）", ymin: 0, ymax: 24 },
+      o: [R`$10$ 倍`, R`$18$ 倍`, R`$20$ 倍`, R`$5$ 倍`],
+      h: [R`從圖上讀出 $2000$ 年和 $2005$ 年的數值。`, R`$2000$ 年 $2\%$，$2005$ 年 $20\%$，倍數 $=20\div2$。`, R`$10$ 倍。（$20-2=18$ 是相差，不是倍數）（95 基測題型）`] },
+    { q: R`資料 $1$、$2$、$3$、$4$、$100$ 中有一個特別大的數，用哪一個統計量來代表這組資料的中間位置比較合適？`, s: "中位數",
+      o: [R`中位數`, R`平均數`, R`最大值`, R`全距`],
+      h: [R`算算看：平均數 $=110\div5=22$，中位數 $=3$。`, R`平均數會被特別大的 $100$ 拉高，$22$ 比大部分資料都大很多。`, R`有極端值時用中位數比較能代表中間位置。`] }
+  ]
+},
+{
+  code: "09", book: 2, title: "線對稱與三視圖", chap: "第二冊 第 6 章", freq: 4,
+  subtitle: "線對稱圖形與對稱軸、對稱性質、積木的前視圖與上視圖",
+  tips: {
+    "對稱軸數量": "沿對稱軸對摺會完全重合；正 $n$ 邊形有 $n$ 條，圓有無限多條。",
+    "線對稱性質": "對應邊等長、對應角相等；對稱點連線被對稱軸垂直平分。",
+    "三視圖": "上視圖格子上的數字＝那一疊的方塊數；前視圖看每一行（直行）最高的那疊。"
+  },
+  practice: [
+    { q: R`下列哪一個英文字母是線對稱圖形？`, s: "對稱軸數量",
+      o: [R`A`, R`N`, R`S`, R`Z`],
+      h: [R`找找看能不能畫一條線，對摺後兩邊完全重合。`, R`A 可以沿著中間的鉛直線對摺；N、S、Z 轉半圈才會重合，但對摺不會重合。`, R`A 是線對稱圖形。`] },
+    { q: R`正方形共有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`$4$ 條`, R`$2$ 條`, R`$1$ 條`, R`$8$ 條`],
+      h: [R`對邊中點的連線可以當對稱軸，對角線也可以。`, R`對邊中點連線 $2$ 條＋對角線 $2$ 條。`, R`共 $4$ 條。`] },
+    { q: R`正三角形共有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`$3$ 條`, R`$1$ 條`, R`$6$ 條`, R`$0$ 條`],
+      h: [R`從每個頂點畫到對邊中點的線都是對稱軸。`, R`有 $3$ 個頂點。`, R`共 $3$ 條。`] },
+    { q: R`圓有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`無限多條`, R`$1$ 條`, R`$2$ 條`, R`$4$ 條`],
+      h: [R`通過圓心的直線，對摺後兩邊都會重合。`, R`通過圓心的直線有無限多條。`, R`無限多條。`] },
+    { q: R`點 $P$ 和點 $P'$ 對直線 $L$ 對稱，下列敘述何者正確？`, s: "線對稱性質",
+      o: [R`$L$ 垂直平分 $\overline{PP'}$`, R`$\overline{PP'}$ 和 $L$ 平行`, R`$P$ 在 $L$ 上`, R`$\overline{PP'}$ 的長度等於 $P$ 到 $L$ 的距離`],
+      h: [R`對稱點的性質：連線和對稱軸的關係。`, R`$\overline{PP'}$ 和 $L$ 互相垂直，而且 $L$ 通過 $\overline{PP'}$ 的中點。`, R`$L$ 是 $\overline{PP'}$ 的垂直平分線。（$\overline{PP'}$ 是 $P$ 到 $L$ 距離的 $2$ 倍）`] },
+    { q: R`一般的平行四邊形（不是長方形也不是菱形）有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`$0$ 條`, R`$1$ 條`, R`$2$ 條`, R`$4$ 條`],
+      h: [R`試著沿對角線或對邊中點連線對摺。`, R`對摺後都不會完全重合（轉半圈才會重合，那是點對稱）。`, R`$0$ 條，不是線對稱圖形。`] },
+    { q: R`一個不是正三角形的等腰三角形，有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`$1$ 條`, R`$2$ 條`, R`$3$ 條`, R`$0$ 條`],
+      h: [R`等腰三角形兩腰一樣長。`, R`頂角平分線（也是底邊的中垂線）可以對摺重合。`, R`$1$ 條。`] },
+    { q: R`正六邊形共有幾條對稱軸？`, s: "對稱軸數量",
+      o: [R`$6$ 條`, R`$3$ 條`, R`$12$ 條`, R`$4$ 條`],
+      h: [R`正 $n$ 邊形有 $n$ 條對稱軸。`, R`對角頂點連線 $3$ 條＋對邊中點連線 $3$ 條。`, R`共 $6$ 條。`] },
+    { q: R`$\triangle ABC$ 和 $\triangle DEF$ 對直線 $L$ 對稱，$A$、$B$、$C$ 的對稱點分別為 $D$、$E$、$F$。若 $\overline{AB}=5$，$\angle A=50°$，下列何者正確？`, s: "線對稱性質",
+      o: [R`$\overline{DE}=5$，$\angle D=50°$`, R`$\overline{DE}=10$，$\angle D=50°$`, R`$\overline{DE}=5$，$\angle D=130°$`, R`$\overline{EF}=5$，$\angle E=50°$`],
+      h: [R`線對稱圖形：對應邊相等、對應角相等。`, R`$AB$ 對應 $DE$，$\angle A$ 對應 $\angle D$。`, R`$\overline{DE}=5$，$\angle D=50°$。`] },
+    { q: R`如圖是一堆積木的上視圖，格子上的數字表示該位置疊了幾個正方體積木，則共有幾個積木？`, s: "三視圖",
+      fig: { t: "stack", g: [[2, 1], [1, 1]] },
+      o: [R`$5$ 個`, R`$4$ 個`, R`$6$ 個`, R`$8$ 個`],
+      h: [R`把格子上的數字全部加起來。`, R`$2+1+1+1$。`, R`共 $5$ 個。`] },
+    { q: R`如圖是一堆積木的上視圖（數字表示疊的個數，下方為前面）。從前面看（前視圖），由左到右每一行各有幾個正方形高？`, s: "三視圖",
+      fig: { t: "stack", g: [[3, 1, 2]], front: true },
+      o: [R`$3$、$1$、$2$`, R`$2$、$1$、$3$`, R`$6$`, R`$3$、$3$、$3$`],
+      h: [R`前視圖：從前面看，每一直行只看得到最高的那一疊。`, R`只有一列，三行分別疊了 $3$、$1$、$2$ 個。`, R`由左到右高 $3$、$1$、$2$。`] },
+    { q: R`如圖是一堆積木的上視圖（數字表示疊的個數，下方為前面），則前視圖由左到右各有幾個正方形高？`, s: "三視圖", lv: 2,
+      fig: { t: "stack", g: [[1, 2], [3, 1]], front: true },
+      o: [R`左 $3$、右 $2$`, R`左 $1$、右 $2$`, R`左 $3$、右 $1$`, R`左 $4$、右 $3$`],
+      h: [R`前視圖看每一直行的「最大值」，前後的方塊會重疊在一起。`, R`左行：$\max(1,3)=3$；右行：$\max(2,1)=2$。`, R`左 $3$、右 $2$。（不是相加）`] },
+    { q: R`如圖是一堆積木的上視圖，格子上的數字表示疊的個數。這堆積木的上視圖由幾個正方形組成？`, s: "三視圖",
+      fig: { t: "stack", g: [[2, 0, 1], [1, 3, 1]] },
+      o: [R`$5$ 個`, R`$8$ 個`, R`$6$ 個`, R`$3$ 個`],
+      h: [R`上視圖：從上面往下看，有積木的格子都會看到一個正方形，不管疊幾層。`, R`數字不是 $0$ 的格子：$2$、$1$、$1$、$3$、$1$。`, R`共 $5$ 個正方形。（積木總數才是 $8$ 個）`] },
+    { q: R`一個直立放在桌上的圓柱，它的上視圖是什麼形狀？`, s: "三視圖",
+      o: [R`圓形`, R`長方形`, R`三角形`, R`正方形`],
+      h: [R`想像從正上方往下看圓柱。`, R`看到的是圓柱的頂面。`, R`圓形。（前視圖才是長方形）`] }
+  ]
+}
+);
+
+// ===== 第三冊 =====
+RAW_MODULES.push(
+{
+  code: "10", book: 3, title: "乘法公式與多項式", chap: "第三冊 第 1 章", freq: 9,
+  subtitle: "和、差的平方公式、平方差公式、多項式的加減乘除",
+  tips: {
+    "和差平方公式": "$(a\pm b)^2=a^2\pm2ab+b^2$，中間的 $2ab$ 不能忘（會考附公式）。",
+    "平方差公式": "$(a+b)(a-b)=a^2-b^2$；$51^2-49^2$ 也可以反過來用。",
+    "乘法公式速算": "把數字拆成整十整百：$99=100-1$、$102\times98=(100+2)(100-2)$。",
+    "多項式加減": "去括號（前面是負號要全部變號），再合併同類項。",
+    "多項式乘法": "分配律：每一項都要乘到，再合併同類項。",
+    "多項式除法": "單項式除：每一項分別除以它。",
+    "多項式名詞": "次數看最高次項；常數項是不含 $x$ 的項。"
+  },
+  practice: [
+    { q: R`$(x+3)^2$ 展開後為何？`, s: "和差平方公式",
+      o: [R`$x^2+6x+9$`, R`$x^2+9$`, R`$x^2+3x+9$`, R`$x^2+6x+6$`],
+      h: [R`和的平方公式：$(a+b)^2=a^2+2ab+b^2$，$a=x$、$b=3$。`, R`$x^2+2\cdot x\cdot3+3^2$。`, R`$=x^2+6x+9$。（中間項 $6x$ 不能漏）`] },
+    { q: R`$(2x-1)^2$ 展開後為何？`, s: "和差平方公式",
+      o: [R`$4x^2-4x+1$`, R`$4x^2+1$`, R`$2x^2-4x+1$`, R`$4x^2-2x+1$`],
+      h: [R`差的平方公式：$(a-b)^2=a^2-2ab+b^2$，$a=2x$、$b=1$。`, R`$(2x)^2-2\cdot2x\cdot1+1^2$。`, R`$=4x^2-4x+1$。（$(2x)^2=4x^2$）`] },
+    { q: R`利用乘法公式計算 $99^2$，結果為何？`, s: "乘法公式速算",
+      o: [R`$9801$`, R`$9810$`, R`$9999$`, R`$9701$`],
+      h: [R`$99=100-1$，用差的平方公式。`, R`$(100-1)^2=10000-200+1$。`, R`$=9801$。`] },
+    { q: R`利用乘法公式計算 $102\times98$，結果為何？`, s: "乘法公式速算",
+      o: [R`$9996$`, R`$10004$`, R`$9604$`, R`$9960$`],
+      h: [R`$102=100+2$，$98=100-2$，用平方差公式。`, R`$(100+2)(100-2)=100^2-2^2$。`, R`$=10000-4=9996$。`] },
+    { q: R`計算 $51^2-49^2$，結果為何？`, s: "平方差公式",
+      o: [R`$200$`, R`$4$`, R`$100$`, R`$2$`],
+      h: [R`平方差公式反過來用：$a^2-b^2=(a+b)(a-b)$。`, R`$(51+49)(51-49)=100\times2$。`, R`$=200$。`] },
+    { q: R`計算 $x(2x-3)-2(x+1)$ 的結果，與下列哪一個式子相同？`, s: "多項式乘法",
+      o: [R`$2x^2-5x-2$`, R`$2x^2-2x-2$`, R`$2x^2-5x+1$`, R`$2x^2-2x-5$`],
+      h: [R`分配律：$x(2x-3)=2x^2-3x$；$-2(x+1)=-2x-2$。`, R`$2x^2-3x-2x-2$。`, R`$=2x^2-5x-2$。（會考暖身操）`] },
+    { q: R`計算 $(2x^2-3x+1)+(x^2+5x-4)$，結果為何？`, s: "多項式加減",
+      o: [R`$3x^2+2x-3$`, R`$3x^2-8x-3$`, R`$2x^2+2x-3$`, R`$3x^2+2x+5$`],
+      h: [R`同類項合併：$x^2$ 項、$x$ 項、常數項分別相加。`, R`$(2+1)x^2+(-3+5)x+(1-4)$。`, R`$=3x^2+2x-3$。`] },
+    { q: R`計算 $(3x^2-x+2)-(x^2-4x+5)$，結果為何？`, s: "多項式加減",
+      o: [R`$2x^2+3x-3$`, R`$2x^2-5x-3$`, R`$2x^2+3x+7$`, R`$4x^2-5x+7$`],
+      h: [R`減號後面的括號拆掉，裡面每一項都要變號：$-x^2+4x-5$。`, R`$3x^2-x+2-x^2+4x-5$。`, R`$=2x^2+3x-3$。`] },
+    { q: R`$(x+2)(x-5)$ 展開後為何？`, s: "多項式乘法",
+      o: [R`$x^2-3x-10$`, R`$x^2+3x-10$`, R`$x^2-10$`, R`$x^2-3x+10$`],
+      h: [R`分配律：$x(x-5)+2(x-5)$。`, R`$x^2-5x+2x-10$。`, R`$=x^2-3x-10$。`] },
+    { q: R`$(2x+1)(x-3)$ 展開後為何？`, s: "多項式乘法",
+      o: [R`$2x^2-5x-3$`, R`$2x^2-7x-3$`, R`$2x^2+5x-3$`, R`$2x^2-3$`],
+      h: [R`分配律：$2x(x-3)+1\cdot(x-3)$。`, R`$2x^2-6x+x-3$。`, R`$=2x^2-5x-3$。`] },
+    { q: R`多項式 $3x^3-2x+5$ 是幾次多項式？`, s: "多項式名詞",
+      o: [R`$3$ 次`, R`$2$ 次`, R`$5$ 次`, R`$1$ 次`],
+      h: [R`多項式的次數，看次數最高的那一項。`, R`三項的次數分別是 $3$、$1$、$0$。`, R`是 $3$ 次多項式。`] },
+    { q: R`計算 $(6x^2-9x)\div3x$，結果為何？`, s: "多項式除法",
+      o: [R`$2x-3$`, R`$2x-9x$`, R`$2x^2-3x$`, R`$3x-6$`],
+      h: [R`每一項分別除以 $3x$。`, R`$6x^2\div3x=2x$，$-9x\div3x=-3$。`, R`$=2x-3$。`] },
+    { q: R`若 $x^2+kx+16$ 是一個完全平方式，且 $k>0$，則 $k=$？`, s: "和差平方公式",
+      o: [R`$8$`, R`$4$`, R`$16$`, R`$32$`],
+      h: [R`$16=4^2$，所以它應該是 $(x+4)^2$。`, R`$(x+4)^2=x^2+2\cdot4\cdot x+16$。`, R`$k=8$。`] },
+    { q: R`已知 $a+b=5$，$ab=3$，則 $a^2+b^2=$？`, s: "和差平方公式", lv: 2,
+      o: [R`$19$`, R`$25$`, R`$22$`, R`$31$`],
+      h: [R`和的平方公式：$(a+b)^2=a^2+2ab+b^2$。`, R`$25=a^2+b^2+6$。`, R`$a^2+b^2=19$。`] },
+    { q: R`計算 $2025^2-2024^2$，結果為何？`, s: "平方差公式",
+      o: [R`$4049$`, R`$1$`, R`$2025$`, R`$4050$`],
+      h: [R`平方差公式：$(2025+2024)(2025-2024)$。`, R`$=4049\times1$。`, R`$=4049$。`] },
+    { q: R`$(x-2)(x+2)(x^2+4)$ 展開後為何？`, s: "平方差公式", lv: 2,
+      o: [R`$x^4-16$`, R`$x^4+16$`, R`$x^4-8x^2-16$`, R`$x^2-16$`],
+      h: [R`先算前兩個括號，用平方差公式。`, R`$(x-2)(x+2)=x^2-4$，再算 $(x^2-4)(x^2+4)$，又是平方差。`, R`$=x^4-16$。`] },
+    { q: R`化簡 $(x+1)^2-(x-1)^2$，結果為何？`, s: "和差平方公式",
+      o: [R`$4x$`, R`$2$`, R`$0$`, R`$2x^2+2$`],
+      h: [R`分別展開：$(x+1)^2=x^2+2x+1$，$(x-1)^2=x^2-2x+1$。`, R`相減：$(x^2+2x+1)-(x^2-2x+1)$，後面要全部變號。`, R`$=4x$。`] },
+    { q: R`長方形的長為 $(2x+3)$、寬為 $(x-1)$，則面積為何？`, s: "多項式乘法",
+      o: [R`$2x^2+x-3$`, R`$2x^2-3$`, R`$3x+2$`, R`$2x^2+5x-3$`],
+      h: [R`面積＝長 × 寬：$(2x+3)(x-1)$。`, R`$2x\cdot x-2x+3x-3$。`, R`$=2x^2+x-3$。`] }
+  ]
+},
+{
+  code: "11", book: 3, title: "平方根與解方程式", chap: "第三冊 第 2、4 章", freq: 10,
+  subtitle: "平方根、根式化簡與運算、畢氏定理、一元二次方程式",
+  tips: {
+    "平方根": "正數的平方根有兩個（$\pm$）；$\sqrt{a}$ 只表示正的那個；$\sqrt{(-5)^2}=5$。",
+    "根式化簡": "把根號裡的平方數提出來：$\sqrt{28}=\sqrt{4\times7}=2\sqrt{7}$（考前暖身操 4）。",
+    "根式運算": "根號內一樣才能相加減；相乘相除可以把根號合併。",
+    "估算根號": "找夾住它的兩個平方數：$16<20<25$，所以 $4<\sqrt{20}<5$。",
+    "畢氏定理": "直角三角形：斜邊² ＝ 兩股平方和（會考附公式 $c^2=a^2+b^2$）。",
+    "解一元二次方程式": "能因式分解就因式分解；不行就用公式解（會考附公式）。"
+  },
+  practice: [
+    { q: R`若 $\sqrt{28}=a\sqrt{7}$，則 $a=$？`, s: "根式化簡",
+      o: [R`$2$`, R`$4$`, R`$8$`, R`$21$`],
+      h: [R`把 $28$ 拆成「平方數 × 其他」：$28=4\times7$。`, R`$\sqrt{28}=\sqrt{4}\times\sqrt{7}=2\sqrt{7}$。`, R`$a=2$。（會考暖身操）`] },
+    { q: R`計算 $\sqrt{12}+\sqrt{27}$，結果為何？`, s: "根式運算",
+      o: [R`$5\sqrt{3}$`, R`$\sqrt{39}$`, R`$6\sqrt{3}$`, R`$13\sqrt{3}$`],
+      h: [R`先化簡：$\sqrt{12}=2\sqrt{3}$，$\sqrt{27}=3\sqrt{3}$。`, R`根號內一樣，前面的係數相加：$2\sqrt{3}+3\sqrt{3}$。`, R`$=5\sqrt{3}$。（$\sqrt{12}+\sqrt{27}\ne\sqrt{39}$）`] },
+    { q: R`計算 $\sqrt{2}\times\sqrt{8}$，結果為何？`, s: "根式運算",
+      o: [R`$4$`, R`$\sqrt{10}$`, R`$16$`, R`$2\sqrt{2}$`],
+      h: [R`根號相乘可以合併：$\sqrt{2}\times\sqrt{8}=\sqrt{2\times8}$。`, R`$=\sqrt{16}$。`, R`$=4$。`] },
+    { q: R`計算 $\sqrt{50}\div\sqrt{2}$，結果為何？`, s: "根式運算",
+      o: [R`$5$`, R`$25$`, R`$\sqrt{48}$`, R`$5\sqrt{2}$`],
+      h: [R`根號相除可以合併：$\sqrt{50\div2}$。`, R`$=\sqrt{25}$。`, R`$=5$。`] },
+    { q: R`$81$ 的平方根為何？`, s: "平方根",
+      o: [R`$\pm9$`, R`$9$`, R`$-9$`, R`$\pm\sqrt{9}$`],
+      h: [R`平方根：哪些數平方會等於 $81$？`, R`$9^2=81$，$(-9)^2=81$。`, R`$81$ 的平方根是 $\pm9$。（$\sqrt{81}$ 才只是 $9$）`] },
+    { q: R`$\sqrt{(-5)^2}$ 之值為何？`, s: "平方根",
+      o: [R`$5$`, R`$-5$`, R`$\pm5$`, R`$25$`],
+      h: [R`先算根號裡面：$(-5)^2=25$。`, R`$\sqrt{25}$ 只取正的平方根。`, R`$=5$。`] },
+    { q: R`$\sqrt{20}$ 介於哪兩個連續整數之間？`, s: "估算根號",
+      o: [R`$4$ 和 $5$`, R`$3$ 和 $4$`, R`$5$ 和 $6$`, R`$19$ 和 $21$`],
+      h: [R`找比 $20$ 小和比 $20$ 大的平方數。`, R`$16<20<25$，所以 $\sqrt{16}<\sqrt{20}<\sqrt{25}$。`, R`介於 $4$ 和 $5$ 之間。`] },
+    { q: R`將 $\dfrac{1}{\sqrt{3}}$ 的分母有理化，結果為何？`, s: "根式化簡",
+      o: [R`$\frac{\sqrt{3}}{3}$`, R`$\sqrt{3}$`, R`$\frac{1}{3}$`, R`$3\sqrt{3}$`],
+      h: [R`分子分母同乘 $\sqrt{3}$。`, R`$\dfrac{1\times\sqrt{3}}{\sqrt{3}\times\sqrt{3}}=\dfrac{\sqrt{3}}{3}$。`, R`$=\frac{\sqrt{3}}{3}$。`] },
+    { q: R`如圖，直角三角形的兩股長分別為 $6$ 和 $8$，則斜邊 $x=$？`, s: "畢氏定理",
+      fig: { t: "rt", a: "6", b: "8", c: "x", na: 6, nb: 8 },
+      o: [R`$10$`, R`$14$`, R`$\sqrt{28}$`, R`$2\sqrt{7}$`],
+      h: [R`畢氏定理：斜邊² ＝ 股² ＋ 股²。`, R`$x^2=6^2+8^2=36+64=100$。`, R`$x=10$。`] },
+    { q: R`直角三角形的斜邊長 $13$，一股長 $5$，則另一股長為何？`, s: "畢氏定理",
+      o: [R`$12$`, R`$8$`, R`$\sqrt{194}$`, R`$18$`],
+      h: [R`求股：股² ＝ 斜邊² － 另一股²。`, R`$13^2-5^2=169-25=144$。`, R`另一股 $=12$。`] },
+    { q: R`如圖，正方形的邊長為 $3$，則對角線長 $d=$？`, s: "畢氏定理",
+      fig: { t: "sq", s: "3", d: "d" },
+      o: [R`$3\sqrt{2}$`, R`$6$`, R`$9$`, R`$\sqrt{6}$`],
+      h: [R`對角線把正方形分成兩個直角三角形，兩股都是 $3$。`, R`$d^2=3^2+3^2=18$。`, R`$d=\sqrt{18}=3\sqrt{2}$。`] },
+    { q: R`坐標平面上 $A(1,1)$、$B(4,5)$ 兩點的距離為何？`, s: "畢氏定理",
+      o: [R`$5$`, R`$7$`, R`$\sqrt{7}$`, R`$25$`],
+      h: [R`畫一個直角三角形：水平相差 $4-1=3$，鉛直相差 $5-1=4$。`, R`$\overline{AB}^2=3^2+4^2=25$。`, R`$\overline{AB}=5$。`] },
+    { q: R`解方程式 $x^2=16$，得 $x=$？`, s: "解一元二次方程式",
+      o: [R`$4$ 或 $-4$`, R`$4$`, R`$8$`, R`$\pm8$`],
+      h: [R`$x$ 是 $16$ 的平方根。`, R`$4^2=16$，$(-4)^2=16$。`, R`$x=4$ 或 $-4$。`] },
+    { q: R`解方程式 $(x-3)(x+5)=0$，得 $x=$？`, s: "解一元二次方程式",
+      o: [R`$3$ 或 $-5$`, R`$-3$ 或 $5$`, R`$3$ 或 $5$`, R`$-3$ 或 $-5$`],
+      h: [R`兩數相乘等於 $0$，至少有一個是 $0$。`, R`$x-3=0$ 或 $x+5=0$。`, R`$x=3$ 或 $-5$。`] },
+    { q: R`解方程式 $x^2-5x=0$，得 $x=$？`, s: "解一元二次方程式",
+      o: [R`$0$ 或 $5$`, R`$5$`, R`$0$ 或 $-5$`, R`$\pm\sqrt{5}$`],
+      h: [R`提出公因式 $x$：$x(x-5)=0$。（不能兩邊直接除以 $x$，會漏掉 $x=0$）`, R`$x=0$ 或 $x-5=0$。`, R`$x=0$ 或 $5$。`] },
+    { q: R`解方程式 $(x-2)^2=9$，得 $x=$？`, s: "解一元二次方程式",
+      o: [R`$5$ 或 $-1$`, R`$5$`, R`$11$ 或 $-7$`, R`$1$ 或 $-5$`],
+      h: [R`開平方：$x-2=\pm3$。`, R`$x-2=3$ 或 $x-2=-3$。`, R`$x=5$ 或 $-1$。`] },
+    { q: R`用公式解求 $x^2+3x-1=0$ 的解，下列何者正確？`, s: "解一元二次方程式", lv: 2,
+      o: [R`$x=\frac{-3\pm\sqrt{13}}{2}$`, R`$x=\frac{3\pm\sqrt{13}}{2}$`, R`$x=\frac{-3\pm\sqrt{5}}{2}$`, R`$x=-3\pm\sqrt{13}$`],
+      h: [R`公式解：$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$，這裡 $a=1$、$b=3$、$c=-1$。`, R`$b^2-4ac=9-4\times1\times(-1)=9+4=13$。`, R`$x=\frac{-3\pm\sqrt{13}}{2}$。`] },
+    { q: R`若 $x=2$ 是方程式 $x^2+kx-6=0$ 的一個解，則 $k=$？`, s: "解一元二次方程式",
+      o: [R`$1$`, R`$-1$`, R`$5$`, R`$2$`],
+      h: [R`$x=2$ 是解 → 代入方程式會成立。`, R`$4+2k-6=0$ → $2k=2$。`, R`$k=1$。`] }
+  ]
+},
+{
+  code: "12", book: 3, title: "簡單的十字交乘法", chap: "第三冊 第 3 章", freq: 3,
+  subtitle: "提公因式、乘法公式因式分解、十字交乘法、因式分解解方程式",
+  tips: {
+    "提公因式": "每一項都有的因式先提出來，括號裡剩下的要能乘回原式。",
+    "公式因式分解": "看到兩項相減且都是平方 → 平方差；三項且頭尾是平方 → 完全平方。",
+    "十字交乘法": "$x^2+bx+c$：找兩數相乘 $=c$、相加 $=b$；記得乘開驗算。",
+    "因式分解解方程式": "先移項讓右邊為 $0$，因式分解後令每個因式 $=0$。"
+  },
+  practice: [
+    { q: R`因式分解 $x^2+5x+6$，結果為何？`, s: "十字交乘法",
+      o: [R`$(x+2)(x+3)$`, R`$(x+1)(x+6)$`, R`$(x-2)(x-3)$`, R`$(x+5)(x+1)$`],
+      h: [R`找兩數：相乘 $=6$、相加 $=5$。`, R`$2\times3=6$，$2+3=5$。`, R`$(x+2)(x+3)$。`] },
+    { q: R`因式分解 $x^2-x-12$，結果為何？`, s: "十字交乘法",
+      o: [R`$(x-4)(x+3)$`, R`$(x+4)(x-3)$`, R`$(x-6)(x+2)$`, R`$(x-12)(x+1)$`],
+      h: [R`找兩數：相乘 $=-12$、相加 $=-1$。`, R`$-4\times3=-12$，$-4+3=-1$。`, R`$(x-4)(x+3)$。`] },
+    { q: R`因式分解 $x^2-9$，結果為何？`, s: "公式因式分解",
+      o: [R`$(x+3)(x-3)$`, R`$(x-3)^2$`, R`$(x+9)(x-1)$`, R`$(x-9)(x+1)$`],
+      h: [R`$x^2$ 和 $9=3^2$ 都是平方，中間是減號 → 平方差公式。`, R`$a^2-b^2=(a+b)(a-b)$，$a=x$、$b=3$。`, R`$(x+3)(x-3)$。`] },
+    { q: R`因式分解 $2x^2+7x+3$，結果為何？`, s: "十字交乘法",
+      o: [R`$(2x+1)(x+3)$`, R`$(2x+3)(x+1)$`, R`$(2x+7)(x+3)$`, R`$(2x-1)(x-3)$`],
+      h: [R`十字交乘：$2x^2$ 拆成 $2x\cdot x$，$3$ 拆成 $1\cdot3$ 或 $3\cdot1$。`, R`試 $(2x+1)(x+3)$：交叉相乘 $2x\cdot3+1\cdot x=7x$ ✓。`, R`$(2x+1)(x+3)$。`] },
+    { q: R`因式分解 $x^2-6x+9$，結果為何？`, s: "公式因式分解",
+      o: [R`$(x-3)^2$`, R`$(x+3)^2$`, R`$(x+3)(x-3)$`, R`$(x-9)(x+1)$`],
+      h: [R`頭尾 $x^2$、$9$ 都是平方，中間 $-6x=-2\cdot x\cdot3$ → 差的平方。`, R`$x^2-2\cdot3\cdot x+3^2$。`, R`$(x-3)^2$。`] },
+    { q: R`因式分解 $3x^2-6x$，結果為何？`, s: "提公因式",
+      o: [R`$3x(x-2)$`, R`$3(x^2-2)$`, R`$x(3x-2)$`, R`$3x(x-6)$`],
+      h: [R`兩項都有 $3$ 和 $x$，公因式是 $3x$。`, R`$3x^2\div3x=x$，$-6x\div3x=-2$。`, R`$3x(x-2)$。`] },
+    { q: R`解方程式 $x^2+2x-15=0$，得 $x=$？`, s: "因式分解解方程式",
+      o: [R`$3$ 或 $-5$`, R`$-3$ 或 $5$`, R`$3$ 或 $5$`, R`$-3$ 或 $-5$`],
+      h: [R`十字交乘：相乘 $-15$、相加 $2$ 的兩數是 $5$、$-3$。`, R`$(x+5)(x-3)=0$。`, R`$x=-5$ 或 $3$。`] },
+    { q: R`解方程式 $x^2-7x+10=0$，得 $x=$？`, s: "因式分解解方程式",
+      o: [R`$2$ 或 $5$`, R`$-2$ 或 $-5$`, R`$1$ 或 $10$`, R`$-2$ 或 $5$`],
+      h: [R`找兩數：相乘 $10$、相加 $-7$。`, R`$-2$、$-5$ → $(x-2)(x-5)=0$。`, R`$x=2$ 或 $5$。`] },
+    { q: R`若 $x^2+ax-8=(x+4)(x+b)$，則 $a=$？`, s: "十字交乘法",
+      o: [R`$2$`, R`$-2$`, R`$6$`, R`$4$`],
+      h: [R`常數項：$4b=-8$。`, R`$b=-2$，所以 $(x+4)(x-2)$；中間項 $=4+(-2)$。`, R`$a=2$。`] },
+    { q: R`因式分解 $2x^2-x-3$，結果為何？`, s: "十字交乘法",
+      o: [R`$(2x-3)(x+1)$`, R`$(2x+3)(x-1)$`, R`$(2x-1)(x+3)$`, R`$(2x+1)(x-3)$`],
+      h: [R`十字交乘：$2x^2=2x\cdot x$，$-3$ 拆成 $(-3)(1)$ 或 $(3)(-1)$ 等。`, R`試 $(2x-3)(x+1)$：交叉 $2x\cdot1+(-3)\cdot x=-x$ ✓。`, R`$(2x-3)(x+1)$。`] },
+    { q: R`下列何者是 $x^2-4x-5$ 的因式？`, s: "十字交乘法",
+      o: [R`$x+1$`, R`$x-1$`, R`$x+5$`, R`$x-4$`],
+      h: [R`先因式分解：相乘 $-5$、相加 $-4$ 的兩數。`, R`$-5$ 和 $1$ → $x^2-4x-5=(x-5)(x+1)$。`, R`$x+1$ 是因式。`] },
+    { q: R`因式分解 $x(x-1)-2(x-1)$，結果為何？`, s: "提公因式",
+      o: [R`$(x-1)(x-2)$`, R`$(x-1)(x+2)$`, R`$x(x-1)(-2)$`, R`$(x-1)^2$`],
+      h: [R`兩項都有 $(x-1)$，把它當成一整個提出來。`, R`$(x-1)(x-2)$。`, R`$(x-1)(x-2)$，乘開是 $x^2-3x+2$。`] },
+    { q: R`因式分解 $6x^2+x-2$，結果為何？`, s: "十字交乘法", lv: 2,
+      o: [R`$(2x-1)(3x+2)$`, R`$(2x+1)(3x-2)$`, R`$(6x-1)(x+2)$`, R`$(3x-1)(2x+2)$`],
+      h: [R`$6x^2$ 可拆成 $2x\cdot3x$，$-2$ 拆成 $(-1)(2)$ 等，交叉相乘要得 $+x$。`, R`試 $(2x-1)(3x+2)$：$2x\cdot2+(-1)\cdot3x=4x-3x=x$ ✓。`, R`$(2x-1)(3x+2)$。`] }
+  ]
+}
+);
+
+// ===== 第四冊 =====
+RAW_MODULES.push(
+{
+  code: "13", book: 4, title: "找規律（數列與級數）", chap: "第四冊 第 1 章", freq: 2,
+  subtitle: "等差數列、等比數列、等差級數、圖形找規律",
+  tips: {
+    "等差數列": "$a_n=a_1+(n-1)d$（會考附公式）；公差＝後項 − 前項。",
+    "等比數列": "$a_n=a_1r^{n-1}$（會考附公式）；公比＝後項 ÷ 前項。",
+    "等差級數": "$S_n=\frac{n(a_1+a_n)}{2}$（會考附公式）：（首項＋末項）× 項數 ÷ 2。",
+    "找規律": "先列出前幾項，看每次增加多少，再寫成 $a_n$ 的式子。",
+    "等差中項": "三數成等差，中間的數＝前後兩數的平均。"
+  },
+  practice: [
+    { q: R`等差數列 $3$，$7$，$11$，$\cdots$ 的第 $10$ 項為何？`, s: "等差數列",
+      o: [R`$39$`, R`$43$`, R`$40$`, R`$35$`],
+      h: [R`公差 $d=7-3=4$，用 $a_n=a_1+(n-1)d$。`, R`$a_{10}=3+(10-1)\times4=3+36$。`, R`$a_{10}=39$。（是 $9$ 個公差，不是 $10$ 個）`] },
+    { q: R`等差數列 $5$，$2$，$-1$，$\cdots$ 的公差為何？`, s: "等差數列",
+      o: [R`$-3$`, R`$3$`, R`$-2$`, R`$\frac{2}{5}$`],
+      h: [R`公差＝後項 − 前項。`, R`$2-5=-3$，$-1-2=-3$。`, R`公差是 $-3$。`] },
+    { q: R`首項為 $2$、公差為 $3$ 的等差數列中，$32$ 是第幾項？`, s: "等差數列",
+      o: [R`第 $11$ 項`, R`第 $10$ 項`, R`第 $12$ 項`, R`第 $16$ 項`],
+      h: [R`$a_n=2+(n-1)\times3=32$。`, R`$(n-1)\times3=30$ → $n-1=10$。`, R`$n=11$，第 $11$ 項。`] },
+    { q: R`等比數列 $2$，$6$，$18$，$\cdots$ 的第 $5$ 項為何？`, s: "等比數列",
+      o: [R`$162$`, R`$54$`, R`$486$`, R`$30$`],
+      h: [R`公比 $r=6\div2=3$，用 $a_n=a_1r^{n-1}$。`, R`$a_5=2\times3^4=2\times81$。`, R`$a_5=162$。`] },
+    { q: R`已知一個等比數列的首項為 $2^{10}$，公比為 $2$，則第 $16$ 項為何？`, s: "等比數列",
+      o: [R`$2^{25}$`, R`$2^{26}$`, R`$2^{27}$`, R`$2^{16}$`],
+      h: [R`$a_{16}=a_1\times r^{16-1}=2^{10}\times2^{15}$。`, R`同底數相乘，指數相加：$2^{10+15}$。`, R`$a_{16}=2^{25}$。（會考暖身操）`] },
+    { q: R`計算 $1+2+3+\cdots+100$ 之值為何？`, s: "等差級數",
+      o: [R`$5050$`, R`$5000$`, R`$10100$`, R`$5100$`],
+      h: [R`等差級數：$S_n=\frac{n(a_1+a_n)}{2}$，共 $100$ 項。`, R`$S_{100}=\frac{100\times(1+100)}{2}$。`, R`$=5050$。`] },
+    { q: R`計算等差級數 $3+7+11+\cdots+39$ 之和為何？`, s: "等差級數",
+      o: [R`$210$`, R`$420$`, R`$189$`, R`$231$`],
+      h: [R`先求項數：$39=3+(n-1)\times4$ → $n=10$。`, R`$S_{10}=\frac{10\times(3+39)}{2}$。`, R`$=210$。`] },
+    { q: R`用火柴棒排正方形：排 $1$ 個正方形用 $4$ 根、排成一列 $2$ 個用 $7$ 根、$3$ 個用 $10$ 根。依此規律，排成一列 $10$ 個正方形需要幾根？`, s: "找規律",
+      o: [R`$31$ 根`, R`$40$ 根`, R`$34$ 根`, R`$30$ 根`],
+      h: [R`$4$，$7$，$10$，$\cdots$ 每次多 $3$ 根，是等差數列。`, R`$a_{10}=4+(10-1)\times3$。`, R`$=31$ 根。`] },
+    { q: R`等差數列中，$a_3=10$，$a_7=22$，則首項 $a_1=$？`, s: "等差數列", lv: 2,
+      o: [R`$4$`, R`$3$`, R`$7$`, R`$1$`],
+      h: [R`從第 $3$ 項到第 $7$ 項差了 $4$ 個公差。`, R`$4d=22-10=12$ → $d=3$。`, R`$a_1=a_3-2d=10-6=4$。`] },
+    { q: R`若 $4$，$x$，$16$ 成等差數列，則 $x=$？`, s: "等差中項",
+      o: [R`$10$`, R`$8$`, R`$12$`, R`$6$`],
+      h: [R`等差中項＝前後兩數的平均。`, R`$x=\frac{4+16}{2}$。`, R`$x=10$。`] },
+    { q: R`若 $2$，$x$，$18$ 成等比數列，且 $x>0$，則 $x=$？`, s: "等比數列",
+      o: [R`$6$`, R`$10$`, R`$9$`, R`$36$`],
+      h: [R`等比：$\frac{x}{2}=\frac{18}{x}$。`, R`$x^2=36$。`, R`$x>0$，所以 $x=6$。`] },
+    { q: R`禮堂第一排有 $10$ 個座位，之後每排比前一排多 $2$ 個，共 $8$ 排，總共有幾個座位？`, s: "等差級數",
+      o: [R`$136$ 個`, R`$96$ 個`, R`$192$ 個`, R`$112$ 個`],
+      h: [R`先求最後一排：$a_8=10+(8-1)\times2=24$。`, R`$S_8=\frac{8\times(10+24)}{2}$。`, R`$=136$ 個。`] }
+  ]
+},
+{
+  code: "14", book: 4, title: "簡單平面圖形", chap: "第四冊 第 3 章", freq: 4,
+  subtitle: "三角形內角與外角、多邊形內角和與外角和、平行線截角、圓",
+  tips: {
+    "三角形內角和": "三角形內角和 $180°$；直角三角形兩銳角互餘（和為 $90°$）。",
+    "外角定理": "三角形的一個外角＝兩個內對角的和。",
+    "多邊形角度": "$n$ 邊形內角和 $(n-2)\times180°$（會考附公式）；外角和永遠 $360°$。",
+    "等腰三角形": "等腰三角形兩底角相等：底角＝（$180°$－頂角）÷ 2。",
+    "平行線截角": "同位角相等、內錯角相等、同側內角互補（和 $180°$）。",
+    "三角形三邊": "任兩邊和大於第三邊：兩邊差 ＜ 第三邊 ＜ 兩邊和。",
+    "圓周長與面積": "圓面積 $\pi r^2$、圓周長 $2\pi r$（會考附公式）；扇形是圓的幾分之幾。"
+  },
+  practice: [
+    { q: R`$\triangle ABC$ 中，$\angle A=50°$，$\angle B=60°$，則 $\angle C=$？`, s: "三角形內角和",
+      o: [R`$70°$`, R`$110°$`, R`$80°$`, R`$60°$`],
+      h: [R`三角形內角和是 $180°$。`, R`$\angle C=180°-50°-60°$。`, R`$\angle C=70°$。`] },
+    { q: R`$\triangle ABC$ 中，$\angle A=40°$，$\angle B=75°$，則 $\angle C$ 的外角為幾度？`, s: "外角定理",
+      o: [R`$115°$`, R`$65°$`, R`$140°$`, R`$105°$`],
+      h: [R`外角定理：$\angle C$ 的外角＝兩個內對角 $\angle A+\angle B$。`, R`$40°+75°$。`, R`$=115°$。（$65°$ 是 $\angle C$ 本身）`] },
+    { q: R`正五邊形的一個內角為幾度？`, s: "多邊形角度",
+      o: [R`$108°$`, R`$72°$`, R`$540°$`, R`$120°$`],
+      h: [R`五邊形內角和 $=(5-2)\times180°=540°$。`, R`正五邊形 $5$ 個內角都一樣：$540°\div5$。`, R`$=108°$。`] },
+    { q: R`六邊形的內角和為幾度？`, s: "多邊形角度",
+      o: [R`$720°$`, R`$1080°$`, R`$360°$`, R`$900°$`],
+      h: [R`$n$ 邊形內角和 $=(n-2)\times180°$。`, R`$(6-2)\times180°$。`, R`$=720°$。`] },
+    { q: R`十邊形的外角和為幾度？`, s: "多邊形角度",
+      o: [R`$360°$`, R`$1440°$`, R`$1800°$`, R`$180°$`],
+      h: [R`任何多邊形的外角和都一樣。`, R`不管幾邊形，外角和都是 $360°$。`, R`$360°$。`] },
+    { q: R`一個正多邊形的每一個外角都是 $30°$，則它是正幾邊形？`, s: "多邊形角度",
+      o: [R`正十二邊形`, R`正六邊形`, R`正十邊形`, R`正八邊形`],
+      h: [R`外角和 $360°$，每個外角一樣大。`, R`邊數 $=360°\div30°$。`, R`$12$，正十二邊形。`] },
+    { q: R`等腰三角形的頂角為 $40°$，則一個底角為幾度？`, s: "等腰三角形",
+      o: [R`$70°$`, R`$140°$`, R`$40°$`, R`$50°$`],
+      h: [R`兩底角相等，三角形內角和 $180°$。`, R`兩底角和 $=180°-40°=140°$。`, R`一個底角 $=70°$。`] },
+    { q: R`直線 $L\parallel M$，被一條截線所截，若 $\angle1=65°$，$\angle2$ 是 $\angle1$ 的內錯角，則 $\angle2=$？`, s: "平行線截角",
+      o: [R`$65°$`, R`$115°$`, R`$25°$`, R`$130°$`],
+      h: [R`兩平行線被截：內錯角相等。`, R`$\angle2=\angle1$。`, R`$\angle2=65°$。`] },
+    { q: R`直線 $L\parallel M$，被一條截線所截，同側內角中有一個角是 $110°$，則另一個同側內角為幾度？`, s: "平行線截角",
+      o: [R`$70°$`, R`$110°$`, R`$20°$`, R`$250°$`],
+      h: [R`兩平行線被截：同側內角互補（和為 $180°$）。`, R`$180°-110°$。`, R`$=70°$。`] },
+    { q: R`三角形的兩邊長為 $3$ 和 $4$，第三邊長可能是下列何者？`, s: "三角形三邊",
+      o: [R`$5$`, R`$1$`, R`$7$`, R`$8$`],
+      h: [R`兩邊差 ＜ 第三邊 ＜ 兩邊和。`, R`$4-3<x<4+3$，也就是 $1<x<7$。`, R`只有 $5$ 符合（$1$ 和 $7$ 都不行，因為不能相等）。`] },
+    { q: R`半徑為 $3$ 公分的圓，面積為多少平方公分？`, s: "圓周長與面積",
+      o: [R`$9\pi$`, R`$6\pi$`, R`$3\pi$`, R`$36\pi$`],
+      h: [R`圓面積 $=\pi r^2$。`, R`$\pi\times3^2$。`, R`$=9\pi$ 平方公分。（$6\pi$ 是圓周長）`] },
+    { q: R`半徑為 $5$ 公分的圓，圓周長為多少公分？`, s: "圓周長與面積",
+      o: [R`$10\pi$`, R`$25\pi$`, R`$5\pi$`, R`$100\pi$`],
+      h: [R`圓周長 $=2\pi r$。`, R`$2\times\pi\times5$。`, R`$=10\pi$ 公分。`] },
+    { q: R`半徑 $6$、圓心角 $60°$ 的扇形，面積為何？`, s: "圓周長與面積", lv: 2,
+      o: [R`$6\pi$`, R`$36\pi$`, R`$12\pi$`, R`$2\pi$`],
+      h: [R`扇形面積 $=\pi r^2\times\frac{\text{圓心角}}{360°}$。`, R`$\pi\times36\times\frac{60}{360}=36\pi\times\frac{1}{6}$。`, R`$=6\pi$。`] },
+    { q: R`直角三角形中，一個銳角為 $35°$，則另一個銳角為幾度？`, s: "三角形內角和",
+      o: [R`$55°$`, R`$145°$`, R`$65°$`, R`$45°$`],
+      h: [R`直角 $90°$，三個角和 $180°$，所以兩銳角和 $90°$。`, R`$90°-35°$。`, R`$=55°$。`] }
+  ]
+}
+);
+
+// ===== 第五冊 =====
+RAW_MODULES.push(
+{
+  code: "18", book: 5, title: "相似形與比例線段", chap: "第五冊 第 1 章", freq: 0,
+  subtitle: "相似三角形的對應邊與對應角、相似比、平行線截比例線段",
+  tips: {
+    "相似三角形": "對應角相等、對應邊成比例；先把對應頂點排好再列比例式。",
+    "相似比": "周長比＝相似比；面積比＝相似比的平方。",
+    "平行線截比例線段": "$\overline{DE}\parallel\overline{BC}$ 時，$\overline{AD}:\overline{DB}=\overline{AE}:\overline{EC}$。",
+    "中點連線": "三角形兩邊中點連線＝第三邊的一半，且平行第三邊。"
+  },
+  practice: [
+    { q: R`已知 $\triangle ABC\sim\triangle DEF$，$\overline{AB}=4$，$\overline{DE}=6$，$\overline{BC}=6$，則 $\overline{EF}=$？`, s: "相似三角形",
+      o: [R`$9$`, R`$4$`, R`$8$`, R`$12$`],
+      h: [R`對應邊成比例：$\overline{AB}:\overline{DE}=\overline{BC}:\overline{EF}$。`, R`$4:6=6:\overline{EF}$ → $4\overline{EF}=36$。`, R`$\overline{EF}=9$。`] },
+    { q: R`兩個相似三角形的相似比為 $2:3$，則它們的面積比為何？`, s: "相似比",
+      o: [R`$4:9$`, R`$2:3$`, R`$8:27$`, R`$\sqrt{2}:\sqrt{3}$`],
+      h: [R`面積比＝相似比的平方。`, R`$2^2:3^2$。`, R`$4:9$。`] },
+    { q: R`$\triangle ABC$ 中，$D$ 在 $\overline{AB}$ 上、$E$ 在 $\overline{AC}$ 上，且 $\overline{DE}\parallel\overline{BC}$。若 $\overline{AD}=2$，$\overline{DB}=3$，$\overline{AE}=4$，則 $\overline{EC}=$？`, s: "平行線截比例線段",
+      o: [R`$6$`, R`$5$`, R`$\frac{8}{3}$`, R`$10$`],
+      h: [R`平行線截比例線段：$\overline{AD}:\overline{DB}=\overline{AE}:\overline{EC}$。`, R`$2:3=4:\overline{EC}$ → $2\overline{EC}=12$。`, R`$\overline{EC}=6$。`] },
+    { q: R`同一時間，身高 $160$ 公分的人影長 $2$ 公尺，旁邊一棵樹的影長 $6$ 公尺，則樹高為多少公尺？`, s: "相似三角形",
+      o: [R`$4.8$ 公尺`, R`$3.2$ 公尺`, R`$480$ 公尺`, R`$7.5$ 公尺`],
+      h: [R`同一時間，物高與影長成比例。單位要一致：$160$ 公分 $=1.6$ 公尺。`, R`$1.6:2=\text{樹高}:6$。`, R`樹高 $=\frac{1.6\times6}{2}=4.8$ 公尺。`] },
+    { q: R`$\triangle ABC\sim\triangle DEF$，$\angle A=40°$，$\angle B=60°$，則 $\angle F=$？`, s: "相似三角形",
+      o: [R`$80°$`, R`$40°$`, R`$60°$`, R`$100°$`],
+      h: [R`$\angle F$ 對應 $\angle C$，相似三角形對應角相等。`, R`$\angle C=180°-40°-60°$。`, R`$\angle F=80°$。`] },
+    { q: R`兩個相似三角形的相似比為 $3:5$，小三角形的周長為 $18$，則大三角形的周長為何？`, s: "相似比",
+      o: [R`$30$`, R`$50$`, R`$10.8$`, R`$20$`],
+      h: [R`周長比＝相似比 $3:5$。`, R`$3:5=18:x$ → $3x=90$。`, R`$x=30$。`] },
+    { q: R`一個圖形放大成 $2$ 倍（每一邊都變 $2$ 倍），面積會變成原來的幾倍？`, s: "相似比",
+      o: [R`$4$ 倍`, R`$2$ 倍`, R`$8$ 倍`, R`不變`],
+      h: [R`放大後與原圖形相似，相似比 $2:1$。`, R`面積比 $=2^2:1^2$。`, R`$4$ 倍。`] },
+    { q: R`$\triangle ABC$ 中，$D$、$E$ 分別為 $\overline{AB}$、$\overline{AC}$ 的中點，若 $\overline{BC}=10$，則 $\overline{DE}=$？`, s: "中點連線",
+      o: [R`$5$`, R`$10$`, R`$20$`, R`$2.5$`],
+      h: [R`兩邊中點連線＝第三邊的一半。`, R`$\overline{DE}=\frac{1}{2}\overline{BC}$。`, R`$\overline{DE}=5$。`] },
+    { q: R`下列哪一個條件可以判斷 $\triangle ABC$ 與 $\triangle DEF$ 相似？`, s: "相似三角形",
+      o: [R`$\angle A=\angle D$ 且 $\angle B=\angle E$`, R`$\angle A=\angle D$`, R`$\overline{AB}=\overline{DE}$`, R`周長相等`],
+      h: [R`AA 相似：兩組對應角相等，三角形就相似。`, R`兩個角相等，第三個角也一定相等。`, R`$\angle A=\angle D$ 且 $\angle B=\angle E$ → AA 相似。`] },
+    { q: R`如圖，直角三角形兩股長為 $6$、$8$，則斜邊上的高 $h=$？`, s: "相似三角形", lv: 2,
+      fig: { t: "rth", a: "6", b: "8", na: 6, nb: 8 },
+      o: [R`$4.8$`, R`$5$`, R`$7$`, R`$2.4$`],
+      h: [R`先用畢氏定理求斜邊：$\sqrt{6^2+8^2}=10$。`, R`面積兩種算法：$\frac{6\times8}{2}=\frac{10\times h}{2}$ → $48=10h$。`, R`$h=4.8$。`] }
+  ]
+},
+{
+  code: "19", book: 5, title: "圓的性質", chap: "第五冊 第 2 章", freq: 0,
+  subtitle: "點、直線與圓的關係、弦心距、切線、圓心角與圓周角",
+  tips: {
+    "點與圓的關係": "比較「到圓心的距離 $d$」和半徑 $r$：$d<r$ 圓內、$d=r$ 圓上、$d>r$ 圓外。",
+    "切線性質": "切線垂直於過切點的半徑；從圓外一點畫的兩條切線長相等。",
+    "弦與弦心距": "圓心到弦的垂線平分弦，用畢氏定理：$r^2=\text{弦心距}^2+(\frac{\text{弦}}{2})^2$。",
+    "圓心角與圓周角": "圓周角＝同弧圓心角的一半；直徑所對的圓周角是 $90°$。",
+    "弧長": "弧長 $=2\pi r\times\frac{\text{圓心角}}{360°}$。"
+  },
+  practice: [
+    { q: R`一個圓心角為 $80°$，則它所對的弧的度數為何？`, s: "圓心角與圓周角",
+      o: [R`$80°$`, R`$40°$`, R`$160°$`, R`$280°$`],
+      h: [R`弧的度數＝它所對的圓心角度數。`, R`圓心角 $80°$。`, R`弧度數 $80°$。`] },
+    { q: R`同一個圓中，某弧所對的圓心角為 $100°$，則同弧所對的圓周角為幾度？`, s: "圓心角與圓周角",
+      o: [R`$50°$`, R`$100°$`, R`$200°$`, R`$80°$`],
+      h: [R`圓周角＝同弧所對圓心角的一半。`, R`$100°\div2$。`, R`$=50°$。`] },
+    { q: R`$\overline{AB}$ 是圓的直徑，$C$ 是圓上另一點，則 $\angle ACB=$？`, s: "圓心角與圓周角",
+      o: [R`$90°$`, R`$180°$`, R`$60°$`, R`$45°$`],
+      h: [R`直徑所對的圓心角是 $180°$（平角）。`, R`圓周角是它的一半。`, R`$\angle ACB=90°$。`] },
+    { q: R`圓 $O$ 的半徑為 $3$，圓外一點 $P$ 到圓心的距離 $\overline{OP}=5$。從 $P$ 畫圓的切線，切點為 $A$，則切線段 $\overline{PA}=$？`, s: "切線性質",
+      o: [R`$4$`, R`$2$`, R`$8$`, R`$\sqrt{34}$`],
+      h: [R`切線垂直半徑：$\triangle OAP$ 是直角三角形，$\angle OAP=90°$。`, R`$\overline{PA}^2=5^2-3^2=16$。`, R`$\overline{PA}=4$。`] },
+    { q: R`圓的半徑為 $5$，點 $P$ 到圓心的距離為 $3$，則 $P$ 點在哪裡？`, s: "點與圓的關係",
+      o: [R`圓內`, R`圓上`, R`圓外`, R`無法判斷`],
+      h: [R`比較 $d$（點到圓心的距離）和半徑 $r$。`, R`$d=3<r=5$。`, R`$P$ 在圓內。`] },
+    { q: R`圓心到直線 $L$ 的距離等於半徑，則直線 $L$ 與圓的關係為何？`, s: "點與圓的關係",
+      o: [R`相切（交於一點）`, R`相交於兩點`, R`不相交`, R`直線通過圓心`],
+      h: [R`距離 $d$ 和半徑 $r$ 比：$d<r$ 割線、$d=r$ 切線、$d>r$ 不相交。`, R`$d=r$。`, R`相切，只有一個交點。`] },
+    { q: R`圓的半徑為 $5$，有一弦長為 $8$，則圓心到這條弦的距離（弦心距）為何？`, s: "弦與弦心距",
+      o: [R`$3$`, R`$4$`, R`$\sqrt{89}$`, R`$6$`],
+      h: [R`圓心到弦的垂線平分弦：半弦長 $=4$。`, R`半徑、弦心距、半弦長形成直角三角形：$5^2=d^2+4^2$。`, R`$d^2=9$，$d=3$。`] },
+    { q: R`圓內接四邊形 $ABCD$ 中，$\angle A=70°$，則 $\angle C=$？`, s: "圓心角與圓周角", lv: 2,
+      o: [R`$110°$`, R`$70°$`, R`$140°$`, R`$35°$`],
+      h: [R`圓內接四邊形：對角互補（和 $180°$）。`, R`$\angle C=180°-70°$。`, R`$\angle C=110°$。`] },
+    { q: R`半徑 $6$ 的圓上，圓心角 $90°$ 所對的弧長為何？`, s: "弧長",
+      o: [R`$3\pi$`, R`$9\pi$`, R`$12\pi$`, R`$6\pi$`],
+      h: [R`弧長 $=2\pi r\times\frac{\text{圓心角}}{360°}$。`, R`$2\pi\times6\times\frac{90}{360}=12\pi\times\frac{1}{4}$。`, R`$=3\pi$。（$9\pi$ 是扇形面積）`] },
+    { q: R`從圓外一點 $P$ 畫圓的兩條切線，切點分別為 $A$、$B$。若 $\overline{PA}=7$，則 $\overline{PB}=$？`, s: "切線性質",
+      o: [R`$7$`, R`$14$`, R`$3.5$`, R`無法得知`],
+      h: [R`圓外一點到圓的兩條切線段長度相等。`, R`$\overline{PA}=\overline{PB}$。`, R`$\overline{PB}=7$。`] }
+  ]
+}
+);
+
+// ===== 第六冊 =====
+RAW_MODULES.push(
+{
+  code: "15", book: 6, title: "機率", chap: "第六冊 第 2 章", freq: 4,
+  subtitle: "古典機率、擲硬幣與骰子、抽球與抽籤、樹狀圖",
+  tips: {
+    "古典機率": "機率＝想要的情形數 ÷ 全部可能的情形數（每種情形機會相等）（考前暖身操 9）。",
+    "擲硬幣與骰子": "兩枚硬幣有 $4$ 種、兩顆骰子有 $36$ 種情形，用樹狀圖或表格列出來。",
+    "機率的範圍": "機率介於 $0$ 和 $1$ 之間；一定發生是 $1$，不可能發生是 $0$。",
+    "獨立事件": "前面的結果不會影響下一次：硬幣連續正面，下一次正面機率還是 $\frac{1}{2}$。"
+  },
+  practice: [
+    { q: R`擲一顆公正的骰子一次，出現偶數點的機率為何？`, s: "古典機率",
+      o: [R`$\frac{1}{2}$`, R`$\frac{1}{3}$`, R`$\frac{1}{6}$`, R`$\frac{2}{3}$`],
+      h: [R`全部可能：$1$～$6$ 點，共 $6$ 種。`, R`偶數點：$2$、$4$、$6$，共 $3$ 種。`, R`機率 $=\frac{3}{6}=\frac{1}{2}$。`] },
+    { q: R`擲一顆公正的骰子一次，出現 $3$ 的倍數點的機率為何？`, s: "古典機率",
+      o: [R`$\frac{1}{3}$`, R`$\frac{1}{2}$`, R`$\frac{1}{6}$`, R`$\frac{2}{3}$`],
+      h: [R`$1$～$6$ 中，$3$ 的倍數有哪些？`, R`$3$、$6$，共 $2$ 種。`, R`機率 $=\frac{2}{6}=\frac{1}{3}$。`] },
+    { q: R`班導買了 $21$ 把 A 菜，其中 $5$ 把是五結鄉 A 菜，其餘是嘉義 A 菜。隨機拿一把（每把機會相等），拿到嘉義 A 菜的機率為何？`, s: "古典機率",
+      o: [R`$\frac{16}{21}$`, R`$\frac{5}{21}$`, R`$\frac{5}{16}$`, R`$\frac{16}{5}$`],
+      h: [R`題目問的是「嘉義 A 菜」，先算它有幾把。`, R`$21-5=16$ 把。`, R`機率 $=\frac{16}{21}$。（會考暖身操：題目看清楚）`] },
+    { q: R`袋中有 $3$ 顆紅球、$5$ 顆白球，大小相同。隨機取出一顆，取到紅球的機率為何？`, s: "古典機率",
+      o: [R`$\frac{3}{8}$`, R`$\frac{3}{5}$`, R`$\frac{5}{8}$`, R`$\frac{1}{3}$`],
+      h: [R`全部球數 $=3+5=8$。`, R`紅球 $3$ 顆。`, R`機率 $=\frac{3}{8}$。（不是 $\frac{3}{5}$，分母是全部的球）`] },
+    { q: R`將一枚公正的硬幣連續擲兩次，兩次都出現正面的機率為何？`, s: "擲硬幣與骰子",
+      o: [R`$\frac{1}{4}$`, R`$\frac{1}{2}$`, R`$\frac{1}{3}$`, R`$1$`],
+      h: [R`列出所有情形：正正、正反、反正、反反。`, R`共 $4$ 種，兩次都正面只有「正正」$1$ 種。`, R`機率 $=\frac{1}{4}$。`] },
+    { q: R`同時擲兩枚公正的硬幣，出現「一正一反」的機率為何？`, s: "擲硬幣與骰子",
+      o: [R`$\frac{1}{2}$`, R`$\frac{1}{4}$`, R`$\frac{1}{3}$`, R`$\frac{3}{4}$`],
+      h: [R`所有情形：正正、正反、反正、反反，共 $4$ 種。`, R`一正一反：正反、反正，共 $2$ 種。`, R`機率 $=\frac{2}{4}=\frac{1}{2}$。（正反和反正是不同的情形）`] },
+    { q: R`同時擲兩顆公正的骰子，點數和為 $7$ 的機率為何？`, s: "擲硬幣與骰子", lv: 2,
+      o: [R`$\frac{1}{6}$`, R`$\frac{7}{36}$`, R`$\frac{1}{12}$`, R`$\frac{1}{11}$`],
+      h: [R`兩顆骰子共有 $6\times6=36$ 種情形。`, R`和為 $7$：$(1,6)(2,5)(3,4)(4,3)(5,2)(6,1)$，共 $6$ 種。`, R`機率 $=\frac{6}{36}=\frac{1}{6}$。`] },
+    { q: R`從號碼 $1$～$20$ 的卡片中隨機抽一張，抽到 $5$ 的倍數的機率為何？`, s: "古典機率",
+      o: [R`$\frac{1}{5}$`, R`$\frac{1}{4}$`, R`$\frac{1}{10}$`, R`$\frac{1}{20}$`],
+      h: [R`$1$～$20$ 中 $5$ 的倍數有哪些？`, R`$5$、$10$、$15$、$20$，共 $4$ 個。`, R`機率 $=\frac{4}{20}=\frac{1}{5}$。`] },
+    { q: R`袋中只有 $6$ 顆紅球，從中取出一顆，取到白球的機率為何？`, s: "機率的範圍",
+      o: [R`$0$`, R`$1$`, R`$\frac{1}{6}$`, R`$\frac{1}{2}$`],
+      h: [R`袋子裡有白球嗎？`, R`不可能發生的事件，機率為 $0$。`, R`取到白球的機率是 $0$。（取到紅球的機率才是 $1$）`] },
+    { q: R`一個圓形轉盤上，紅色區域是圓心角 $90°$ 的扇形。轉動指針，停在紅色區域的機率為何？`, s: "古典機率",
+      o: [R`$\frac{1}{4}$`, R`$\frac{1}{3}$`, R`$\frac{1}{2}$`, R`$\frac{1}{90}$`],
+      h: [R`機率＝紅色面積占整個圓的比例＝圓心角占 $360°$ 的比例。`, R`$\frac{90°}{360°}$。`, R`$=\frac{1}{4}$。`] },
+    { q: R`箱子裡有 $5$ 張籤，其中 $2$ 張有獎。第一個人隨機抽一張，抽到有獎的機率為何？`, s: "古典機率",
+      o: [R`$\frac{2}{5}$`, R`$\frac{2}{3}$`, R`$\frac{1}{5}$`, R`$\frac{1}{2}$`],
+      h: [R`全部 $5$ 張，有獎 $2$ 張。`, R`想要的 ÷ 全部 $=\frac{2}{5}$。`, R`機率 $=\frac{2}{5}$。（不是有獎:沒獎 $=2:3$）`] },
+    { q: R`小明擲一枚公正的硬幣，前 $3$ 次都出現正面。第 $4$ 次出現正面的機率為何？`, s: "獨立事件",
+      o: [R`$\frac{1}{2}$`, R`$\frac{1}{16}$`, R`$\frac{1}{8}$`, R`$1$`],
+      h: [R`硬幣沒有記憶，前面的結果不影響下一次。`, R`每一次都只有正、反兩種，機會相等。`, R`第 $4$ 次正面的機率還是 $\frac{1}{2}$。`] },
+    { q: R`某班有男生 $18$ 人、女生 $12$ 人，隨機抽一人當班長，抽到女生的機率為何？`, s: "古典機率",
+      o: [R`$\frac{2}{5}$`, R`$\frac{2}{3}$`, R`$\frac{3}{5}$`, R`$\frac{1}{12}$`],
+      h: [R`全班 $18+12=30$ 人。`, R`女生 $12$ 人：$\frac{12}{30}$。`, R`約分得 $\frac{2}{5}$。`] },
+    { q: R`同時擲兩顆公正的骰子，兩顆都出現 $6$ 點的機率為何？`, s: "擲硬幣與骰子",
+      o: [R`$\frac{1}{36}$`, R`$\frac{1}{6}$`, R`$\frac{1}{12}$`, R`$\frac{1}{18}$`],
+      h: [R`兩顆骰子共 $36$ 種情形。`, R`兩顆都是 $6$：只有 $(6,6)$ 一種。`, R`機率 $=\frac{1}{36}$。`] }
+  ]
+},
+{
+  code: "16", book: 6, title: "立體圖形", chap: "第六冊 第 3 章", freq: 4,
+  subtitle: "角柱與圓柱的體積和表面積、柱體與錐體的面、頂點、邊",
+  tips: {
+    "柱體體積": "柱體體積＝底面積 × 高（正立方體＝邊長³）。",
+    "表面積": "表面積＝所有面的面積相加；圓柱＝兩個底圓＋側面長方形。",
+    "面頂點邊": "$n$ 角柱：$(n+2)$ 面、$2n$ 個頂點、$3n$ 條邊；$n$ 角錐：$(n+1)$ 面、$(n+1)$ 個頂點、$2n$ 條邊。",
+    "展開圖": "圓柱側面展開是長方形，長＝底圓周長、寬＝高。"
+  },
+  practice: [
+    { q: R`邊長 $3$ 公分的正立方體，體積為多少立方公分？`, s: "柱體體積",
+      o: [R`$27$`, R`$9$`, R`$54$`, R`$18$`],
+      h: [R`正立方體體積＝邊長 × 邊長 × 邊長。`, R`$3\times3\times3$。`, R`$=27$ 立方公分。`] },
+    { q: R`邊長 $2$ 公分的正立方體，表面積為多少平方公分？`, s: "表面積",
+      o: [R`$24$`, R`$8$`, R`$16$`, R`$12$`],
+      h: [R`正立方體有 $6$ 個一樣的正方形面。`, R`每個面 $2\times2=4$，共 $6$ 個面。`, R`$4\times6=24$ 平方公分。`] },
+    { q: R`長、寬、高分別為 $2$、$3$、$4$ 公分的長方體，體積為多少立方公分？`, s: "柱體體積",
+      o: [R`$24$`, R`$9$`, R`$52$`, R`$26$`],
+      h: [R`長方體體積＝長 × 寬 × 高。`, R`$2\times3\times4$。`, R`$=24$ 立方公分。`] },
+    { q: R`長、寬、高分別為 $2$、$3$、$4$ 公分的長方體，表面積為多少平方公分？`, s: "表面積",
+      o: [R`$52$`, R`$24$`, R`$26$`, R`$48$`],
+      h: [R`長方體有三組相同的面，每組 $2$ 個：$2\times3$、$2\times4$、$3\times4$。`, R`$2\times(6+8+12)$。`, R`$=52$ 平方公分。`] },
+    { q: R`底面半徑 $2$ 公分、高 $5$ 公分的圓柱，體積為多少立方公分？`, s: "柱體體積",
+      o: [R`$20\pi$`, R`$10\pi$`, R`$50\pi$`, R`$4\pi$`],
+      h: [R`柱體體積＝底面積 × 高，底面積 $=\pi r^2$。`, R`$\pi\times2^2\times5=4\pi\times5$。`, R`$=20\pi$ 立方公分。`] },
+    { q: R`三角柱共有幾條邊？`, s: "面頂點邊",
+      o: [R`$9$ 條`, R`$6$ 條`, R`$5$ 條`, R`$12$ 條`],
+      h: [R`三角柱：上下兩個三角形底面，加上連接它們的側邊。`, R`上底 $3$ 條＋下底 $3$ 條＋側邊 $3$ 條。`, R`共 $9$ 條。（$n$ 角柱有 $3n$ 條邊）`] },
+    { q: R`四角錐共有幾個面？`, s: "面頂點邊",
+      o: [R`$5$ 個`, R`$4$ 個`, R`$6$ 個`, R`$8$ 個`],
+      h: [R`四角錐：$1$ 個四邊形底面，加上幾個三角形側面？`, R`底面有 $4$ 條邊，每條邊連到頂點形成一個三角形側面：$4$ 個。`, R`$1+4=5$ 個面。`] },
+    { q: R`六角柱共有幾個頂點？`, s: "面頂點邊",
+      o: [R`$12$ 個`, R`$6$ 個`, R`$8$ 個`, R`$18$ 個`],
+      h: [R`頂點都在上下兩個底面上。`, R`上底 $6$ 個＋下底 $6$ 個。`, R`共 $12$ 個。（$n$ 角柱有 $2n$ 個頂點）`] },
+    { q: R`四角錐共有幾個頂點？`, s: "面頂點邊",
+      o: [R`$5$ 個`, R`$4$ 個`, R`$8$ 個`, R`$6$ 個`],
+      h: [R`底面四邊形有 $4$ 個頂點，再加上尖端的頂點。`, R`$4+1$。`, R`共 $5$ 個。`] },
+    { q: R`底面半徑 $1$ 公分、高 $3$ 公分的圓柱，表面積為多少平方公分？`, s: "表面積", lv: 2,
+      o: [R`$8\pi$`, R`$6\pi$`, R`$3\pi$`, R`$7\pi$`],
+      h: [R`表面積＝兩個底圓＋側面（長方形，長＝底圓周長，寬＝高）。`, R`兩底：$2\times\pi\times1^2=2\pi$；側面：$2\pi\times1\times3=6\pi$。`, R`$2\pi+6\pi=8\pi$ 平方公分。`] },
+    { q: R`底面半徑 $3$ 公分的圓柱，側面展開成一個長方形，則這個長方形的長（底圓周長）為多少公分？`, s: "展開圖",
+      o: [R`$6\pi$`, R`$9\pi$`, R`$3\pi$`, R`$18\pi$`],
+      h: [R`側面長方形的長＝底面圓的周長。`, R`圓周長 $=2\pi r=2\times\pi\times3$。`, R`$=6\pi$ 公分。`] },
+    { q: R`正立方體共有幾條邊？`, s: "面頂點邊",
+      o: [R`$12$ 條`, R`$8$ 條`, R`$6$ 條`, R`$24$ 條`],
+      h: [R`正立方體是四角柱。`, R`上面 $4$ 條＋下面 $4$ 條＋直立的 $4$ 條。`, R`共 $12$ 條。`] },
+    { q: R`一個直角柱的底面是兩股為 $3$、$4$ 公分的直角三角形，柱高 $10$ 公分，則體積為多少立方公分？`, s: "柱體體積",
+      o: [R`$60$`, R`$120$`, R`$70$`, R`$50$`],
+      h: [R`柱體體積＝底面積 × 高；底面是直角三角形。`, R`底面積 $=\frac{3\times4}{2}=6$。`, R`$6\times10=60$ 立方公分。（忘了除以 $2$ 會得 $120$）`] },
+    { q: R`一個柱體的底面積為 $15$ 平方公分、高為 $8$ 公分，則體積為多少立方公分？`, s: "柱體體積",
+      o: [R`$120$`, R`$23$`, R`$60$`, R`$40$`],
+      h: [R`柱體體積＝底面積 × 高。`, R`$15\times8$。`, R`$=120$ 立方公分。`] }
+  ]
+},
+{
+  code: "20", book: 6, title: "二次函數", chap: "第六冊 第 1 章", freq: 0,
+  subtitle: "拋物線的開口、頂點、對稱軸、最大最小值、與兩軸的交點",
+  tips: {
+    "頂點與對稱軸": "$y=a(x-h)^2+k$ 的頂點是 $(h,k)$，對稱軸是 $x=h$（注意 $h$ 的正負號）。",
+    "開口方向": "$a>0$ 開口向上（有最小值），$a<0$ 開口向下（有最大值）。",
+    "最大最小值": "最大值或最小值就是頂點的 $y$ 坐標 $k$。",
+    "與軸的交點": "與 $y$ 軸交點令 $x=0$；與 $x$ 軸交點令 $y=0$ 解方程式。",
+    "圖形平移": "$y=ax^2$ 向右移 $h$：$x$ 換成 $(x-h)$；向上移 $k$：後面加 $k$。"
+  },
+  practice: [
+    { q: R`二次函數 $y=x^2$ 的頂點坐標為何？`, s: "頂點與對稱軸",
+      o: [R`$(0,0)$`, R`$(1,1)$`, R`$(0,1)$`, R`$(1,0)$`],
+      h: [R`$y=x^2$ 可以看成 $y=1(x-0)^2+0$。`, R`頂點 $(h,k)=(0,0)$。`, R`頂點是原點 $(0,0)$。`] },
+    { q: R`二次函數 $y=2(x-1)^2+3$ 的頂點坐標為何？`, s: "頂點與對稱軸",
+      o: [R`$(1,3)$`, R`$(-1,3)$`, R`$(2,3)$`, R`$(1,-3)$`],
+      h: [R`$y=a(x-h)^2+k$ 的頂點是 $(h,k)$。`, R`$(x-1)$ → $h=1$；$+3$ → $k=3$。`, R`頂點 $(1,3)$。`] },
+    { q: R`二次函數 $y=-3x^2+1$ 的圖形開口方向為何？`, s: "開口方向",
+      o: [R`向下`, R`向上`, R`向左`, R`向右`],
+      h: [R`看 $x^2$ 前面的係數 $a$ 的正負。`, R`$a=-3<0$。`, R`開口向下。`] },
+    { q: R`二次函數 $y=(x+2)^2-5$ 的對稱軸為何？`, s: "頂點與對稱軸",
+      o: [R`$x=-2$`, R`$x=2$`, R`$y=-5$`, R`$x=-5$`],
+      h: [R`$(x+2)$ 要看成 $(x-(-2))$。`, R`$h=-2$。`, R`對稱軸 $x=-2$。`] },
+    { q: R`二次函數 $y=(x-3)^2+4$ 的最小值為何？`, s: "最大最小值",
+      o: [R`$4$`, R`$3$`, R`$-3$`, R`$0$`],
+      h: [R`$a=1>0$ 開口向上，頂點最低。`, R`頂點 $(3,4)$。`, R`最小值是 $4$（在 $x=3$ 時）。`] },
+    { q: R`二次函數 $y=x^2-4x+3$ 的圖形與 $y$ 軸的交點坐標為何？`, s: "與軸的交點",
+      o: [R`$(0,3)$`, R`$(3,0)$`, R`$(0,-4)$`, R`$(1,0)$`],
+      h: [R`在 $y$ 軸上 → $x=0$。`, R`$y=0-0+3$。`, R`交點 $(0,3)$。`] },
+    { q: R`二次函數 $y=x^2-4x+3$ 的圖形與 $x$ 軸交點的 $x$ 坐標為何？`, s: "與軸的交點",
+      o: [R`$1$ 和 $3$`, R`$-1$ 和 $-3$`, R`$3$`, R`$2$ 和 $-2$`],
+      h: [R`在 $x$ 軸上 → $y=0$：$x^2-4x+3=0$。`, R`十字交乘：$(x-1)(x-3)=0$。`, R`$x=1$ 和 $3$。`] },
+    { q: R`將 $y=x^2$ 的圖形向右平移 $2$ 單位，得到的二次函數為何？`, s: "圖形平移",
+      o: [R`$y=(x-2)^2$`, R`$y=(x+2)^2$`, R`$y=x^2+2$`, R`$y=x^2-2$`],
+      h: [R`向右平移，頂點從 $(0,0)$ 移到 $(2,0)$。`, R`頂點 $(h,k)=(2,0)$ → $y=(x-2)^2+0$。`, R`$y=(x-2)^2$。（向右是減，不是加）`] },
+    { q: R`若二次函數 $y=ax^2$ 的圖形通過點 $(2,8)$，則 $a=$？`, s: "與軸的交點",
+      o: [R`$2$`, R`$4$`, R`$\frac{1}{2}$`, R`$16$`],
+      h: [R`點在圖形上 → 代入會成立。`, R`$8=a\times2^2=4a$。`, R`$a=2$。`] },
+    { q: R`二次函數 $y=-(x-1)^2+6$ 的最大值為何？`, s: "最大最小值",
+      o: [R`$6$`, R`$1$`, R`$-6$`, R`$7$`],
+      h: [R`$a=-1<0$，開口向下，頂點最高。`, R`頂點 $(1,6)$。`, R`最大值是 $6$。`] }
+  ]
+}
+);
+
+
+// 選項中的分數用 \dfrac 顯示較清楚
+RAW_MODULES.forEach(m => m.practice.forEach(p => { p.o = p.o.map(t => t.replace(/\\frac/g, "\\dfrac")); p.h = p.h.map(t => t.replace(/\\frac/g, "\\dfrac")); }));
+// 觀念分類（由每題的 s 自動產生，長度必定和題數一致）
+const SKILL_MAP = RAW_MODULES.map(m => m.practice.map(p => p.s));
+const SKILL_TIPS = Object.assign({}, ...RAW_MODULES.map(m => m.tips));
+</script>
+
+<script>
+// ================== 設定區（部署前請修改） ==================
+// 1) Firebase：沿用原本複習網站的同一組設定。沒填的話網站仍可使用，成績只存在該台裝置的瀏覽器裡。
+const MY_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAy2wm_OLhsfBin9Dmx598yKD3qTJVSr_c",
+  authDomain: "nine-1st-semester-exam1.firebaseapp.com",
+  projectId: "nine-1st-semester-exam1",
+  storageBucket: "nine-1st-semester-exam1.firebasestorage.app",
+  messagingSenderId: "270707443925",
+  appId: "1:270707443925:web:2d59d3d9c9ccbfbc907a5c"
+};
+// 2) 這一份網站的資料存放位置（和其他複習網站分開，避免成績混在一起）
+const appId = "math9-cap-review-b1to6";
+const COLLECTION_NAME = "student_scores";
+// 3) 教師後台密碼（請改成自己的）
+const TEACHER_PASSWORD = "520";
+// ============================================================
+
+const LS_PREFIX = "m9cap_";
+const SITE_LABEL = "九年級會考複習（第一～六冊）";
+let db = null, fs = null, auth = null, cloudStatus = "connecting";
+
+const BOOKS = {
+  1: { name: "第一冊", short: "一", grade: "七年級上", color: "amber", hex: "#f59e0b", soft: "bg-amber-50", ring: "border-amber-200", text: "text-amber-700" },
+  2: { name: "第二冊", short: "二", grade: "七年級下", color: "orange", hex: "#f97316", soft: "bg-orange-50", ring: "border-orange-200", text: "text-orange-700" },
+  3: { name: "第三冊", short: "三", grade: "八年級上", color: "emerald", hex: "#10b981", soft: "bg-emerald-50", ring: "border-emerald-200", text: "text-emerald-700" },
+  4: { name: "第四冊", short: "四", grade: "八年級下", color: "teal", hex: "#14b8a6", soft: "bg-teal-50", ring: "border-teal-200", text: "text-teal-700" },
+  5: { name: "第五冊", short: "五", grade: "九年級上", color: "sky", hex: "#0ea5e9", soft: "bg-sky-50", ring: "border-sky-200", text: "text-sky-700" },
+  6: { name: "第六冊", short: "六", grade: "九年級下", color: "indigo", hex: "#6366f1", soft: "bg-indigo-50", ring: "border-indigo-200", text: "text-indigo-700" }
+};
+const MOCK_N = 15;
+
+const appData = {
+  modules: RAW_MODULES.map((m, mi) => ({
+    ...m,
+    practice: m.practice.map(p => ({ q: p.q, options: p.o.slice(), correctStr: p.o[0], hints: p.h, fig: p.fig || null, lv: p.lv || 1, modIdx: mi, skill: p.s }))
+  }))
+};
+const MODS = appData.modules;
+const unitWeight = m => Math.max(m.freq, 0.5);   // 出現率權重（前 10 題沒出現過的單元給 0.5）
+const TOTAL_FREQ = MODS.reduce((a, m) => a + m.freq, 0);
+function bookUnits(b) { return MODS.map((m, i) => i).filter(i => MODS[i].book === b).sort((a, c) => MODS[c].freq - MODS[a].freq || MODS[a].code.localeCompare(MODS[c].code)); }
+
+// ---------- 等級換算（推估） ----------
+// 依「幫你達 B」目標：會考前 15 題（基礎題）答對 10 題 ≈ B。以基礎題答對率往上、往下推估七個等級。
+const LEVELS = [
+  { name: "A++", min: 1.00, g: "A", note: "基礎題全對" },
+  { name: "A+", min: 0.93, g: "A", note: "約 15 題對 14 題" },
+  { name: "A", min: 0.86, g: "A", note: "約 15 題對 13 題" },
+  { name: "B++", min: 0.80, g: "B", note: "約 15 題對 12 題" },
+  { name: "B+", min: 0.73, g: "B", note: "約 15 題對 11 題" },
+  { name: "B", min: 0.65, g: "B", note: "約 15 題對 10 題（達 B 目標）" },
+  { name: "C", min: 0, g: "C", note: "15 題對 9 題以下" }
+];
+function levelOf(r) { if (r === null || r === undefined || isNaN(r)) return null; return LEVELS.find(l => r >= l.min - 1e-9); }
+function lvBadge(r, big) {
+  const l = levelOf(r);
+  if (!l) return `<span class="lv lv-none ${big ? "text-base px-3 py-1" : ""}">未測</span>`;
+  return `<span class="lv lv-${l.g} ${big ? "text-base px-3 py-1" : ""}" title="推估會考等級">${l.name}</span>`;
+}
+function unitRatio(i) { const s = scores[i]; return s ? s.best / MODS[i].practice.length : null; }
+function bookRatio(b) { const u = bookUnits(b); const done = u.filter(i => scores[i]); if (!done.length) return null; const w = u.reduce((a, i) => a + unitWeight(MODS[i]), 0); return u.reduce((a, i) => a + unitWeight(MODS[i]) * (unitRatio(i) || 0), 0) / w; }
+function overallRatio() { const w = MODS.reduce((a, m) => a + unitWeight(m), 0); return MODS.reduce((a, m, i) => a + unitWeight(m) * (unitRatio(i) || 0), 0) / w; }
+function mockRatio() { return scores.mock ? scores.mock.best / MOCK_N : null; }
+
+// ---------- 學生狀態 ----------
+let studentSeat = "", studentName = "";
+let scores = {}, mistakes = [], mistakeLog = {}, studentHistory = [];
+let currentView = "overview", currentModuleData = [], currentModuleCorrectCount = 0, qState = [], isQuizActive = false, pendingView = null;
+let allDashboardRecords = [], mockTimer = null;
+
+function lsGet(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch (e) { return fb; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+// 座號、姓名統一格式：全形轉半形、座號去掉前面的 0、姓名去掉空白 →「07」「7」「０７」都是同一人
+function normSeat(s) { const d = String(s || "").normalize("NFKC").replace(/\D/g, ""); return d ? String(parseInt(d, 10)) : ""; }
+function normName(n) { return String(n || "").normalize("NFKC").replace(/\s+/g, ""); }
+function canonKey(seat, name) { return `${normSeat(seat)}_${normName(name)}`; }
+function getStudentId() { return canonKey(studentSeat, studentName); }
+// 舊版用原樣輸入當代號（例如 07_王小明），把那份本機紀錄搬到新代號
+function migrateLocal(rawSeat, rawName) {
+  const oldId = `${String(rawSeat).trim()}_${String(rawName).trim()}`, id = getStudentId();
+  if (oldId === id) return;
+  ["scores_", "mistakes_", "mistakelog_", "history_", "slain_"].forEach(k => {
+    const old = lsGet(LS_PREFIX + k + oldId, null); if (old === null) return;
+    if (lsGet(LS_PREFIX + k + id, null) === null) lsSet(LS_PREFIX + k + id, old);
+  });
+}
+function showToast(html, kind = "info", ms = 6000) {
+  let el = document.getElementById("toast");
+  if (!el) { el = document.createElement("div"); el.id = "toast"; document.body.appendChild(el); }
+  const c = { ok: "bg-emerald-600", info: "bg-stone-800", warn: "bg-rose-600" }[kind];
+  el.className = `fixed z-[90] left-1/2 -translate-x-1/2 top-4 max-w-[92vw] w-max ${c} text-white font-bold text-sm rounded-2xl shadow-2xl px-5 py-3 fade-in`;
+  el.innerHTML = html; clearTimeout(el._t); el._t = setTimeout(hideToast, ms);
+}
+function hideToast() { const el = document.getElementById("toast"); if (el) el.remove(); }
+function nowTs() { return Date.now() + (window.__timeShift || 0); }   // __timeShift 只供測試用
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function shuffleArray(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function triggerKatex(el) {
+  const go = () => { try { renderMathInElement(el || document.body, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, strict: false }); } catch (e) {} };
+  if (window.renderMathInElement) go(); else window.addEventListener("load", go, { once: true });
+}
+function findQuestionData(modIdx, qText) { const m = MODS[modIdx]; return m ? m.practice.find(p => p.q === qText) : null; }
+function unitLabel(i) { return `${MODS[i].code} ${MODS[i].title}`; }
+
+// 錯題格式：stage 1 第一關（馬上重做）／2 第二關（兩天後）／3 第三關（五天後）；due 解鎖時間；upd 最後變動時間
+function normMistake(m) { return { modIdx: m.modIdx, q: m.q, stage: m.stage || 1, due: m.due || 0, upd: m.upd || 0 }; }
+let slain = {};   // 已消滅的健忘怪物：{ 題目: 消滅時間 }，也用來避免雲端把已消滅的錯題又加回來
+function loadLocal() {
+  const id = getStudentId();
+  scores = lsGet(LS_PREFIX + "scores_" + id, {});
+  mistakes = lsGet(LS_PREFIX + "mistakes_" + id, []).filter(m => findQuestionData(m.modIdx, m.q)).map(normMistake);
+  mistakeLog = lsGet(LS_PREFIX + "mistakelog_" + id, {});
+  studentHistory = lsGet(LS_PREFIX + "history_" + id, []);
+  slain = lsGet(LS_PREFIX + "slain_" + id, {});
+}
+function saveLocalAll() {
+  const id = getStudentId();
+  lsSet(LS_PREFIX + "scores_" + id, scores);
+  lsSet(LS_PREFIX + "mistakes_" + id, mistakes);
+  lsSet(LS_PREFIX + "mistakelog_" + id, mistakeLog);
+  lsSet(LS_PREFIX + "history_" + id, studentHistory);
+  lsSet(LS_PREFIX + "slain_" + id, slain);
+}
+
+// ---------- 雲端 ----------
+async function initFirebase() {
+  if (!MY_FIREBASE_CONFIG.apiKey || MY_FIREBASE_CONFIG.apiKey === "請貼上") { cloudStatus = "not_configured"; renderNav(); return; }
+  try {
+    const fbApp = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
+    const fbAuth = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
+    const fsMod = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+    const app = fbApp.initializeApp(MY_FIREBASE_CONFIG);
+    auth = fbAuth.getAuth(app);
+    await fbAuth.signInAnonymously(auth);
+    fs = fsMod; db = fs.getFirestore(app);   // 登入完成才啟用資料庫，避免未登入時讀取失敗
+    cloudStatus = "connected";
+    if (studentName) syncDataToCloud();
+  } catch (e) { console.error("Firebase 連線失敗：", e); cloudStatus = "error"; db = null; if (studentName) showToast("⚠️ 連不上雲端（可能是網路被擋），這次的成績先存在這台裝置。", "warn", 10000); }
+  renderNav();
+}
+function studentDocRef(id) { return fs.doc(db, "artifacts", appId, "public", "data", COLLECTION_NAME, id); }
+function mergeCloudIntoLocal(c) {
+  if (c.scores) for (const k in c.scores) {
+    const l = scores[k], r = c.scores[k];
+    if (!l) scores[k] = r;
+    else if ((l.v === 2) !== (r.v === 2)) { const nw = l.v === 2 ? l : r; scores[k] = { ...nw, n: Math.max(l.n || 1, r.n || 1) }; }
+    else scores[k] = { ...l, first: l.first ?? r.first, best: Math.max(l.best || 0, r.best || 0), n: Math.max(l.n || 0, r.n || 0) };
+  }
+  if (c.slain) for (const q in c.slain) slain[q] = Math.max(slain[q] || 0, c.slain[q]);
+  if (Array.isArray(c.mistakes)) c.mistakes.forEach(raw => {
+    if (!findQuestionData(raw.modIdx, raw.q)) return;
+    const r = normMistake(raw), i = mistakes.findIndex(x => x.q === r.q);
+    if (i === -1) mistakes.push(r); else if (r.upd > mistakes[i].upd) mistakes[i] = r;
+  });
+  // 已消滅（而且之後沒有再錯）的題目，不要被舊資料加回來
+  mistakes = mistakes.filter(m => !(slain[m.q] && slain[m.q] >= m.upd));
+  if (c.mistakeLog) for (const k in c.mistakeLog) { if (!mistakeLog[k] || (c.mistakeLog[k].count || 0) > (mistakeLog[k].count || 0)) mistakeLog[k] = c.mistakeLog[k]; }
+  if (Array.isArray(c.history)) { const seen = new Set(studentHistory.map(h => h.timestamp)); c.history.forEach(h => { if (!seen.has(h.timestamp)) studentHistory.push(h); }); studentHistory.sort((a, b) => a.timestamp - b.timestamp); }
+  saveLocalAll();
+}
+let syncChain = Promise.resolve();
+function syncDataToCloud() { syncChain = syncChain.then(doSyncDataToCloud); return syncChain; }
+async function doSyncDataToCloud() {
+  if (!db || !studentName) return;
+  const idAtStart = getStudentId();
+  try {
+    const ref = studentDocRef(idAtStart);
+    const snap = await fs.getDoc(ref);
+    if (idAtStart !== getStudentId()) return;
+    const sig = () => JSON.stringify([scores, mistakes, studentHistory.length, Object.keys(slain).length]);
+    const before = sig(), histBefore = studentHistory.length;
+    if (snap.exists()) mergeCloudIntoLocal(snap.data());
+    // 第一次同步：把雲端上「同一位學生、代號寫法不同」的舊紀錄一起找回來（例如 07_王小明、7_王 小明）
+    if (!legacyChecked[idAtStart]) {
+      legacyChecked[idAtStart] = true;
+      let found = snap.exists();
+      try {
+        const all = await fs.getDocs(fs.collection(db, "artifacts", appId, "public", "data", COLLECTION_NAME));
+        const olds = []; all.forEach(d => { const r = d.data(); if (r && r.studentId !== idAtStart && !r.mergedInto && canonKey(r.studentSeat, r.studentName) === idAtStart) olds.push(r); });
+        for (const r of olds) { mergeCloudIntoLocal(r); found = true; await fs.setDoc(studentDocRef(r.studentId), { ...r, mergedInto: idAtStart }); }
+      } catch (e) { console.warn("舊紀錄搜尋失敗：", e); }
+      const who = `${String(normSeat(studentSeat)).padStart(2, "0")} 號 ${escapeHtml(normName(studentName))}`;
+      if (found || studentHistory.length) showToast(`☁️ 歡迎回來，${who}！已載入你的紀錄：完成 ${studentHistory.length} 回。`, "ok", 5000);
+      else if (!histBefore) showToast(`☁️ 雲端還沒有「${who}」的紀錄。<br><span class="text-xs">如果你以前練過，請確認座號和姓名跟上次一樣。</span>`, "info", 8000);
+    }
+    const changed = before !== sig();
+    await fs.setDoc(ref, { studentId: idAtStart, studentSeat: normSeat(studentSeat), studentName: normName(studentName), scores, mistakes, mistakesCount: mistakes.length, slain, mistakeLog, history: studentHistory, lastUpdated: Date.now() });
+    if (changed) { renderNav(); if (!isQuizActive) refreshCurrentView(); }
+  } catch (e) {
+    console.error("雲端同步異常：", e);
+    if (!legacyChecked.__err) { legacyChecked.__err = true; showToast(`⚠️ 讀不到雲端紀錄，這次的成績先存在這台裝置。<button onclick="legacyChecked={};syncDataToCloud();hideToast()" class="underline ml-2">再試一次</button>`, "warn", 12000); }
+  }
+}
+let legacyChecked = {};
+
+// ---------- 成績與錯題 ----------
+function getModuleMaxScore(i) { return i === "review" ? mistakes.length : i === "mock" ? MOCK_N : MODS[i].practice.length; }
+// 成績一律只算「獨立答對」：答對而且沒有看完 3 步提示
+function saveScore(i, s) {
+  const cur = scores[i];
+  if (!cur) scores[i] = { first: s, best: s, n: 1, v: 2 };
+  else if (cur.v !== 2) scores[i] = { first: cur.first, best: s, n: (cur.n || 1) + 1, v: 2, oldBest: cur.best };   // 改版前的最佳（含看完提示）不再沿用
+  else scores[i] = { first: cur.first, best: Math.max(cur.best, s), n: (cur.n || 1) + 1, v: 2 };
+  saveLocalAll();
+}
+// 答錯或看完提示才答對 → 放進（或退回）第一關
+function addToMistakes(qData) {
+  const ex = mistakes.find(m => m.q === qData.q), realMod = ex ? ex.modIdx : qData.modIdx, t = nowTs();
+  if (ex) { ex.stage = 1; ex.due = 0; ex.upd = t; }
+  else mistakes.push({ modIdx: realMod, q: qData.q, stage: 1, due: 0, upd: t });
+  const k = qData.q; mistakeLog[k] = { modIdx: realMod, count: ((mistakeLog[k] || {}).count || 0) + 1, last: Date.now() };
+  saveLocalAll();
+}
+const STAGE_INFO = {
+  1: { name: "第一關：馬上重做", short: "第一關", icon: "👾", wait: 0, color: "rose" },
+  2: { name: "第二關：兩天後再戰", short: "第二關", icon: "👹", wait: 2 * 864e5, color: "amber" },
+  3: { name: "第三關：五天後決戰", short: "第三關", icon: "🐲", wait: 5 * 864e5, color: "violet" }
+};
+// 錯題重練答對（沒看完提示）→ 往下一關；第三關也答對 → 消滅健忘怪物
+function promoteMistake(qText) {
+  const m = mistakes.find(x => x.q === qText); if (!m) return null;
+  const t = nowTs();
+  if (m.stage >= 3) { mistakes = mistakes.filter(x => x.q !== qText); slain[qText] = t; saveLocalAll(); return "slain"; }
+  m.stage += 1; m.due = t + STAGE_INFO[m.stage].wait; m.upd = t; saveLocalAll(); return m.stage;
+}
+function removeFromMistakes(qText) { mistakes = mistakes.filter(m => m.q !== qText); slain[qText] = nowTs(); saveLocalAll(); }
+function stageBuckets(list = mistakes, t = nowTs()) {
+  const b = { 1: { ready: [], locked: [] }, 2: { ready: [], locked: [] }, 3: { ready: [], locked: [] } };
+  list.map(normMistake).forEach(m => { const s = Math.min(3, Math.max(1, m.stage)); (m.due <= t ? b[s].ready : b[s].locked).push(m); });
+  [1, 2, 3].forEach(s => b[s].locked.sort((a, c) => a.due - c.due));
+  return b;
+}
+function fmtLeft(ms) { if (ms <= 0) return "已解鎖"; const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), mi = Math.ceil(ms % 36e5 / 6e4); return d ? `還要 ${d} 天 ${h} 小時` : h ? `還要 ${h} 小時 ${mi} 分` : `還要 ${mi} 分鐘`; }
+function fmtTime(t) { return new Date(t).toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
+function readyCount() { const b = stageBuckets(); return b[1].ready.length + b[2].ready.length + b[3].ready.length; }
+
+// ---------- 導覽 ----------
+function toggleMobileMenu() {
+  const sb = document.getElementById("sidebar"), bd = document.getElementById("sidebar-backdrop");
+  const open = sb.classList.contains("hidden");
+  sb.classList.toggle("hidden", !open); sb.classList.toggle("flex", open); bd.classList.toggle("hidden", !open);
+}
+function closeMobileMenu() { if (window.innerWidth < 1024) { document.getElementById("sidebar").classList.add("hidden"); document.getElementById("sidebar").classList.remove("flex"); document.getElementById("sidebar-backdrop").classList.add("hidden"); } }
+
+const SKILL_OF = {};
+RAW_MODULES.forEach((m, mi) => m.practice.forEach((p, qi) => { SKILL_OF[p.q] = { modIdx: mi, skill: (SKILL_MAP[mi] || [])[qi] || m.title }; }));
+
+function viewBook(v) { if (typeof v === "number") return MODS[v].book; const m = /^book(\d)$/.exec(String(v)); return m ? +m[1] : null; }
+
+function renderNav() {
+  const nav = document.getElementById("nav-list"), ui = document.getElementById("user-info");
+  if (!studentName) {
+    nav.innerHTML = `<div class="text-sm text-stone-400 px-3 py-4">🔒 請先輸入座號與姓名以啟用複習</div>`;
+    ui.innerHTML = ""; return;
+  }
+  const act = v => String(currentView) === String(v);
+  const curBook = viewBook(currentView);
+  const ms = scores.mock;
+  let html = `<button onclick="switchView('overview')" class="w-full flex items-center gap-3 px-5 py-3.5 rounded-2xl text-left font-black text-lg transition-colors ${act("overview") ? "bg-amber-100 text-amber-900 shadow-sm" : "text-stone-600 hover:bg-stone-100"}"><span>📊</span>學習儀表板</button>
+    <button onclick="switchView('mock')" class="w-full flex items-center gap-3 px-5 py-3 rounded-2xl text-left transition-colors ${act("mock") ? "bg-rose-100" : "hover:bg-stone-100"}"><span class="text-lg">🎯</span><span class="min-w-0 flex-1"><span class="block font-black text-stone-800">會考比例模擬</span><span class="block text-xs text-stone-400">依出現率抽 ${MOCK_N} 題${ms ? `・最佳 ${ms.best}/${MOCK_N}` : ""}</span></span>${ms ? lvBadge(mockRatio()) : ""}</button>
+    <div class="text-xs font-black text-stone-400 tracking-wider px-3 pt-5 pb-2">選擇冊次複習</div>`;
+  [1, 2, 3, 4, 5, 6].forEach(b => {
+    const B = BOOKS[b], units = bookUnits(b), passed = units.filter(i => (unitRatio(i) || 0) >= 0.65).length, open = curBook === b;
+    html += `<button onclick="switchView('book${b}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-left transition-colors ${act("book" + b) ? "bg-amber-100" : open ? "bg-stone-50" : "hover:bg-stone-100"}">
+      <span class="w-10 h-10 rounded-full flex items-center justify-center text-base font-black flex-shrink-0 text-white" style="background:${B.hex}">${B.short}</span>
+      <span class="min-w-0 flex-1"><span class="block font-bold text-stone-800">${B.name}<span class="text-xs text-stone-400 font-bold ml-1">${B.grade}</span></span><span class="block text-xs text-stone-400 tabular-nums">${passed}/${units.length} 單元達 B</span></span>
+      <span class="text-stone-300 text-sm">${open ? "▾" : "▸"}</span></button>`;
+    if (open) html += `<div class="ml-6 pl-3 border-l-2 border-stone-100 space-y-0.5 pb-1">${units.map((i, k) => {
+      const s = scores[i], max = MODS[i].practice.length;
+      return `<button onclick="switchView(${i})" class="w-full flex items-center gap-2 px-2 py-2 rounded-xl text-left ${act(i) ? "bg-amber-100" : "hover:bg-stone-100"}">
+        <span class="text-[11px] font-black text-stone-400 w-4">${k + 1}</span>
+        <span class="min-w-0 flex-1"><span class="block text-sm font-bold text-stone-700 truncate">${MODS[i].title}</span><span class="block text-[11px] text-stone-400 tabular-nums">最佳紀錄: ${s ? s.best : 0}/${max}</span></span>${lvBadge(unitRatio(i))}</button>`;
+    }).join("")}</div>`;
+  });
+  html += `<div class="text-xs font-black text-stone-400 tracking-wider px-3 pt-5 pb-2">複習工具</div>
+    <button onclick="switchView('review')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-left transition-colors ${/^review/.test(String(currentView)) ? "bg-rose-100" : "hover:bg-stone-100"}">
+      <span class="w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 ${readyCount() ? "bg-rose-100" : "bg-stone-100"}">👾</span>
+      <span class="min-w-0"><span class="block font-bold text-stone-800">錯題重練區</span><span class="block text-xs ${readyCount() ? "text-rose-500 font-bold" : "text-stone-400"}">${mistakes.length ? `可挑戰 ${readyCount()} 題・共 ${mistakes.length} 隻健忘怪物` : "目前沒有錯題"}</span></span></button>
+    <button onclick="switchView('guide')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-left transition-colors ${act("guide") ? "bg-amber-100" : "hover:bg-stone-100"}">
+      <span class="w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 bg-stone-100">🧭</span>
+      <span class="min-w-0"><span class="block font-bold text-stone-800">會考攻略</span><span class="block text-xs text-stone-400">出現率・時間分配・等級換算</span></span></button>`;
+  nav.innerHTML = html;
+  const st = { connected: ["☁️ 成績已連線雲端", "text-green-600"], not_configured: ["💾 成績僅存本機", "text-stone-400"], error: ["⚠️ 雲端連線失敗（暫存本機）", "text-rose-500"], connecting: ["⏳ 雲端連線中…", "text-stone-400"] }[cloudStatus];
+  ui.innerHTML = `<div class="text-center space-y-1.5 py-2">
+      <div class="font-bold text-stone-600">目前學生：<span class="text-amber-600 font-black">${escapeHtml(String(studentSeat).padStart(2, "0"))} 號 ${escapeHtml(studentName)}</span></div>
+      <div class="text-xs font-bold ${st[1]}">${st[0]}</div>
+      <button onclick="changeStudentName()" class="block mx-auto text-xs text-stone-400 underline hover:text-stone-600">修改座號／姓名</button>
+      <button onclick="changeStudentName()" class="block mx-auto text-xs text-stone-400 hover:text-stone-600 pt-1">登出（換人使用）</button></div>`;
+  triggerKatex(nav);
+}
+
+function refreshCurrentView() {
+  const v = currentView;
+  if (v === "overview") renderOverview();
+  else if (viewBook(v) && typeof v !== "number") renderBook(viewBook(v));
+  else if (v === "guide") renderGuide();
+  else if (v === "review") renderReviewHub();
+}
+function switchView(v) {
+  if (isQuizActive && String(v) !== String(currentView)) { pendingView = v; openLeaveModal(); return; }
+  closeMobileMenu(); stopMockTimer();
+  currentView = v;
+  if (v === "overview") renderOverview();
+  else if (v === "teacher") renderTeacherDashboard();
+  else if (v === "review") renderReviewHub();
+  else if (v === "guide") renderGuide();
+  else if (/^book\d$/.test(String(v))) renderBook(viewBook(v));
+  else renderModule(v);
+  renderNav();
+  window.scrollTo(0, 0);
+}
+function openLeaveModal() { document.getElementById("leave-modal").classList.remove("hidden"); }
+function closeLeaveModal() { document.getElementById("leave-modal").classList.add("hidden"); pendingView = null; }
+function confirmLeave() { const v = pendingView; document.getElementById("leave-modal").classList.add("hidden"); isQuizActive = false; pendingView = null; if (v === "__logout") changeStudentName(); else switchView(v); }
+function abandonQuiz() { pendingView = /^review/.test(String(currentView)) ? "review" : viewBook(currentView) ? "book" + viewBook(currentView) : "overview"; openLeaveModal(); }
+
+// ---------- 登入 ----------
+function renderNameEntry() {
+  currentView = "name";
+  document.getElementById("main-content").innerHTML = `
+  <div class="max-w-md mx-auto mt-6 lg:mt-16 bg-white rounded-[36px] border border-stone-100 shadow-sm p-8 text-center fade-in">
+    <div class="text-5xl mb-3">🛡️</div>
+    <h1 class="text-2xl font-black text-stone-800">九年級會考複習戰士</h1>
+    <p class="text-sm text-stone-500 mt-1">第一～六冊・依 111～115 會考出現率排序・目標「幫你達 B」</p>
+    <p class="text-sm font-bold text-stone-600 mt-5">開始前，請輸入你的座號與姓名以同步成績紀錄：</p>
+    <p class="text-xs text-stone-400 mb-5">換電腦或手機時輸入同樣的座號姓名，紀錄會自動接續（座號打 7 或 07 都可以）</p>
+    <div class="flex gap-3 mb-3">
+      <input id="seat-input" inputmode="numeric" class="w-24 border-2 border-stone-200 rounded-2xl px-3 py-3 text-center" placeholder="座號">
+      <input id="name-input" class="flex-1 min-w-0 border-2 border-stone-200 rounded-2xl px-4 py-3 text-center" placeholder="例如：王小明" onkeydown="if(event.key==='Enter')setStudentName()">
+    </div>
+    <div id="name-error" class="hidden text-sm text-rose-600 mb-2">請填寫座號和姓名。</div>
+    <button onclick="setStudentName()" class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black text-lg shadow-sm">開始複習 🚀</button>
+    <div class="mt-6 pt-5 border-t border-stone-100 flex flex-col sm:flex-row gap-2 justify-center">
+      <button onclick="openPrintSetup()" class="px-4 py-2.5 rounded-2xl bg-stone-800 text-white text-sm font-bold">🖨️ 列印紙本學習單</button>
+      <button onclick="openTeacherVerification()" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-600 text-sm font-bold">👨‍🏫 教師後台</button>
+    </div>
+  </div>`;
+  renderNav();
+}
+function setStudentName() {
+  const rawSeat = document.getElementById("seat-input").value, rawName = document.getElementById("name-input").value;
+  const seat = normSeat(rawSeat), name = normName(rawName);
+  if (!seat || !name) { const e = document.getElementById("name-error"); e.textContent = !seat && rawSeat.trim() ? "座號請填數字。" : "請填寫座號和姓名。"; e.classList.remove("hidden"); return; }
+  studentSeat = seat; studentName = name;
+  migrateLocal(rawSeat, rawName);
+  lsSet(LS_PREFIX + "current_student", { seat, name });
+  loadLocal(); currentView = "overview"; renderOverview(); renderNav(); syncDataToCloud();
+}
+function changeStudentName() {
+  if (isQuizActive) { pendingView = "__logout"; openLeaveModal(); return; }
+  stopMockTimer();
+  try { localStorage.removeItem(LS_PREFIX + "current_student"); } catch (e) {}
+  studentSeat = ""; studentName = ""; scores = {}; mistakes = []; mistakeLog = {}; studentHistory = []; slain = {};
+  closeMobileMenu(); renderNameEntry();
+}
+
+// ---------- 共用：弱點、圖表、推薦 ----------
+function computeWeakSkills() {
+  const tally = {};
+  mistakes.forEach(m => {
+    const info = SKILL_OF[m.q]; if (!info) return;
+    const k = info.skill; tally[k] = tally[k] || { skill: k, modIdx: info.modIdx, now: 0, total: 0 };
+    tally[k].now++;
+  });
+  Object.entries(mistakeLog).forEach(([q, v]) => {
+    const info = SKILL_OF[q]; if (!info || !tally[info.skill]) return;
+    tally[info.skill].total += v.count || 1;
+  });
+  return Object.values(tally).sort((a, b) => b.now - a.now || b.total - a.total);
+}
+// items: [{ label, first, best, has }]（first/best 為 0~100）
+function progressChartSVG(items) {
+  const W = 620, H = 330, L = 46, Rr = 12, T = 18, B = 286;
+  const pw = W - L - Rr, gw = pw / items.length, bw = Math.min(30, gw * 0.3);
+  const y = v => B - (B - T) * v / 100;
+  let g = `<rect x="${L}" y="${y(80)}" width="${pw}" height="${y(65) - y(80)}" fill="#fef3c7" opacity=".7"/><text x="${W - Rr - 4}" y="${y(65) - 5}" font-size="12" font-weight="700" fill="#b45309" text-anchor="end">B 目標線 65%</text>`;
+  for (let v = 0; v <= 100; v += 20) g += `<line x1="${L}" x2="${W - Rr}" y1="${y(v)}" y2="${y(v)}" stroke="#e7e5e4" stroke-width="1"/><text x="${L - 8}" y="${y(v) + 4}" font-size="14" fill="#78716c" text-anchor="end">${v}</text>`;
+  g += `<line x1="${L}" x2="${W - Rr}" y1="${y(65)}" y2="${y(65)}" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="6 4"/>`;
+  items.forEach((it, i) => {
+    const cx = L + gw * i + gw / 2;
+    const bar = (x, v, c) => `<rect x="${x}" y="${y(v)}" width="${bw}" height="${B - y(v)}" rx="5" fill="${c}"/>${it.has ? `<text x="${x + bw / 2}" y="${y(v) - 6}" font-size="12" font-weight="700" fill="#57534e" text-anchor="middle">${v}</text>` : ""}`;
+    g += bar(cx - bw - 2, it.first, "#d6d3d1") + bar(cx + 2, it.best, "#10b981");
+    g += `<text x="${cx}" y="${B + 22}" font-size="${items.length > 6 ? 13 : 15}" font-weight="700" fill="#57534e" text-anchor="middle">${it.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" role="img" aria-label="首次與最佳答對率">${g}
+    <line x1="${L}" x2="${W - Rr}" y1="${B}" y2="${B}" stroke="#a8a29e" stroke-width="1.2"/></svg>
+    <div class="flex flex-wrap justify-center gap-6 text-sm font-bold text-stone-600 mt-1">
+      <span class="flex items-center gap-2"><span class="w-10 h-3 rounded bg-stone-300"></span>首次挑戰</span>
+      <span class="flex items-center gap-2"><span class="w-10 h-3 rounded bg-emerald-500"></span>最佳表現</span></div>`;
+}
+function unitChartItems(idxs) { return idxs.map(i => { const s = scores[i], max = MODS[i].practice.length; return { label: MODS[i].code, first: s ? Math.round(s.first / max * 100) : 0, best: s ? Math.round(s.best / max * 100) : 0, has: !!s }; }); }
+function bookChartItems() {
+  return [1, 2, 3, 4, 5, 6].map(b => {
+    const u = bookUnits(b), tot = u.reduce((a, i) => a + MODS[i].practice.length, 0), has = u.some(i => scores[i]);
+    const f = u.reduce((a, i) => a + ((scores[i] || {}).first || 0), 0), bs = u.reduce((a, i) => a + ((scores[i] || {}).best || 0), 0);
+    return { label: BOOKS[b].name, first: Math.round(f / tot * 100), best: Math.round(bs / tot * 100), has };
+  });
+}
+// 推薦順序：出現率越高、目前答對率越低，越優先
+function recommendList() {
+  return MODS.map((m, i) => ({ i, m, r: unitRatio(i), pr: unitWeight(m) * (1 - (unitRatio(i) || 0)) }))
+    .filter(x => (x.r ?? 0) < 1).sort((a, b) => b.pr - a.pr || b.m.freq - a.m.freq);
+}
+function freqText(m) { return m.freq ? `近 5 年會考前 10 題出現 <b class="text-stone-700">${m.freq}</b> 題` : `前 10 題未出現・加分單元`; }
+
+// ---------- 首頁：會考戰力儀表板 ----------
+const PROPHECY = R`考前預測自己最常犯的錯：「$-3^2$ 當成 $9$、負的帶分數 $-2\frac{3}{8}$ 當成 $-2+\frac{3}{8}$、科學記號只比前面的數、最大公因數和最小公倍數次方取錯、點到 $x$ 軸距離看錯坐標、$(a+b)^2$ 漏掉 $2ab$、$\sqrt{12}+\sqrt{27}$ 直接相加成 $\sqrt{39}$、$x^2-5x=0$ 兩邊除以 $x$ 漏掉 $0$、等差數列第 $n$ 項多算一個公差、眾數寫成次數、機率分母沒用全部」。`;
+function renderOverview() {
+  const totalMax = MODS.reduce((a, m) => a + m.practice.length, 0);
+  const totalBest = MODS.reduce((a, m, i) => a + ((scores[i] || {}).best || 0), 0);
+  const pct = Math.round(totalBest / totalMax * 100);
+  const weak = computeWeakSkills();
+  const weakUnits = MODS.map((m, i) => ({ i, m, s: scores[i] })).filter(u => u.s && u.s.best / u.m.practice.length < 0.7);
+  const rec = recommendList();
+  const est = scores.mock ? mockRatio() : (Object.keys(scores).some(k => k !== "mock") ? overallRatio() : null);
+  const estSrc = scores.mock ? "依「會考比例模擬」最佳成績" : "依各單元最佳成績 × 出現率加權（未挑戰的單元以 0 計）";
+  const badgeColor = pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : "bg-green-600";
+
+  let diag;
+  if (!mistakes.length) {
+    const msg = studentHistory.length
+      ? `你已經清空所有錯題！<br>${weakUnits.length ? `不過 <b>${weakUnits.map(u => unitLabel(u.i)).join("、")}</b> 的最佳紀錄還不到 7 成，再挑戰一次吧！` : "繼續往出現率高、還沒挑戰的單元前進！"}`
+      : `你的觀念非常扎實，或者才剛開始練習。<br>請從下方「選擇冊次」開始挑戰吧！`;
+    diag = `<div class="flex items-center gap-5 p-6 rounded-[24px] bg-emerald-50 border-l-[6px] border-emerald-500">
+      <div class="text-5xl">🌟</div>
+      <div><div class="text-2xl font-black text-emerald-800">太棒了！目前無錯題</div><div class="text-emerald-700 font-bold mt-2 leading-relaxed">${msg}</div></div></div>`;
+  } else {
+    diag = `<div class="p-6 rounded-[24px] bg-rose-50 border-l-[6px] border-rose-500">
+      <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🩺</span><div class="text-xl font-black text-rose-800">發現 ${mistakes.length} 題待複習，弱點集中在：</div></div>
+      <ol class="space-y-3">${weak.slice(0, 3).map((w, k) => `<li class="bg-white rounded-2xl p-4 shadow-sm">
+        <div class="flex flex-wrap items-center gap-2"><span class="w-6 h-6 rounded-full bg-rose-500 text-white text-xs font-black flex items-center justify-center">${k + 1}</span>
+          <span class="font-black text-stone-800">${w.skill}</span><span class="text-xs font-bold text-stone-500 bg-stone-100 rounded-lg px-2 py-0.5">${BOOKS[MODS[w.modIdx].book].name}・${unitLabel(w.modIdx)}</span>
+          <span class="text-xs font-bold text-rose-600 ml-auto">錯題 ${w.now} 題</span></div>
+        <div class="text-sm text-stone-600 mt-2 leading-relaxed">💡 ${SKILL_TIPS[w.skill] || "回講義複習這個觀念的例題。"}</div></li>`).join("")}</ol>
+      ${weakUnits.length ? `<div class="text-sm font-bold text-rose-700 mt-4">📌 最佳紀錄未達 7 成的單元：${weakUnits.map(u => `${unitLabel(u.i)}（${Math.round(u.s.best / u.m.practice.length * 100)}%）`).join("、")}</div>` : ""}
+      <button onclick="switchView('review')" class="mt-4 px-5 py-3 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">前往錯題重練區 →</button></div>`;
+  }
+
+  const bookCards = [1, 2, 3, 4, 5, 6].map(b => {
+    const B = BOOKS[b], u = bookUnits(b), fq = u.reduce((a, i) => a + MODS[i].freq, 0), br = bookRatio(b);
+    const tot = u.reduce((a, i) => a + MODS[i].practice.length, 0), done = u.reduce((a, i) => a + ((scores[i] || {}).best || 0), 0);
+    return `<button onclick="switchView('book${b}')" class="text-left rounded-[28px] border-2 ${B.ring} ${B.soft} p-5 hover:shadow-md hover:-translate-y-0.5 transition min-w-0">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex items-center gap-3"><span class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-sm" style="background:${B.hex}">${B.short}</span>
+          <div><div class="text-xl font-black text-stone-800">${B.name}</div><div class="text-xs font-bold ${B.text}">${B.grade}</div></div></div>
+        ${lvBadge(br)}
+      </div>
+      <div class="mt-3 text-xs font-bold text-stone-500">會考前 10 題出現 <span class="text-lg font-black ${B.text}">${fq}</span> 題 / ${TOTAL_FREQ}</div>
+      <div class="flex flex-wrap gap-1 mt-2">${u.map(i => `<span class="text-[11px] font-bold bg-white/80 rounded-lg px-2 py-0.5 text-stone-600">${MODS[i].title}</span>`).join("")}</div>
+      <div class="h-2 bg-white rounded-full mt-3 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.round(done / tot * 100)}%;background:${B.hex}"></div></div>
+      <div class="text-[11px] text-stone-400 mt-1 tabular-nums">已答對 ${done}/${tot} 題（最佳紀錄合計）</div></button>`;
+  }).join("");
+
+  const recHtml = rec.slice(0, 4).map((x, k) => `<button onclick="switchView(${x.i})" class="text-left flex items-center gap-3 bg-white rounded-2xl p-4 border border-stone-100 hover:border-amber-300 hover:bg-amber-50 min-w-0">
+      <span class="w-8 h-8 rounded-full bg-amber-500 text-white font-black flex items-center justify-center flex-shrink-0">${k + 1}</span>
+      <span class="min-w-0 flex-1"><span class="block font-black text-stone-800 truncate">${x.m.title}</span>
+      <span class="block text-xs text-stone-400">${BOOKS[x.m.book].name}・${freqText(x.m)}</span>
+      <span class="block text-xs font-bold ${x.r === null ? "text-stone-400" : "text-rose-500"}">${x.r === null ? "尚未挑戰" : `目前最佳 ${Math.round(x.r * 100)}%`}</span></span>${lvBadge(x.r)}</button>`).join("");
+
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-8">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+      <div class="min-w-0">
+        <h1 class="text-4xl sm:text-5xl font-black text-stone-900 tracking-tight">會考戰力儀表板</h1>
+        <p class="text-stone-500 text-base sm:text-lg mt-3 leading-relaxed">九年級會考複習戰士・第一～六冊・全部基礎題，目標「幫你達 B」</p>
+      </div>
+      <div class="flex gap-3 flex-shrink-0 self-start flex-wrap">
+        <div class="bg-white border-2 border-stone-100 rounded-[28px] px-6 py-4 shadow-sm text-center min-w-[9rem]">
+          <div class="text-xs font-black tracking-wider text-stone-400">推估會考等級</div>
+          <div class="mt-1">${est === null ? `<span class="lv lv-none text-2xl px-4 py-1">未測</span>` : `<span class="lv lv-${levelOf(est).g} text-3xl px-4 py-1">${levelOf(est).name}</span>`}</div>
+          <div class="text-[10px] text-stone-400 mt-1 max-w-[10rem] leading-tight mx-auto">${est === null ? "做完單元或模擬考後出現" : estSrc}</div>
+        </div>
+        <div class="${badgeColor} text-white rounded-[28px] px-7 py-5 flex items-center gap-5 shadow-lg">
+          <div><div class="text-xs font-black tracking-wider opacity-90">綜合熟練度</div><div class="text-5xl font-black tabular-nums leading-tight">${pct}%</div><div class="text-[11px] font-bold opacity-90 mt-1">只計算獨立答對<br>（看完 3 步提示不算）</div></div>
+          <div class="text-5xl">🎯</div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-stone-800 mb-1 flex items-center gap-3"><span>📚</span>選擇複習冊次</h2>
+      <p class="text-sm text-stone-500 mb-4">點選冊次後，單元會依 111～115 會考出現率排好「建議先複習」的順序。</p>
+      <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">${bookCards}</div>
+    </section>
+
+    <section class="rounded-[36px] bg-amber-50 border border-amber-100 p-6 sm:p-8">
+      <h2 class="text-xl font-black text-amber-950 mb-1 flex items-center gap-3"><span>🧭</span>系統推薦：現在最該先複習</h2>
+      <p class="text-sm text-amber-900/70 mb-4">排序方式：會考出現率越高、你目前答對率越低的單元排越前面。</p>
+      <div class="grid sm:grid-cols-2 gap-3">${recHtml || `<div class="text-amber-900 font-bold">所有單元都滿分了！去挑戰「會考比例模擬」吧。</div>`}</div>
+    </section>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <section class="bg-white rounded-[36px] border border-stone-100 shadow-sm p-6 sm:p-8 min-w-0">
+        <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-3"><span>💡</span>自我分析與弱點診斷</h2>
+        ${diag}
+        <div class="mt-6 p-6 rounded-[24px] bg-stone-50 border border-stone-100">
+          <div class="font-black text-stone-500 mb-3">🔮 當個預言家！</div>
+          <p class="text-stone-700 leading-relaxed">${PROPHECY}</p>
+          <div class="mt-4 bg-white rounded-2xl px-5 py-4 font-bold text-stone-700 shadow-sm">💡 點擊左側「錯題重練區」，立刻消滅這些弱點吧！</div>
+        </div>
+      </section>
+      <section class="bg-white rounded-[36px] border border-stone-100 shadow-sm p-6 sm:p-8 min-w-0">
+        <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-3"><span>📈</span>各冊實力演進（首次 vs 最佳）</h2>
+        <div class="text-xs text-stone-400 mb-2">縱軸為獨立答對率（%，答對且沒看完 3 步提示）；虛線為 B 目標 65%</div>
+        ${progressChartSVG(bookChartItems())}
+        <div class="mt-5 rounded-2xl bg-stone-50 border border-stone-100 p-4">
+          <div class="font-black text-stone-700 mb-2 text-sm">等級怎麼換算？</div>
+          <div class="flex flex-wrap gap-2 text-xs">${LEVELS.map(l => `<span class="flex items-center gap-1"><span class="lv lv-${l.g}">${l.name}</span><span class="text-stone-500">${l.g === "C" ? "未滿 65%" : l.name === "A++" ? "100%" : `≥ ${Math.round(l.min * 100)}%`}</span></span>`).join("")}</div>
+          <p class="text-xs text-stone-400 mt-2 leading-relaxed">以「會考前 15 題答對 10 題 ≈ B」為基準推估，只反映基礎題實力；A 級在會考還需要後段題與非選題，詳見「會考攻略」。</p>
+        </div>
+      </section>
+    </div>
+
+    ${monsterPanel()}
+
+    <section class="rounded-[36px] bg-indigo-50 border border-indigo-100 p-6 sm:p-8">
+      <h2 class="text-2xl font-black text-indigo-950 mb-4 flex items-center gap-3"><span>📝</span>專項弱點補強區</h2>
+      <p class="text-indigo-900 leading-loose"><span class="inline-block bg-indigo-200 text-indigo-900 font-black rounded-lg px-3 py-0.5 mr-2">學習建議</span>請觀察上方的「弱點診斷」，回到「幫你達 B」講義對應單元的「練功房」，把錯過的題型重做一次（弱點提示會告訴你是哪一組）。</p>
+      <p class="text-indigo-900 leading-loose mt-1">⚠️ <b class="text-rose-600">小叮嚀：</b>練習過程中，請務必將不熟的概念及計算過程，確實記錄在你的<b>白本筆記</b>上喔！不會的公式隨時按右下角「📘 公式」查。</p>
+      <div class="flex flex-wrap gap-3 mt-5">
+        <button onclick="openPrintSetup(${JSON.stringify(weakUnits.length ? weakUnits.map(u => u.i) : rec.slice(0, 3).map(x => x.i))}, 'B')" class="px-5 py-3 rounded-2xl bg-white text-indigo-900 font-bold shadow-sm hover:bg-indigo-100">🖨️ 列印${weakUnits.length ? "弱點單元" : "推薦單元"}學習單</button>
+        ${mistakes.length ? `<button onclick="switchView('review')" class="px-5 py-3 rounded-2xl bg-indigo-600 text-white font-bold hover:bg-indigo-700">👾 錯題重練（可挑戰 ${readyCount()} 題）</button>` : ""}
+      </div>
+    </section>
+
+    <section class="rounded-[36px] bg-amber-500 text-white p-7 sm:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+      <div class="min-w-0">
+        <div class="text-3xl sm:text-4xl font-black italic tracking-tight">READY TO GO?</div>
+        <p class="font-bold text-lg mt-3 leading-relaxed opacity-95">${rec.length ? `從「${rec[0].m.title}」開始（${BOOKS[rec[0].m.book].name}，${rec[0].m.freq ? `會考前 10 題出現 ${rec[0].m.freq} 題` : "加分單元"}），透過漸進式三步驟提示，把會考基礎分穩穩拿下。` : "所有單元都滿分了！用「會考比例模擬」檢查實戰手感。"}</p>
+      </div>
+      <div class="flex flex-col gap-3 flex-shrink-0">
+        ${rec.length ? `<button onclick="switchView(${rec[0].i})" class="bg-white text-amber-600 font-black text-xl px-8 py-5 rounded-[24px] shadow-lg hover:bg-amber-50">進入「${rec[0].m.title}」</button>` : ""}
+        <button onclick="switchView('mock')" class="bg-amber-600 text-white font-black px-8 py-3 rounded-[20px] hover:bg-amber-700">🎯 會考比例模擬 ${MOCK_N} 題</button>
+      </div>
+    </section>
+  </div>`;
+  triggerKatex(document.getElementById("main-content"));
+}
+
+// ---------- 冊次頁 ----------
+function renderBook(b) {
+  const B = BOOKS[b], u = bookUnits(b), fq = u.reduce((a, i) => a + MODS[i].freq, 0), maxF = Math.max(...MODS.map(m => m.freq));
+  const cards = u.map((i, k) => {
+    const m = MODS[i], s = scores[i], r = unitRatio(i), max = m.practice.length;
+    return `<div class="bg-white rounded-[28px] border border-stone-100 shadow-sm p-5 sm:p-6 flex flex-col sm:flex-row gap-4 sm:items-center">
+      <div class="flex items-center gap-4 min-w-0 flex-1">
+        <div class="flex-shrink-0 text-center w-14"><div class="text-[10px] font-black text-stone-400">優先</div><div class="text-3xl font-black" style="color:${B.hex}">${k + 1}</div></div>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2"><span class="text-xs font-black text-stone-400">${m.code}</span><span class="text-lg font-black text-stone-800">${m.title}</span>${lvBadge(r)}</div>
+          <div class="text-xs text-stone-400 mt-0.5">${m.chap}・${m.subtitle}</div>
+          <div class="flex items-center gap-2 mt-2"><div class="h-2.5 w-28 sm:w-40 bg-stone-100 rounded-full overflow-hidden"><div class="h-full rounded-full" style="width:${m.freq / maxF * 100}%;background:${B.hex}"></div></div><span class="text-xs text-stone-500">${freqText(m)}</span></div>
+          <div class="text-xs text-stone-400 mt-1 tabular-nums">共 ${max} 題（依出現率配題）・${s ? `首次 ${s.first}／最佳 ${s.best}` : "尚未挑戰"}</div>
+        </div>
+      </div>
+      <div class="flex gap-2 flex-shrink-0">
+        <button onclick="openPrintSetup(${i})" class="px-4 py-3 rounded-2xl bg-stone-100 text-stone-700 text-sm font-bold">🖨️</button>
+        <button onclick="switchView(${i})" class="px-5 py-3 rounded-2xl text-white font-black" style="background:${B.hex}">${s ? "再挑戰" : "開始練習"} →</button>
+      </div></div>`;
+  }).join("");
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-6">
+    <button onclick="switchView('overview')" class="text-sm font-bold text-stone-400 hover:text-stone-600">← 回儀表板</button>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div class="flex items-center gap-4"><span class="w-16 h-16 rounded-3xl flex items-center justify-center text-3xl font-black text-white shadow" style="background:${B.hex}">${B.short}</span>
+        <div><h1 class="text-4xl font-black text-stone-900">${B.name}<span class="text-xl text-stone-400 ml-2">${B.grade}</span></h1>
+        <p class="text-stone-500 mt-1">近 5 年會考前 10 題共出現 <b class="${B.text}">${fq}</b> 題（全部 ${TOTAL_FREQ} 題）</p></div></div>
+      <div class="flex items-center gap-3"><span class="text-sm font-bold text-stone-500">本冊推估</span>${lvBadge(bookRatio(b), true)}
+        <button onclick="openPrintSetup(${JSON.stringify(u)})" class="px-4 py-2.5 rounded-2xl bg-stone-800 text-white text-sm font-bold">🖨️ 本冊學習單</button></div>
+    </div>
+    <div class="rounded-2xl ${B.soft} border ${B.ring} px-5 py-4 text-sm text-stone-700 leading-relaxed">📌 <b>建議複習順序</b>：由上往下，先練會考最常出現的單元。每個單元答對率達 <b>65%</b>（約 B）再往下一個；題數已依出現率分配，出現越多的單元題目越多。${fq === 0 ? "<br>本冊單元在近 5 年會考前 10 題沒有出現，屬於加分單元：先把第一～四、六冊的高出現率單元練熟再來。" : ""}</div>
+    <div class="space-y-3">${cards}</div>
+    <section class="bg-white rounded-[36px] border border-stone-100 shadow-sm p-6 sm:p-8">
+      <h2 class="text-xl font-black text-stone-800 mb-3 flex items-center gap-3"><span>📈</span>本冊單元實力演進（首次 vs 最佳）</h2>
+      <div class="max-w-2xl">${progressChartSVG(unitChartItems(u))}</div>
+      <div class="text-xs text-stone-400 mt-2">${u.map(i => `${MODS[i].code}＝${MODS[i].title}`).join("、")}</div>
+    </section>
+  </div>`;
+  triggerKatex(document.getElementById("main-content"));
+}
+
+// ---------- 會考攻略 ----------
+const FREQ_TABLE = [
+  ["01", "簡單計算", "第一冊第 1、2 章", ["5", "2", "6", "2", "1", "", ""], 5], ["02", "數線與絕對值", "第一冊第 1 章", ["1", "", "", "", "", "", ""], 1],
+  ["03", "指數與科學記號", "第一冊第 1 章", ["", "", "1", "6", "8", "1", "8"], 5], ["04", "因數與倍數", "第一冊第 2 章", ["3", "5", "9", "8", "", "", ""], 4],
+  ["05", "解一元一次方程式", "第一冊第 3 章", ["", "", "", "9", "", "", ""], 1], ["06", "二元一次聯立方程式", "第二冊第 1 章", ["", "", "", "", "3", "4", "1"], 3],
+  ["07", "直角座標與直線", "第二冊第 2 章", ["7", "1", "5.7", "5", "4", "6", ""], 7], ["08", "簡單統計圖表", "第二冊第 5 章", ["", "", "", "", "9", "7", "6"], 3],
+  ["09", "線對稱與三視圖", "第二冊第 6 章", ["", "", "3", "1", "7", "3", ""], 4], ["10", "乘法公式與多項式", "第三冊第 1 章", ["2", "7.9", "2", "3", "", "2.10", "5.7"], 9],
+  ["11", "平方根與解方程式", "第三冊第 2、4 章", ["6.10", "4.8", "4.10", "4", "", "8", "3.9"], 10], ["12", "簡單的十字交乘法", "第三冊第 3 章", ["8", "", "", "10", "10", "", ""], 3],
+  ["13", "找規律（數列與級數）", "第四冊第 1 章", ["", "", "", "", "5", "9", ""], 2], ["14", "簡單平面圖形", "第四冊第 3 章", ["", "3", "8", "7", "", "5", ""], 4],
+  ["15", "機率", "第六冊第 2 章", ["9", "10", "", "", "6", "", "4"], 4], ["16", "立體圖形", "第六冊第 3 章", ["4", "6", "", "", "2", "", "2"], 4],
+  ["17", "比例與不等式", "第二冊第 3、4 章", ["", "", "", "", "", "", "10"], 1]
+];
+function renderGuide() {
+  const yrs = ["111", "111補", "112", "112陸", "113", "114", "115"];
+  const sorted = FREQ_TABLE.slice().sort((a, b) => b[4] - a[4]);
+  const timeRows = [["A++", [["1～10", "10 題", "10 分鐘"], ["11～20", "10 題", "25 分鐘"], ["21～25", "4～5 題", "20 分鐘"], ["非選", "5～6 分", "20 分鐘"]]],
+    ["A", [["1～10", "10 題", "15 分鐘"], ["11～20", "9 題", "25 分鐘"], ["21～25", "3 題", "20 分鐘"], ["非選", "4～6 分", "20 分鐘"]]],
+    ["B", [["1～15", "10 題", "50 分鐘"], ["16～25", "3～4 題", "10 分鐘"], ["非選", "2 分", "20 分鐘"]]]];
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-8">
+    <div><h1 class="text-4xl font-black text-stone-900">🧭 會考攻略</h1><p class="text-stone-500 mt-2">單元出現率、目標題數與時間分配、考前小叮嚀、等級換算方式。</p></div>
+
+    <section class="bg-white rounded-[32px] border border-stone-100 shadow-sm p-6 sm:p-8">
+      <h2 class="text-xl font-black text-stone-800 mb-1">📊 幫你達 B 重點單元（111～115 前 10 題統計）</h2>
+      <p class="text-sm text-stone-500 mb-4">依總計題數由多到少排列；數字為當年度的題號。點單元名稱可直接練習。</p>
+      <div class="overflow-x-auto"><table class="w-full text-sm min-w-[640px]"><thead class="bg-stone-50 text-stone-500"><tr><th class="text-left px-3 py-2">主題</th><th class="text-left px-3 py-2">章節</th>${yrs.map(y => `<th class="px-2 py-2">${y}</th>`).join("")}<th class="px-3 py-2">總計</th></tr></thead>
+      <tbody>${sorted.map(r => { const mi = MODS.findIndex(m => m.code === r[0]); return `<tr class="border-t border-stone-100"><td class="px-3 py-2"><button onclick="switchView(${mi})" class="font-bold text-stone-800 hover:text-amber-600 text-left">${r[0]}-${r[1]}</button></td><td class="px-3 py-2 text-stone-500 whitespace-nowrap">${r[2]}</td>${r[3].map(c => `<td class="px-2 py-2 text-center text-stone-500 tabular-nums">${c.replace(".", "、")}</td>`).join("")}<td class="px-3 py-2"><div class="flex items-center gap-2"><div class="h-2 rounded-full bg-amber-400" style="width:${r[4] * 8}px"></div><b class="tabular-nums">${r[4]}</b></div></td></tr>`; }).join("")}</tbody></table></div>
+    </section>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <section class="bg-white rounded-[32px] border border-stone-100 shadow-sm p-6 sm:p-8">
+        <h2 class="text-xl font-black text-stone-800 mb-4">⏱️ 目標題數＆參考時間分配</h2>
+        <table class="w-full text-sm"><thead class="bg-stone-100 text-stone-600"><tr><th class="px-3 py-2">目標</th><th class="px-3 py-2">題號</th><th class="px-3 py-2">答對目標</th><th class="px-3 py-2">時間</th></tr></thead>
+        <tbody>${timeRows.map(([g, rows]) => rows.map((r, k) => `<tr class="border-t border-stone-100 ${g === "B" ? "bg-amber-50" : ""}">${k === 0 ? `<td rowspan="${rows.length}" class="px-3 py-2 text-center text-2xl font-black ${g === "B" ? "text-amber-600" : "text-stone-500"}">${g}</td>` : ""}<td class="px-3 py-2 text-center">${r[0]}</td><td class="px-3 py-2 text-center font-bold ${g === "B" && k === 0 ? "text-amber-700" : ""}">${r[1]}</td><td class="px-3 py-2 text-center">${r[2]}</td></tr>`).join("")).join("")}</tbody></table>
+        <p class="text-sm text-amber-800 font-bold mt-4">🎯 B 的關鍵：前 15 題花 50 分鐘，穩穩答對 10 題，非選拼 2 分！</p>
+      </section>
+      <section class="bg-white rounded-[32px] border border-stone-100 shadow-sm p-6 sm:p-8">
+        <h2 class="text-xl font-black text-stone-800 mb-4">📣 考前小叮嚀</h2>
+        <ul class="space-y-3 text-stone-700">
+          <li><b class="text-amber-600">1～15 題：細心做</b>・前 15 題通常不難，如果卡住，就是自己想太多！</li>
+          <li><b class="text-amber-600">16～20 題：用心做</b>・這幾題會有點變化，用心看條件，想辦法解答。</li>
+          <li><b class="text-amber-600">21～23 題：放心做</b>・寫不順代表題目很難，大家都寫不好。不用慌，對一題賺一題。</li>
+          <li><b class="text-amber-600">24～25 題：耐心做</b>・題組第一小題通常很簡單，耐心讀完題目。</li>
+          <li><b class="text-rose-600">非選題：一定要寫</b>・最晚 11:30 一定要開始寫非選！兩小題的第一小題比較簡單。</li>
+          <li>前 10 題如果出現<b>統計圖表</b>一定不要放過；寫完記得檢查有沒有劃錯答案。</li>
+        </ul>
+        <p class="mt-4 text-sm text-stone-500">會寫的都寫對，不會寫的都猜對。不求與人相比，但求超越自己！</p>
+      </section>
+    </div>
+
+    <section class="bg-white rounded-[32px] border border-stone-100 shadow-sm p-6 sm:p-8">
+      <h2 class="text-xl font-black text-stone-800 mb-2">🏅 網站的等級換算（推估）</h2>
+      <p class="text-sm text-stone-500 mb-4 leading-relaxed">本網站題目都是會考前 15 題程度的基礎題。依「幫你達 B」的目標（前 15 題答對 10 題 ≈ B），用你的基礎題答對率往上、往下推估七個等級。會考真正的 A 級還需要答對後段題（16～25 題）和非選題，所以「A」系列在這裡代表：<b>基礎題已經到 A 的水準，可以開始挑戰後段題了</b>。會考的「++」是該等級前 25%、「+」是前 26～50%。</p>
+      <div class="grid sm:grid-cols-7 gap-2">${LEVELS.map(l => `<div class="rounded-2xl border border-stone-100 p-3 text-center"><span class="lv lv-${l.g} text-lg">${l.name}</span><div class="text-sm font-black text-stone-700 mt-2">${l.g === "C" ? "未滿 65%" : l.name === "A++" ? "100%" : `≥ ${Math.round(l.min * 100)}%`}</div><div class="text-[11px] text-stone-400 mt-1 leading-tight">${l.note}</div></div>`).join("")}</div>
+    </section>
+  </div>`;
+}
+
+// ---------- 作答 ----------
+function buildMockSet() {
+  const pool = MODS.map(m => m.practice.slice());
+  const chosen = [];
+  for (let n = 0; n < MOCK_N; n++) {
+    const cand = MODS.map((m, i) => i).filter(i => pool[i].length);
+    const tw = cand.reduce((a, i) => a + unitWeight(MODS[i]), 0);
+    let r = Math.random() * tw, pick = cand[0];
+    for (const i of cand) { r -= unitWeight(MODS[i]); if (r <= 0) { pick = i; break; } }
+    const k = Math.floor(Math.random() * pool[pick].length);
+    chosen.push(pool[pick].splice(k, 1)[0]);
+  }
+  return chosen.sort((a, b) => (a.lv - b.lv) || (MODS[a.modIdx].book - MODS[b.modIdx].book));
+}
+function stopMockTimer() { if (mockTimer) { clearInterval(mockTimer); mockTimer = null; } }
+function renderModule(modIdx) {
+  const rv = /^review([123])$/.exec(String(modIdx)), isReview = !!rv, stage = rv ? +rv[1] : 0;
+  const isMock = modIdx === "mock", genM = /^gen(\d+)$/.exec(String(modIdx)), genIdx = genM ? +genM[1] : null;
+  if (isReview) {
+    const t = nowTs();
+    currentModuleData = shuffleArray(mistakes.filter(m => m.stage === stage && m.due <= t).map(m => findQuestionData(m.modIdx, m.q)).filter(Boolean));
+    if (!currentModuleData.length) { currentView = "review"; renderReviewHub(); renderNav(); return; }
+  } else if (isMock) currentModuleData = buildMockSet();
+  else if (genM) currentModuleData = G.make(MODS[genIdx].code, 10).map(g => ({ q: g.q, options: g.o, correctStr: g.o[0], hints: g.h, fig: g.fig || null, lv: 1, modIdx: genIdx, skill: g.s, gen: true }));
+  else currentModuleData = MODS[modIdx].practice;
+  currentModuleData = currentModuleData.map(q => ({ ...q, shuffled: shuffleArray(q.options) }));
+  currentModuleCorrectCount = 0; qState = [];
+  const m = typeof modIdx === "number" ? MODS[modIdx] : genM ? MODS[genIdx] : null;
+  const title = isReview ? `${STAGE_INFO[stage].icon} 錯題重練・${STAGE_INFO[stage].name}` : isMock ? "🎯 會考比例模擬" : genM ? `🎲 隨機加練：${m.title}` : `${m.title}`;
+  const sub = isReview ? (stage < 3 ? `獨立答對（沒看完 3 步提示）→ 移到${STAGE_INFO[stage + 1].short}，${stage === 1 ? "2" : "5"} 天後解鎖；答錯或看完提示 → 退回第一關` : "獨立答對 → 消滅健忘怪物！答錯或看完提示 → 退回第一關")
+    : genM ? `數字每次都不一樣，可以一直練！加練題不列入錯題清單，也不影響單元最佳紀錄。${m.chap}`
+    : isMock ? `依 111～115 會考前 10 題單元出現率，從全部 ${MODS.length} 個單元隨機抽 ${MOCK_N} 題。建議 50 分鐘內完成（幫你達 B：前 15 題答對 10 題）。`
+    : `${m.chap}・${m.subtitle}`;
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in">
+    ${m ? `<button onclick="switchView('book${m.book}')" class="text-sm font-bold text-stone-400 hover:text-stone-600 mb-3">← 回${BOOKS[m.book].name}</button>` : isReview ? `<button onclick="switchView('review')" class="text-sm font-bold text-stone-400 hover:text-stone-600 mb-3">← 回錯題重練區</button>` : ""}
+    <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
+      <div class="min-w-0">
+        <h1 class="text-3xl font-black text-stone-800">${m ? `<span class="text-stone-300 mr-2">${m.code}</span>` : ""}${title}</h1>
+        <div class="text-sm text-stone-500 mt-1 leading-relaxed">${sub}</div>
+        ${m && !genM ? `<div class="text-xs text-stone-400 mt-1">${freqText(m)}・答對 65% 以上約為 B</div>` : ""}
+        ${isReview ? "" : `<div class="text-xs text-stone-400 mt-1">計分方式：答對而且<b>沒有看完 3 步提示</b>才算分；看完提示才答對不計分${genM ? "" : "，會放進錯題重練"}。</div>`}
+      </div>
+      <div class="flex gap-2 items-center flex-wrap">
+        <button onclick="openFormula()" class="px-4 py-2.5 rounded-2xl bg-sky-50 text-sky-800 text-sm font-bold">📘 公式</button>
+        ${m && !genM ? `<button onclick="switchView('gen${modIdx}')" class="px-4 py-2.5 rounded-2xl bg-amber-50 text-amber-900 text-sm font-bold">🎲 加練</button>` : ""}
+        ${m && !genM ? `<button onclick="openPrintSetup(${modIdx})" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-700 text-sm font-bold">🖨️ 學習單</button>` : ""}
+        ${isMock ? `<div id="mock-timer" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-700 font-black text-sm tabular-nums">⏱ 00:00</div>` : ""}
+        <div id="score-badge" class="px-4 py-2.5 rounded-2xl bg-amber-100 text-amber-900 font-black text-sm">獨立答對: 0/${currentModuleData.length}</div>
+      </div>
+    </div>
+    ${renderHintQuizUI()}
+    <div id="retry-footer" class="hidden mt-10 text-center bg-white border border-stone-100 rounded-[28px] p-8 shadow-sm">
+      <div class="text-2xl font-black text-stone-800" id="final-msg"></div>
+      <div class="text-stone-500 mt-2" id="final-sub"></div>
+      <div class="text-sm text-stone-500 mt-3 leading-relaxed" id="final-detail"></div>
+      <div class="flex gap-3 justify-center mt-5 flex-wrap">
+        <button onclick="isQuizActive=false;switchView('overview')" class="px-6 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">回儀表板</button>
+        ${m ? `<button onclick="isQuizActive=false;switchView('book${m.book}')" class="px-6 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">回${BOOKS[m.book].name}</button>` : ""}
+        ${isReview ? `<button onclick="isQuizActive=false;switchView('review')" class="px-6 py-3 rounded-2xl bg-stone-800 font-bold text-white">回錯題重練區</button>`
+          : `<button onclick="renderModule(${typeof modIdx === "number" ? modIdx : `'${modIdx}'`});window.scrollTo(0,0)" class="px-6 py-3 rounded-2xl bg-amber-500 font-bold text-white">${isMock || genM ? "再抽一回" : "再練一次"}</button>${m && !genM ? `<button onclick="isQuizActive=false;switchView('gen${modIdx}')" class="px-6 py-3 rounded-2xl bg-amber-100 font-bold text-amber-900">🎲 隨機加練</button>` : ""}
+        <button id="footer-review" onclick="isQuizActive=false;switchView('review')" class="hidden px-6 py-3 rounded-2xl bg-stone-800 font-bold text-white">錯題重練</button>`}
+      </div>
+    </div>
+    <div class="text-center mt-8"><button id="abandon-btn" onclick="abandonQuiz()" class="text-sm text-stone-400 font-bold hover:text-stone-600">放棄本回作答</button></div>
+  </div>`;
+  isQuizActive = true;
+  stopMockTimer();
+  if (isMock) { const t0 = Date.now(); mockTimer = setInterval(() => { const el = document.getElementById("mock-timer"); if (!el) return stopMockTimer(); const s = Math.floor((Date.now() - t0) / 1000); el.textContent = `⏱ ${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`; }, 1000); }
+  triggerKatex(document.getElementById("main-content"));
+}
+
+// ---------- 圖形 ----------
+function figSVG(f, forPrint) {
+  if (!f) return "";
+  if (f.t === "geo") return geoSVG(f, forPrint);
+  const ink = forPrint ? "#111" : "#44403c", fill = forPrint ? "none" : "#fef3c7", lab = forPrint ? "#111" : "#b45309", soft = forPrint ? "#999" : "#d6d3d1";
+  const T = (x, y, s, anchor = "middle") => `<text x="${x}" y="${y}" font-size="15" font-weight="700" fill="${lab}" text-anchor="${anchor}" font-family="Times New Roman, serif" font-style="italic">${s}</text>`;
+  const N = (x, y, s, anchor = "middle", sz = 12, c = ink) => `<text x="${x}" y="${y}" font-size="${sz}" fill="${c}" text-anchor="${anchor}" font-family="Noto Sans TC, sans-serif">${s}</text>`;
+  if (f.t === "rt") {
+    const k = 120 / Math.max(f.na, f.nb), w = f.nb * k, h = f.na * k, x0 = 30, y0 = 20;
+    const B = [x0, y0 + h], C = [x0 + w, y0 + h], A = [x0 + w, y0];
+    return `<svg viewBox="0 0 ${w + 70} ${h + 50}"><polygon points="${A} ${B} ${C}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <polyline points="${C[0] - 12},${C[1]} ${C[0] - 12},${C[1] - 12} ${C[0]},${C[1] - 12}" fill="none" stroke="${ink}" stroke-width="1.5"/>
+      ${T(A[0] + 10, y0 + h / 2 + 5, f.a, "start")}${T(x0 + w / 2, y0 + h + 22, f.b)}${T(x0 + w / 2 - 12, y0 + h / 2 - 4, f.c, "end")}</svg>`;
+  }
+  if (f.t === "rth") {
+    const k = 120 / Math.max(f.na, f.nb), w = f.nb * k, h = f.na * k, x0 = 30, y0 = 20;
+    const A = [x0, y0], B = [x0, y0 + h], C = [x0 + w, y0 + h];
+    const ux = C[0] - A[0], uy = C[1] - A[1], t = ((B[0] - A[0]) * ux + (B[1] - A[1]) * uy) / (ux * ux + uy * uy);
+    const D = [A[0] + t * ux, A[1] + t * uy];
+    return `<svg viewBox="0 0 ${w + 60} ${h + 50}"><polygon points="${A} ${B} ${C}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <polyline points="${B[0]},${B[1] - 12} ${B[0] + 12},${B[1] - 12} ${B[0] + 12},${B[1]}" fill="none" stroke="${ink}" stroke-width="1.5"/>
+      <line x1="${B[0]}" y1="${B[1]}" x2="${D[0]}" y2="${D[1]}" stroke="${ink}" stroke-width="1.8" stroke-dasharray="5 4"/>
+      ${T(x0 - 8, y0 + h / 2 + 5, f.a, "end")}${T(x0 + w / 2, y0 + h + 22, f.b)}${T((B[0] + D[0]) / 2 + 4, (B[1] + D[1]) / 2 + 16, "h", "start")}</svg>`;
+  }
+  if (f.t === "sq") {
+    const s = 110, x0 = 30, y0 = 25;
+    return `<svg viewBox="0 0 ${s + 60} ${s + 45}"><rect x="${x0}" y="${y0}" width="${s}" height="${s}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <line x1="${x0}" y1="${y0 + s}" x2="${x0 + s}" y2="${y0}" stroke="${ink}" stroke-width="1.8"/>
+      ${T(x0 + s / 2, y0 - 8, f.s)}${T(x0 - 8, y0 + s / 2 + 5, f.s, "end")}${T(x0 + s / 2 + 12, y0 + s / 2 + 14, f.d, "start")}</svg>`;
+  }
+  if (f.t === "nl") { // 數線：min~max 等分 div 格
+    const W = 300, x0 = 22, x1 = W - 22, yb = 46, span = f.max - f.min;
+    const X = v => x0 + (v - f.min) / span * (x1 - x0);
+    let s = `<line x1="${x0 - 14}" y1="${yb}" x2="${x1 + 14}" y2="${yb}" stroke="${ink}" stroke-width="2"/><polygon points="${x1 + 18},${yb} ${x1 + 8},${yb - 5} ${x1 + 8},${yb + 5}" fill="${ink}"/>`;
+    for (let k = 0; k <= f.div; k++) { const v = f.min + span * k / f.div, big = Math.abs(v - Math.round(v)) < 1e-9; s += `<line x1="${X(v)}" y1="${yb - (big ? 8 : 5)}" x2="${X(v)}" y2="${yb + (big ? 8 : 5)}" stroke="${ink}" stroke-width="${big ? 2 : 1.3}"/>`; if (big && !f.nonum && !(f.labels || []).some(l => l[0] === v)) s += N(X(v), yb + 24, String(v), "middle", 13); }
+    (f.labels || []).forEach(([v, t]) => { s += N(X(v), yb + 24, t, "middle", 13); });
+    (f.pts || []).forEach(([n, v]) => { s += `<circle cx="${X(v)}" cy="${yb}" r="4.5" fill="${forPrint ? "#111" : "#dc2626"}"/>${T(X(v), yb - 14, n)}`; });
+    return `<svg viewBox="0 0 ${W} 80">${s}</svg>`;
+  }
+  if (f.t === "bar" || f.t === "line") { // 長條圖／折線圖
+    const W = 300, H = 210, L = 38, Rr = 10, Tp = 16, Bt = 170, n = f.labels.length;
+    const allV = f.vals.concat(f.vals2 || []), ymin = f.ymin ?? 0, rawMax = f.ymax ?? Math.max(...allV);
+    const step = rawMax - ymin <= 10 ? 2 : rawMax - ymin <= 20 ? 4 : rawMax - ymin <= 40 ? 5 : 10;
+    const ymax = f.ymax ?? Math.ceil(rawMax / step) * step + (Math.ceil(rawMax / step) * step === rawMax ? step : 0);
+    const Y = v => Bt - (v - ymin) / (ymax - ymin) * (Bt - Tp), gw = (W - L - Rr) / n;
+    let s = "";
+    for (let v = ymin; v <= ymax + 1e-9; v += step) s += `<line x1="${L}" x2="${W - Rr}" y1="${Y(v)}" y2="${Y(v)}" stroke="${soft}" stroke-width="0.8"/>${N(L - 5, Y(v) + 4, v, "end", 11)}`;
+    s += `<line x1="${L}" x2="${L}" y1="${Tp - 4}" y2="${Bt}" stroke="${ink}" stroke-width="1.4"/><line x1="${L}" x2="${W - Rr}" y1="${Bt}" y2="${Bt}" stroke="${ink}" stroke-width="1.4"/>`;
+    if (f.t === "bar") {
+      const two = !!f.vals2, bw = Math.min(two ? 16 : 26, gw * (two ? 0.34 : 0.6));
+      f.labels.forEach((lb, i) => {
+        const cx = L + gw * i + gw / 2;
+        const bar = (x, v, c) => `<rect x="${x}" y="${Y(v)}" width="${bw}" height="${Bt - Y(v)}" fill="${c}" stroke="${ink}" stroke-width="0.8"/>${N(x + bw / 2, Y(v) - 3, v, "middle", 10)}`;
+        s += two ? bar(cx - bw - 1, f.vals[i], forPrint ? "#ddd" : "#fcd34d") + bar(cx + 1, f.vals2[i], forPrint ? "#777" : "#60a5fa") : bar(cx - bw / 2, f.vals[i], forPrint ? "#ccc" : "#fcd34d");
+        s += N(cx, Bt + 15, lb, "middle", 11);
+      });
+      if (f.vals2) s += `<rect x="${W - 96}" y="2" width="10" height="10" fill="${forPrint ? "#ddd" : "#fcd34d"}" stroke="${ink}" stroke-width=".6"/>${N(W - 82, 11, f.names[0], "start", 10)}<rect x="${W - 50}" y="2" width="10" height="10" fill="${forPrint ? "#777" : "#60a5fa"}" stroke="${ink}" stroke-width=".6"/>${N(W - 36, 11, f.names[1], "start", 10)}`;
+    } else {
+      const pts = f.vals.map((v, i) => [L + gw * i + gw / 2, Y(v)]);
+      s += `<polyline points="${pts.map(p => p.join(",")).join(" ")}" fill="none" stroke="${forPrint ? "#111" : "#2563eb"}" stroke-width="2"/>`;
+      pts.forEach((p, i) => { s += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${forPrint ? "#111" : "#2563eb"}"/>${N(p[0], p[1] - 7, f.vals[i], "middle", 10)}${N(p[0], Bt + 15, f.labels[i], "middle", 11)}`; });
+    }
+    s += N(L - 4, Tp - 6, f.yl || "", "start", 10) + N((L + W) / 2, H - 6, f.xl || "", "middle", 11);
+    return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
+  }
+  if (f.t === "stack") { // 積木上視圖，格子數字＝疊幾個
+    const c = 44, rows = f.g.length, cols = f.g[0].length, x0 = 20, y0 = 12;
+    let s = "";
+    f.g.forEach((row, r) => row.forEach((v, k) => { s += `<rect x="${x0 + k * c}" y="${y0 + r * c}" width="${c}" height="${c}" fill="${v ? fill : "#fff"}" stroke="${ink}" stroke-width="1.6"/>${v ? `<text x="${x0 + k * c + c / 2}" y="${y0 + r * c + c / 2 + 8}" font-size="22" font-weight="700" fill="${ink}" text-anchor="middle">${v}</text>` : ""}`; }));
+    const W = x0 * 2 + cols * c, H = y0 + rows * c + (f.front ? 34 : 10);
+    if (f.front) s += `<line x1="${W / 2}" y1="${H - 4}" x2="${W / 2}" y2="${y0 + rows * c + 8}" stroke="${ink}" stroke-width="1.6"/><polygon points="${W / 2},${y0 + rows * c + 5} ${W / 2 - 5},${y0 + rows * c + 14} ${W / 2 + 5},${y0 + rows * c + 14}" fill="${ink}"/>${N(W / 2 + 8, H - 6, "前", "start", 12)}`;
+    return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
+  }
+  if (f.t === "coord") { // 坐標平面
+    const [xa, xb, ya, yb] = f.r, u = 26, W = (xb - xa) * u + 30, H = (yb - ya) * u + 30;
+    const X = x => 15 + (x - xa) * u, Y = y => 15 + (yb - y) * u;
+    let s = "";
+    for (let x = xa; x <= xb; x++) s += `<line x1="${X(x)}" y1="${Y(ya)}" x2="${X(x)}" y2="${Y(yb)}" stroke="${soft}" stroke-width="0.7"/>`;
+    for (let y = ya; y <= yb; y++) s += `<line x1="${X(xa)}" y1="${Y(y)}" x2="${X(xb)}" y2="${Y(y)}" stroke="${soft}" stroke-width="0.7"/>`;
+    s += `<line x1="${X(xa)}" y1="${Y(0)}" x2="${X(xb)}" y2="${Y(0)}" stroke="${ink}" stroke-width="1.6"/><line x1="${X(0)}" y1="${Y(ya)}" x2="${X(0)}" y2="${Y(yb)}" stroke="${ink}" stroke-width="1.6"/>`;
+    s += N(X(xb) - 4, Y(0) - 5, "x", "end", 12) + N(X(0) + 5, Y(yb) + 11, "y", "start", 12) + N(X(0) - 4, Y(0) + 13, "O", "end", 11);
+    for (let x = xa; x <= xb; x++) if (x) s += N(X(x), Y(0) + 13, x, "middle", 9, soft === "#999" ? "#333" : "#78716c");
+    for (let y = ya; y <= yb; y++) if (y) s += N(X(0) - 4, Y(y) + 3, y, "end", 9, soft === "#999" ? "#333" : "#78716c");
+    Object.entries(f.pts || {}).forEach(([n, p]) => { s += `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="4" fill="${forPrint ? "#111" : "#dc2626"}"/>${T(X(p[0]) + 7, Y(p[1]) - 6, n, "start")}`; });
+    return `<svg viewBox="0 0 ${W} ${H}">${s}</svg>`;
+  }
+  return "";
+}
+function geoSVG() { return ""; }
+
+function renderHintQuizUI() {
+  let html = `<div class="space-y-8" id="quiz-container">`;
+  currentModuleData.forEach((q, qIdx) => {
+    qState[qIdx] = { hintsShown: 0, selectedOption: null, answered: false, correct: false, isMistake: false };
+    const tag = (/^review/.test(String(currentView)) || currentView === "mock") ? `<span class="inline-block text-xs font-black text-stone-500 bg-stone-100 rounded-lg px-2 py-0.5 mr-2 align-middle">${BOOKS[MODS[q.modIdx].book].name}・${MODS[q.modIdx].title}</span>` : "";
+    html += `
+    <div class="p-6 sm:p-8 rounded-[32px] bg-white border border-stone-100 shadow-sm" id="q-block-${qIdx}">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1 min-w-0">
+          <div class="text-lg sm:text-xl font-bold text-stone-800 mb-5 flex items-start">
+            <span class="w-9 h-9 bg-stone-100 text-stone-600 rounded-2xl text-sm font-black flex items-center justify-center mr-4 flex-shrink-0">${qIdx + 1}</span>
+            <div class="pt-1 leading-relaxed min-w-0">${tag}${q.lv === 2 ? `<span class="inline-block text-xs font-black text-rose-600 bg-rose-50 rounded-lg px-2 py-0.5 mr-2 align-middle">★進階</span>` : ""}${q.q}</div>
+          </div>
+        </div>
+        ${q.fig ? `<div class="fig w-64 sm:w-80 mx-auto sm:mx-0 flex-shrink-0">${figSVG(q.fig, false)}</div>` : ""}
+      </div>
+      <div class="mb-5 space-y-2" id="hints-${qIdx}"></div>
+      <div class="mb-6">
+        <button onclick="showHint(${qIdx})" id="hint-btn-${qIdx}" class="text-sm font-bold text-amber-800 bg-amber-100 px-5 py-3 rounded-2xl hover:bg-amber-200 transition-colors">💡 看提示 (0/3)</button>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        ${q.shuffled.map((o, oIdx) => `<button id="btn-${qIdx}-${oIdx}" onclick="selectHintOption(${qIdx}, ${oIdx})" class="opt-btn-${qIdx} text-left px-5 py-4 rounded-2xl border-2 border-stone-200 bg-stone-50 hover:border-amber-400 hover:bg-amber-50 font-medium text-stone-700 transition-colors"><span class="text-stone-400 font-black mr-2">(${"ABCD"[oIdx]})</span>${o}</button>`).join("")}
+      </div>
+      <div id="feedback-${qIdx}" class="hidden"></div>
+    </div>`;
+  });
+  return html + `</div>`;
+}
+
+function showHint(qIdx) {
+  const st = qState[qIdx]; if (st.answered || st.hintsShown >= 3) return;
+  st.hintsShown++; if (st.hintsShown === 3) st.isMistake = true;
+  updateQuestionUI(qIdx);
+}
+function updateQuestionUI(qIdx) {
+  const st = qState[qIdx], qd = currentModuleData[qIdx];
+  const box = document.getElementById(`hints-${qIdx}`);
+  const labels = ["第一步", "第二步", "最後一步"];
+  box.innerHTML = qd.hints.slice(0, st.hintsShown).map((h, i) => `
+    <div class="p-4 bg-amber-50 text-amber-900 rounded-2xl text-sm border-l-[6px] border-amber-400 fade-in flex items-start">
+      <span class="mr-3 font-black whitespace-nowrap">💡 ${labels[i]}</span><span class="leading-relaxed font-medium min-w-0">${h}</span></div>`).join("");
+  triggerKatex(box);
+  const btn = document.getElementById(`hint-btn-${qIdx}`);
+  if (st.answered || st.hintsShown >= 3) { btn.disabled = true; btn.classList.add("opacity-50", "cursor-not-allowed"); }
+  btn.textContent = st.hintsShown >= 3 ? "💡 提示已全部顯示 (3/3)" : `💡 看提示 (${st.hintsShown}/3)`;
+}
+// 每題結果分成：solo 沒看提示答對／hinted 看 1～2 步答對（以上兩種＝獨立答對，計分）
+//              full 看完 3 步才答對（不計分）／wrongNo 沒看提示答錯／wrongHint 有看提示答錯
+function selectHintOption(qIdx, oIdx) {
+  const st = qState[qIdx]; if (st.answered) return;
+  const view = currentView, isReview = /^review/.test(String(view));
+  const qd = currentModuleData[qIdx], isCorrect = qd.shuffled[oIdx] === qd.correctStr, used = st.hintsShown;
+  st.answered = true; st.selectedOption = oIdx; st.correct = isCorrect; st.hintsUsed = used;
+  st.cat = isCorrect ? (used === 0 ? "solo" : used < 3 ? "hinted" : "full") : (used === 0 ? "wrongNo" : "wrongHint");
+  const indep = st.cat === "solo" || st.cat === "hinted";
+  const fb = document.getElementById(`feedback-${qIdx}`);
+  fb.classList.remove("hidden");
+  document.getElementById(`btn-${qIdx}-${oIdx}`).classList.add(isCorrect ? "btn-correct" : "btn-wrong");
+  const into = qd.gen ? "（加練題不列入錯題）" : isReview ? "怪物逃回第一關，再練一次吧！" : "已放進錯題重練第一關。";
+  if (indep) {
+    currentModuleCorrectCount++;
+    let extra = "";
+    if (isReview) { const r = promoteMistake(qd.q); extra = r === "slain" ? "💥 健忘怪物被你消滅了！這題從錯題清單移除。" : r ? `👍 移到${STAGE_INFO[r].short}，${fmtTime(nowTs() + STAGE_INFO[r].wait)} 解鎖再戰。` : ""; }
+    fb.innerHTML = `✅ 答對了！${used ? `（看了 ${used} 步提示，仍算獨立答對）` : ""}<span class="text-xs block mt-1 opacity-80">${extra || "上方已列出完整的三步驟解法，對照看看你的想法是不是一樣。"}</span>`;
+    fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-green-100 text-green-800 fade-in";
+  } else {
+    if (!qd.gen) addToMistakes(qd);
+    if (isCorrect) {
+      fb.innerHTML = `✅ 答案正確，但因為看完 3 步提示，<b>不計入得分</b>。<span class="text-xs block mt-1 opacity-80">${into}</span>`;
+      fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-amber-100 text-amber-800 fade-in";
+    } else {
+      const ci = qd.shuffled.indexOf(qd.correctStr);
+      document.getElementById(`btn-${qIdx}-${ci}`).classList.add("btn-correct");
+      fb.innerHTML = `❌ 再想想！正確答案已標示為綠色，上面有完整解題步驟。<span class="text-xs block mt-1 opacity-80">${into}</span>`;
+      fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-rose-100 text-rose-800 fade-in";
+    }
+  }
+  st.hintsShown = 3; // 作答後顯示完整解題步驟（不影響計分）
+  document.querySelectorAll(`.opt-btn-${qIdx}`).forEach(b => { b.disabled = true; b.classList.remove("hover:border-amber-400", "hover:bg-amber-50"); });
+  updateQuestionUI(qIdx);
+  document.getElementById("score-badge").textContent = `獨立答對: ${currentModuleCorrectCount}/${currentModuleData.length}`;
+  checkModuleCompletion(view);
+}
+function checkModuleCompletion(modIdx) {
+  if (!qState.every(s => s.answered)) return;
+  isQuizActive = false;
+  const max = currentModuleData.length, cnt = k => qState.filter(s => s.cat === k).length;
+  const rec = { solo: cnt("solo"), hinted: cnt("hinted"), full: cnt("full"), wrongNo: cnt("wrongNo"), wrongHint: cnt("wrongHint") };
+  const genC = /^gen(\d+)$/.exec(String(modIdx)), isReview = /^review/.test(String(modIdx));
+  if (genC) { const k = "x" + genC[1], o = scores[k] || { rounds: 0, correct: 0, total: 0 }; scores[k] = { rounds: o.rounds + 1, correct: o.correct + currentModuleCorrectCount, total: o.total + max }; saveLocalAll(); }
+  else if (!isReview) saveScore(modIdx, currentModuleCorrectCount);
+  const elapsed = document.getElementById("mock-timer") ? document.getElementById("mock-timer").textContent.replace("⏱ ", "") : "";
+  stopMockTimer();
+  const title = isReview ? `錯題重練・${STAGE_INFO[+String(modIdx).slice(-1)].short}` : modIdx === "mock" ? "會考比例模擬" : genC ? "🎲 加練 " + unitLabel(+genC[1]) : unitLabel(modIdx);
+  studentHistory.push({ moduleId: modIdx, moduleTitle: title, score: currentModuleCorrectCount, maxScore: max, timestamp: Date.now(), v: 2, ...rec });
+  saveLocalAll(); syncDataToCloud();
+  const p = currentModuleCorrectCount / max, lv = levelOf(p);
+  document.getElementById("final-msg").innerHTML = `完成！獨立答對 ${currentModuleCorrectCount}/${max} ${p === 1 ? "🏆 全對！" : p >= .8 ? "👍 很棒！" : "💪 再接再厲！"}`;
+  document.getElementById("final-sub").innerHTML = isReview ? `👾 目前錯題：第一關 ${mistakes.filter(m => m.stage === 1).length}・第二關 ${mistakes.filter(m => m.stage === 2).length}・第三關 ${mistakes.filter(m => m.stage === 3).length}・已消滅 ${Object.keys(slain).length} 隻` : genC ? `本回獨立答對 ${currentModuleCorrectCount}/${max}，再抽一回，數字又會不一樣！<br><span class="text-xs">加練累積：${scores["x" + genC[1]].rounds} 回、答對 ${scores["x" + genC[1]].correct}/${scores["x" + genC[1]].total} 題</span>` :
+    `本回基礎題推估等級：<span class="lv lv-${lv.g} text-lg">${lv.name}</span>${elapsed ? `　用時 ${elapsed}` : ""}<br><span class="text-xs">${lv.g === "C" ? `再獨立答對 ${Math.ceil(0.65 * max - 1e-9) - currentModuleCorrectCount} 題就到 B！先看錯題的三步驟提示。` : lv.g === "B" ? `已達 B！把錯題重練一次，往 ${lv.name === "B++" ? "A" : "B++"} 前進。` : "基礎題已經很穩，可以多練 ★進階題。"}</span>`;
+  document.getElementById("final-detail").innerHTML = `沒看提示答對 <b>${rec.solo}</b>・看 1～2 步提示答對 <b>${rec.hinted}</b>・看完提示才答對 <b>${rec.full}</b>（不計分）<br>答錯：沒看提示 <b>${rec.wrongNo}</b>・有看提示 <b>${rec.wrongHint}</b>`;
+  const fr = document.getElementById("footer-review"); if (fr && mistakes.length) fr.classList.remove("hidden");
+  document.getElementById("retry-footer").classList.remove("hidden");
+  const ab = document.getElementById("abandon-btn"); if (ab) ab.style.display = "none";
+  renderNav();
+}
+
+// ---------- 公式查找 ----------
+const FORMULAS = {
+  cap: { name: "會考卷附的公式", items: [
+    ["和的平方公式", R`$(a+b)^2=a^2+2ab+b^2$`], ["差的平方公式", R`$(a-b)^2=a^2-2ab+b^2$`], ["平方差公式", R`$a^2-b^2=(a+b)(a-b)$`],
+    ["畢氏定理", R`直角三角形兩股為 $a$、$b$，斜邊為 $c$，則 $c^2=a^2+b^2$`],
+    ["圓面積、圓周長", R`半徑為 $r$：圓面積 $=\pi r^2$，圓周長 $=2\pi r$`],
+    ["凸 $n$ 邊形內角和", R`$(n-2)\times180°$，$n\ge3$`],
+    ["等差數列、等差級數", R`首項 $a_1$、公差 $d$：$a_n=a_1+(n-1)d$，$S_n=\dfrac{n(a_1+a_n)}{2}$`],
+    ["等比數列", R`首項 $a_1$、公比 $r$：$a_n=a_1r^{n-1}$`],
+    ["一元二次方程式公式解", R`$ax^2+bx+c=0$ 的解為 $x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$`]
+  ] },
+  1: { name: "第一冊", items: [
+    ["四則運算順序", R`先括號 → 乘方 → 乘除 → 加減；$-3^2=-9$，$(-3)^2=9$`],
+    ["絕對值", R`$|a|$＝$a$ 到原點的距離；$a\ge0$ 時 $|a|=a$，$a<0$ 時 $|a|=-a$`],
+    ["數線距離與中點", R`$A(a)$、$B(b)$ 的距離 $=|a-b|$，中點 $=\dfrac{a+b}{2}$`],
+    ["指數律", R`$a^m\times a^n=a^{m+n}$，$a^m\div a^n=a^{m-n}$，$(a^m)^n=a^{mn}$，$(ab)^n=a^nb^n$，$a^0=1$`],
+    ["科學記號", R`$a\times10^n$，其中 $1\le a<10$`],
+    ["倍數判別法", R`2、5：看個位；4：看末兩位；3、9：數字和；11：奇數位和與偶數位和的差`],
+    ["最大公因數、最小公倍數", R`標準分解式：最大公因數取共同質因數的「小」次方；最小公倍數取所有質因數的「大」次方；$a\times b=(a,b)\times[a,b]$`],
+    ["等量公理與移項", R`等號兩邊同加、減、乘、除（除數 $\ne0$）同一數仍相等；移項要變號`]
+  ] },
+  2: { name: "第二冊", items: [
+    ["二元一次聯立方程式", R`代入消去法、加減消去法：先消去一個未知數`],
+    ["象限", R`第一 $(+,+)$、第二 $(-,+)$、第三 $(-,-)$、第四 $(+,-)$`],
+    ["直線與兩軸交點", R`與 $x$ 軸交點：令 $y=0$；與 $y$ 軸交點：令 $x=0$`],
+    ["比例式", R`$a:b=c:d \Rightarrow ad=bc$`],
+    ["正比與反比", R`正比：$y=kx$（$\frac{y}{x}$ 固定）；反比：$xy=k$`],
+    ["不等式", R`兩邊同乘或同除以負數，不等號方向要改變`],
+    ["統計量", R`平均數＝總和 ÷ 個數；中位數：排序後中間的數；眾數：出現最多次的數`],
+    ["圓形圖", R`圓心角 $=360°\times$ 百分率`],
+    ["線對稱", R`對應邊相等、對應角相等；對稱軸垂直平分對稱點連線。正 $n$ 邊形有 $n$ 條對稱軸`]
+  ] },
+  3: { name: "第三冊", items: [
+    ["分配律展開", R`$(a+b)(c+d)=ac+ad+bc+bd$`],
+    ["根式運算", R`$\sqrt{a}\times\sqrt{b}=\sqrt{ab}$，$\dfrac{\sqrt{a}}{\sqrt{b}}=\sqrt{\dfrac{a}{b}}$，$\sqrt{a^2b}=a\sqrt{b}$（$a,b\ge0$）`],
+    ["分母有理化", R`$\dfrac{1}{\sqrt{a}}=\dfrac{\sqrt{a}}{a}$`],
+    ["平方根", R`正數 $a$ 的平方根為 $\pm\sqrt{a}$；$\sqrt{a^2}=|a|$`],
+    ["坐標上兩點距離", R`$\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}$（畢氏定理）`],
+    ["十字交乘法", R`$x^2+(a+b)x+ab=(x+a)(x+b)$`],
+    ["因式分解解方程式", R`若 $AB=0$，則 $A=0$ 或 $B=0$`],
+    ["判別式", R`$b^2-4ac>0$ 兩相異根；$=0$ 重根；$<0$ 無解`]
+  ] },
+  4: { name: "第四冊", items: [
+    ["等差中項", R`$a$、$b$、$c$ 成等差 $\Rightarrow b=\dfrac{a+c}{2}$`],
+    ["三角形內角和與外角", R`內角和 $180°$；外角＝兩內對角和`],
+    ["多邊形外角和", R`任意多邊形外角和 $=360°$；正 $n$ 邊形每一外角 $=\dfrac{360°}{n}$`],
+    ["平行線截角", R`同位角相等、內錯角相等、同側內角互補`],
+    ["三角形三邊關係", R`兩邊差 $<$ 第三邊 $<$ 兩邊和`],
+    ["扇形", R`扇形面積 $=\pi r^2\times\dfrac{\theta}{360°}$，弧長 $=2\pi r\times\dfrac{\theta}{360°}$`],
+    ["常用面積", R`三角形 $=\dfrac{\text{底}\times\text{高}}{2}$，梯形 $=\dfrac{(\text{上底}+\text{下底})\times\text{高}}{2}$`]
+  ] },
+  5: { name: "第五冊", items: [
+    ["相似三角形", R`對應角相等、對應邊成比例；AA、SAS、SSS 相似`],
+    ["相似比", R`周長比＝相似比；面積比＝相似比的平方`],
+    ["平行線截比例線段", R`$\overline{DE}\parallel\overline{BC}\Rightarrow\overline{AD}:\overline{DB}=\overline{AE}:\overline{EC}$`],
+    ["中點連線", R`三角形兩邊中點連線＝第三邊的 $\dfrac{1}{2}$，且平行第三邊`],
+    ["圓周角", R`圓周角＝同弧圓心角的 $\dfrac{1}{2}$；直徑所對圓周角 $=90°$`],
+    ["切線", R`切線 $\perp$ 過切點的半徑；圓外一點的兩切線段等長`],
+    ["圓內接四邊形", R`對角互補（和為 $180°$）`]
+  ] },
+  6: { name: "第六冊", items: [
+    ["二次函數頂點式", R`$y=a(x-h)^2+k$：頂點 $(h,k)$，對稱軸 $x=h$`],
+    ["開口與最值", R`$a>0$ 開口向上，最小值 $k$；$a<0$ 開口向下，最大值 $k$`],
+    ["機率", R`機率 $=\dfrac{\text{想要的情形數}}{\text{全部可能的情形數}}$，介於 $0$ 和 $1$`],
+    ["柱體體積", R`柱體體積＝底面積 × 高；圓柱 $=\pi r^2h$`],
+    ["圓柱表面積", R`$2\pi r^2+2\pi rh$（兩底＋側面）`],
+    ["角柱、角錐", R`$n$ 角柱：$n+2$ 面、$2n$ 頂點、$3n$ 邊；$n$ 角錐：$n+1$ 面、$n+1$ 頂點、$2n$ 邊`]
+  ] }
+};
+let fmTab = "cap";
+function openFormula() { closeMobileMenu(); document.getElementById("formula-modal").classList.remove("hidden"); renderFormula(); setTimeout(() => document.getElementById("fm-search").focus({ preventScroll: true }), 50); }
+function closeFormula() { document.getElementById("formula-modal").classList.add("hidden"); }
+function setFmTab(t) { fmTab = t; document.getElementById("fm-search").value = ""; renderFormula(); }
+function renderFormula() {
+  const tabs = ["cap", 1, 2, 3, 4, 5, 6];
+  document.getElementById("fm-tabs").innerHTML = tabs.map(t => `<button onclick="setFmTab('${t}')" class="px-3 py-1.5 rounded-xl text-sm font-bold ${String(fmTab) === String(t) ? (t === "cap" ? "bg-sky-600 text-white" : "bg-stone-800 text-white") : "bg-stone-100 text-stone-600 hover:bg-stone-200"}">${t === "cap" ? "⭐ 會考卷附公式" : FORMULAS[t].name}</button>`).join("");
+  const kw = document.getElementById("fm-search").value.trim();
+  const groups = kw ? tabs : [fmTab];
+  let html = "";
+  groups.forEach(t => {
+    const g = FORMULAS[t], items = g.items.filter(([n, f]) => !kw || n.includes(kw) || f.includes(kw));
+    if (!items.length) return;
+    html += `${kw || t === "cap" ? `<div class="text-sm font-black ${t === "cap" ? "text-sky-700" : "text-stone-500"} mt-1 mb-2">${t === "cap" ? "⭐ 會考試卷上會附的公式（考試時可以直接看）" : `${g.name}・要自己記住的重點`}</div>` : `<div class="text-sm font-black text-stone-500 mb-2">${g.name}・要自己記住的重點（會考不附，要背）</div>`}
+      <div class="grid sm:grid-cols-2 gap-3 mb-5">${items.map(([n, f]) => `<div class="fm-item rounded-2xl border ${t === "cap" ? "border-sky-100 bg-sky-50" : "border-stone-100 bg-stone-50"} p-4"><div class="text-xs font-black ${t === "cap" ? "text-sky-700" : "text-stone-500"} mb-1">${n}</div><div class="text-stone-800 leading-relaxed">${f}</div></div>`).join("")}</div>`;
+  });
+  const body = document.getElementById("fm-body");
+  body.innerHTML = html || `<div class="text-stone-400 text-center py-8">找不到「${escapeHtml(kw)}」，換個關鍵字試試。</div>`;
+  triggerKatex(body);
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeFormula(); });
+
+// ---------- 教師後台 ----------
+function openTeacherVerification() { closeMobileMenu(); document.getElementById("pw-error").classList.add("hidden"); document.getElementById("teacher-pw").value = ""; document.getElementById("password-modal").classList.remove("hidden"); setTimeout(() => document.getElementById("teacher-pw").focus(), 50); }
+function closePasswordModal() { document.getElementById("password-modal").classList.add("hidden"); }
+function verifyTeacherPassword() {
+  if (document.getElementById("teacher-pw").value === TEACHER_PASSWORD) { closePasswordModal(); isQuizActive = false; stopMockTimer(); currentView = "teacher"; renderTeacherDashboard(); renderNav(); }
+  else document.getElementById("pw-error").classList.remove("hidden");
+}
+async function fetchAllStudentRecords() {
+  if (!db) return null;
+  const snap = await fs.getDocs(fs.collection(db, "artifacts", appId, "public", "data", COLLECTION_NAME));
+  const groups = {};
+  snap.forEach(d => { const r = d.data(); if (!r || r.mergedInto) return; const k = canonKey(r.studentSeat, r.studentName); (groups[k] = groups[k] || []).push(r); });
+  // 同一位學生如果有不同寫法的紀錄（學生尚未重新登入），先在後台合併顯示
+  const out = Object.values(groups).map(rs => rs.length === 1 ? { ...rs[0], studentSeat: normSeat(rs[0].studentSeat), studentName: normName(rs[0].studentName) } : mergeRecords(rs));
+  return out.sort((a, b) => (parseInt(a.studentSeat) || 0) - (parseInt(b.studentSeat) || 0));
+}
+function mergeRecords(rs) {
+  const out = { studentId: rs[0].studentId, studentSeat: normSeat(rs[0].studentSeat), studentName: normName(rs[0].studentName), scores: {}, mistakes: [], slain: {}, mistakeLog: {}, history: [], lastUpdated: 0 };
+  rs.forEach(r => {
+    Object.entries(r.scores || {}).forEach(([k, v]) => { const l = out.scores[k]; out.scores[k] = l ? { first: Math.min(l.first, v.first), best: Math.max(l.best, v.best), n: (l.n || 1) + (v.n || 1) } : v; });
+    Object.assign(out.slain, r.slain || {});
+    (r.mistakes || []).forEach(m => { if (!out.mistakes.some(x => x.q === m.q)) out.mistakes.push(m); });
+    Object.entries(r.mistakeLog || {}).forEach(([q, v]) => { if (!out.mistakeLog[q] || (v.count || 0) > out.mistakeLog[q].count) out.mistakeLog[q] = v; });
+    out.history.push(...(r.history || [])); out.lastUpdated = Math.max(out.lastUpdated, r.lastUpdated || 0);
+  });
+  out.history.sort((a, b) => a.timestamp - b.timestamp); out.mistakesCount = out.mistakes.length;
+  return out;
+}
+// 學生作答統計（只算改版後有細項的紀錄）
+function recStats(r, modFilter) {
+  // 沒指定單元時只統計單元測驗和會考模擬（不含錯題重練）
+  const hs = (r.history || []).filter(h => modFilter === undefined ? (typeof h.moduleId === "number" || h.moduleId === "mock") : String(h.moduleId) === String(modFilter));
+  const v2 = hs.filter(h => h.v === 2), sum = k => v2.reduce((a, h) => a + (h[k] || 0), 0);
+  return { tries: hs.length, v2: v2.length, old: hs.length - v2.length, q: v2.reduce((a, h) => a + h.maxScore, 0), indep: sum("solo") + sum("hinted"), solo: sum("solo"), hinted: sum("hinted"), full: sum("full"), wrongNo: sum("wrongNo"), wrongHint: sum("wrongHint") };
+}
+async function renderTeacherDashboard() {
+  const main = document.getElementById("main-content");
+  main.innerHTML = `<div class="fade-in"><div class="flex flex-wrap justify-between items-center gap-3 mb-6"><h1 class="text-3xl font-black text-stone-800">👨‍🏫 教師後台</h1>
+    <div class="flex gap-2"><button onclick="openPrintSetup()" class="px-4 py-2.5 rounded-2xl bg-stone-800 text-white text-sm font-bold">🖨️ 列印學習單</button><button onclick="exitTeacherPanel()" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-700 text-sm font-bold">離開後台</button></div></div>
+    <div id="teacher-body" class="text-stone-500">讀取中…</div></div>`;
+  let recs = null;
+  try { recs = await fetchAllStudentRecords(); } catch (e) { console.error(e); }
+  const body = document.getElementById("teacher-body");
+  if (!recs) { body.innerHTML = `<div class="bg-amber-50 border border-amber-100 rounded-2xl p-5 text-amber-900 text-sm leading-relaxed">目前沒有連上雲端資料庫，所以看不到全班成績。請在程式最上方的「設定區」確認 Firebase 設定，並確認 Firebase 已開啟「匿名登入」、資料庫規則允許 <code>artifacts/${appId}</code> 位置。<br>學習單列印功能不需要雲端，可以直接使用。</div>`; return; }
+  allDashboardRecords = recs;
+  const avg = MODS.map((m, i) => { const v = recs.filter(r => r.scores && r.scores[i]); return v.length ? v.reduce((a, r) => a + r.scores[i].best, 0) / v.length / m.practice.length : 0; });
+  const doneCnt = MODS.map((m, i) => recs.filter(r => r.scores && r.scores[i]).length);
+  const mockDone = recs.filter(r => r.scores && r.scores.mock), mockAvg = mockDone.length ? mockDone.reduce((a, r) => a + r.scores.mock.best, 0) / mockDone.length / MOCK_N : null;
+  const lvDist = {}; recs.forEach(r => { const rr = r.scores && r.scores.mock ? r.scores.mock.best / MOCK_N : null; const l = levelOf(rr); const k = l ? l.name : "未測"; lvDist[k] = (lvDist[k] || 0) + 1; });
+  // 全班最常錯題
+  const wrong = {};
+  recs.forEach(r => {
+    Object.entries(r.mistakeLog || {}).forEach(([q, v]) => { wrong[q] = wrong[q] || { modIdx: v.modIdx, n: 0, open: 0 }; wrong[q].n++; });
+    (r.mistakes || []).forEach(m => { if (wrong[m.q]) wrong[m.q].open++; });
+  });
+  classWrongList = Object.entries(wrong).map(([q, v]) => ({ q, ...v, data: findQuestionData(v.modIdx, q) })).filter(w => w.data)
+    .sort((a, b) => b.n - a.n || b.open - a.open);
+  const topWrong = classWrongList.slice(0, 10);
+  body.innerHTML = `
+    <div class="bg-sky-50 border border-sky-100 rounded-2xl px-4 py-3 text-sm text-sky-900 mb-5 leading-relaxed"><b>計分說明：</b>「獨立答對」＝答對且沒有看完 3 步提示（含只看 1～2 步）。看完 3 步提示才答對不計分，和答錯一樣會進入錯題重練。<br><span class="text-xs text-sky-700">改版前的紀錄沒有記錄提示使用情形，標示為「改版前」，只顯示當時的答對題數。</span></div>
+    <div class="bg-white rounded-2xl border border-stone-100 p-5 mb-6 flex flex-wrap items-center gap-x-8 gap-y-3">
+      <div><div class="text-xs font-bold text-stone-400">會考比例模擬・全班平均最佳</div><div class="text-2xl font-black text-stone-800">${mockAvg === null ? "—" : Math.round(mockAvg * 100) + "%"} <span class="text-sm text-stone-400 font-bold">${mockDone.length} 人完成</span></div></div>
+      <div class="flex flex-wrap gap-2 items-center"><span class="text-xs font-bold text-stone-400 mr-1">推估等級分布</span>${LEVELS.map(l => `<span class="flex items-center gap-1 text-sm"><span class="lv lv-${l.g}">${l.name}</span><b class="tabular-nums">${lvDist[l.name] || 0}</b></span>`).join("")}<span class="flex items-center gap-1 text-sm"><span class="lv lv-none">未測</span><b>${lvDist["未測"] || 0}</b></span></div>
+    </div>
+    ${[1, 2, 3, 4, 5, 6].map(b => `<div class="mb-4"><div class="text-sm font-black mb-2" style="color:${BOOKS[b].hex}">${BOOKS[b].name}（${BOOKS[b].grade}）</div><div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-3">${bookUnits(b).map(i => `<div class="bg-white rounded-2xl border border-stone-100 p-4">
+      <div class="text-xs font-bold text-stone-400 truncate">${unitLabel(i)}</div><div class="text-2xl font-black text-stone-800 mt-1">${Math.round(avg[i] * 100)}%</div>
+      <div class="h-1.5 bg-stone-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-amber-400" style="width:${avg[i] * 100}%"></div></div>
+      <div class="text-xs text-stone-400 mt-2">平均最佳獨立答對率・${doneCnt[i]} 人完成・共練 ${recs.reduce((a, r) => a + recStats(r, i).tries, 0)} 次</div></div>`).join("")}</div></div>`).join("")}
+    <div class="bg-white rounded-2xl border border-stone-100 p-5 mb-6 mt-6">
+      <div class="font-black text-stone-800 mb-1">全班最常錯的題目</div>
+      <div class="text-xs text-stone-400 mb-4">依「曾答錯或用完 3 個提示」的人數排序；括號內為目前還沒消滅的人數。共 ${classWrongList.length} 題有人錯過。</div>
+      ${topWrong.length ? `<ol class="space-y-2 text-sm text-stone-700 mb-5">${topWrong.map((w, k) => `<li class="flex gap-3 items-start"><span class="w-5 text-stone-400 font-bold tabular-nums">${k + 1}.</span><span class="font-black text-rose-600 whitespace-nowrap tabular-nums">${w.n} 人<span class="text-xs text-stone-400 font-bold">（${w.open}）</span></span><span class="text-stone-400 whitespace-nowrap">${MODS[w.modIdx].code} ${MODS[w.modIdx].title}</span><span class="min-w-0">${w.q}</span></li>`).join("")}</ol>
+      <div class="bg-stone-50 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-stone-700">
+        <label class="flex items-center gap-2 font-bold">題數
+          <select id="cw-count" class="border-2 border-stone-200 rounded-xl px-2 py-1.5 bg-white">
+            ${[5, 10, 15, 20].filter(n => n < classWrongList.length).map(n => `<option value="${n}" ${n === 10 ? "selected" : ""}>前 ${n} 題</option>`).join("")}
+            <option value="all" ${classWrongList.length <= 10 ? "selected" : ""}>全部 ${classWrongList.length} 題</option></select></label>
+        <span class="flex items-center gap-3 font-bold">版本
+          ${["A", "B", "C"].map(v => `<label class="flex items-center gap-1 font-normal"><input type="radio" name="cw-ver" value="${v}" ${v === "B" ? "checked" : ""}>${v}</label>`).join("")}</span>
+        <label class="flex items-center gap-2"><input type="checkbox" id="cw-opts"> 附選項</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="cw-key" checked> 附解答頁（含答錯人數）</label>
+        <button onclick="printClassMistakes()" class="ml-auto px-5 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">🖨️ 列印全班常錯題學習單</button>
+      </div>` : `<div class="text-sm text-stone-500">目前還沒有學生答錯，等學生作答後這裡會自動統計。</div>`}
+    </div>
+    <div class="flex flex-wrap gap-3 items-center mb-3"><div class="font-black text-stone-800">學生列表（${recs.length} 人）</div>
+      <input id="t-filter" oninput="filterTeacherStudents()" class="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm" placeholder="搜尋座號或姓名">
+      <span class="text-xs text-stone-400">累計欄只算單元與模擬考（改版後）；單元欄為「嘗試次數・首次/最佳」，紅字為最佳未達 6 成；點學生看每次作答明細、錯題與列印個人錯題單</span></div>
+    <div class="overflow-x-auto bg-white rounded-2xl border border-stone-100"><table class="w-full text-sm"><thead class="bg-stone-50 text-stone-500"><tr>
+      <th class="text-left px-4 py-3 sticky left-0 bg-stone-50">學生</th><th class="px-3 py-3 whitespace-nowrap">模擬<span class="block text-[10px] font-normal">首次/最佳</span></th><th class="px-3 py-3">推估</th><th class="px-3 py-3 whitespace-nowrap">嘗試<br>次數</th><th class="px-3 py-3 whitespace-nowrap">獨立答對<span class="block text-[10px] font-normal">（改版後累計）</span></th><th class="px-3 py-3 whitespace-nowrap">看完提示<br>才答對</th><th class="px-3 py-3 whitespace-nowrap">答錯<span class="block text-[10px] font-normal">沒看提示／有看</span></th><th class="px-3 py-3 whitespace-nowrap">目前錯題<span class="block text-[10px] font-normal">一／二／三關</span></th><th class="px-3 py-3 whitespace-nowrap">已消滅</th>${MODS.map(m => `<th class="px-2 py-3 whitespace-nowrap" title="${m.title}">${m.code}<span class="block text-[10px] font-normal">${BOOKS[m.book].short}冊</span></th>`).join("")}<th class="px-3 py-3 whitespace-nowrap">最後更新</th></tr></thead>
+      <tbody id="t-rows"></tbody></table></div>
+    <div id="t-detail" class="mt-6"></div>`;
+  displayTeacherStudentList(recs);
+  triggerKatex(body);
+}
+function displayTeacherStudentList(list) {
+  document.getElementById("t-rows").innerHTML = list.map(r => {
+    const mk = r.scores && r.scores.mock, S = recStats(r), ms = (r.mistakes || []).map(normMistake), stg = s => ms.filter(m => m.stage === s).length;
+    return `<tr class="border-t border-stone-100 hover:bg-amber-50 cursor-pointer" onclick="selectTeacherStudent('${escapeHtml(r.studentId)}')">
+    <td class="px-4 py-3 font-bold text-stone-700 whitespace-nowrap sticky left-0 bg-white">${escapeHtml(r.studentSeat)} 號 ${escapeHtml(r.studentName)}</td>
+    <td class="px-3 py-3 text-center tabular-nums whitespace-nowrap">${mk ? `${mk.first}/${mk.best}` : "—"}</td><td class="px-3 py-3 text-center">${lvBadge(mk ? mk.best / MOCK_N : null)}</td>
+    <td class="px-3 py-3 text-center tabular-nums">${S.tries}</td>
+    <td class="px-3 py-3 text-center tabular-nums whitespace-nowrap">${S.v2 ? `<b class="text-emerald-700">${S.indep}</b>/${S.q}` : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-amber-700">${S.v2 ? S.full : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-rose-600 whitespace-nowrap">${S.v2 ? `${S.wrongNo}／${S.wrongHint}` : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums whitespace-nowrap">${ms.length ? `${stg(1)}／${stg(2)}／${stg(3)}` : "0"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-emerald-700">${Object.keys(r.slain || {}).length}</td>
+    ${MODS.map((m, i) => { const s = r.scores && r.scores[i], n = recStats(r, i).tries || (s ? s.n || 1 : 0); return `<td class="px-2 py-3 text-center tabular-nums whitespace-nowrap ${s && s.best / m.practice.length < .6 ? "text-rose-600 font-bold" : "text-stone-600"}">${s ? `<span class="text-stone-400 font-normal">${n}次・</span>${s.first}/${s.best}${s.v === 2 ? "" : `<span class="block text-[10px] text-stone-400 font-normal">改版前</span>`}` : "—"}</td>`; }).join("")}
+    <td class="px-3 py-3 text-xs text-stone-400 whitespace-nowrap">${r.lastUpdated ? new Date(r.lastUpdated).toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : ""}</td></tr>`; }).join("");
+}
+function filterTeacherStudents() { const k = document.getElementById("t-filter").value.trim(); displayTeacherStudentList(allDashboardRecords.filter(r => !k || String(r.studentSeat).includes(k) || (r.studentName || "").includes(k))); }
+function selectTeacherStudent(id) {
+  const r = allDashboardRecords.find(x => x.studentId === id); if (!r) return;
+  const mods = appData.modules, S = recStats(r), t = nowTs();
+  const hist = (r.history || []).slice().reverse();
+  const ms = (r.mistakes || []).map(normMistake).filter(m => findQuestionData(m.modIdx, m.q)).sort((a, b) => a.stage - b.stage || a.due - b.due);
+  const cell = (v, c = "") => `<td class="px-2 py-2 text-center tabular-nums ${c}">${v}</td>`;
+  const el = document.getElementById("t-detail");
+  el.innerHTML = `<div class="bg-white rounded-2xl border border-stone-100 p-5 space-y-6">
+    <div class="flex flex-wrap items-end justify-between gap-3"><div class="font-black text-stone-800 text-xl">${escapeHtml(r.studentSeat)} 號 ${escapeHtml(r.studentName)}</div>
+      <div class="text-sm text-stone-500">共作答 <b>${S.tries}</b> 次${S.old ? `（改版前 ${S.old} 次）` : ""}・改版後獨立答對 <b class="text-emerald-700">${S.indep}/${S.q}</b>（沒看提示 ${S.solo}、看 1～2 步 ${S.hinted}）・看完提示才答對 <b class="text-amber-700">${S.full}</b>・答錯 <b class="text-rose-600">沒看提示 ${S.wrongNo}／有看提示 ${S.wrongHint}</b></div></div>
+    <div>
+      <div class="font-bold text-stone-700 mb-2">📋 每一次的作答紀錄</div>
+      <div class="overflow-x-auto max-h-96 overflow-y-auto border border-stone-100 rounded-xl"><table class="w-full text-sm"><thead class="bg-stone-50 text-stone-500 text-xs sticky top-0"><tr>
+        <th class="text-left px-3 py-2">時間</th><th class="text-left px-3 py-2">單元</th><th class="px-2 py-2">獨立答對<br><span class="font-normal">（得分）</span></th><th class="px-2 py-2">其中看<br>1～2 步</th><th class="px-2 py-2">看完提示<br>才答對</th><th class="px-2 py-2">答錯<br>沒看提示</th><th class="px-2 py-2">答錯<br>有看提示</th></tr></thead>
+        <tbody>${hist.map(h => `<tr class="border-t border-stone-100"><td class="px-3 py-2 whitespace-nowrap text-stone-500 tabular-nums">${fmtTime(h.timestamp)}</td><td class="px-3 py-2 whitespace-nowrap">${escapeHtml(h.moduleTitle)}</td>
+          ${h.v === 2 ? cell(`<b>${h.score}</b>/${h.maxScore}`, "text-emerald-700") + cell(h.hinted) + cell(h.full, "text-amber-700") + cell(h.wrongNo, "text-rose-600") + cell(h.wrongHint, "text-rose-600")
+          : `<td class="px-2 py-2 text-center tabular-nums text-stone-500">${h.score}/${h.maxScore}</td><td colspan="4" class="px-2 py-2 text-center text-xs text-stone-400">改版前紀錄（答對題數含看完提示，無細項）</td>`}</tr>`).join("") || `<tr><td colspan="7" class="px-3 py-4 text-center text-stone-400">尚無紀錄</td></tr>`}</tbody></table></div>
+    </div>
+    <div>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2"><div class="font-bold text-stone-700">👾 目前錯題（${ms.length} 題）・已消滅 ${Object.keys(r.slain || {}).length} 隻</div></div>
+      ${ms.length ? `<ul class="text-sm space-y-2 text-stone-700 mb-4">${ms.map(m => `<li class="flex gap-2 items-start"><span class="text-[11px] font-black rounded-lg px-2 py-0.5 whitespace-nowrap ${m.stage === 1 ? "bg-rose-100 text-rose-700" : m.stage === 2 ? "bg-amber-100 text-amber-700" : "bg-violet-100 text-violet-700"}">${STAGE_INFO[m.stage].short}${m.due > t ? `・${fmtTime(m.due)} 解鎖` : ""}</span><span class="text-xs text-stone-400 whitespace-nowrap mt-0.5">${MODS[m.modIdx] ? unitLabel(m.modIdx) : ""}</span><span class="min-w-0">${m.q}</span></li>`).join("")}</ul>
+      <div class="bg-stone-50 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-stone-700">
+        <span class="font-bold">🖨️ 列印個人錯題單</span>
+        <span class="flex items-center gap-3">版本 ${["A", "B", "C"].map(v => `<label class="flex items-center gap-1"><input type="radio" name="pm-ver" value="${v}" ${v === "B" ? "checked" : ""}>${v}</label>`).join("")}</span>
+        <label class="flex items-center gap-2">範圍 <select id="pm-stage" class="border-2 border-stone-200 rounded-xl px-2 py-1 bg-white"><option value="all">全部錯題</option><option value="1">只印第一關</option><option value="2">只印第二關</option><option value="3">只印第三關</option></select></label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pm-opts"> 附選項</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pm-key" checked> 附解答頁</label>
+        <button onclick="printStudentMistakes('${escapeHtml(r.studentId)}')" class="ml-auto px-5 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">預覽個人錯題單</button>
+      </div>` : `<div class="text-sm text-stone-500">目前沒有錯題。</div>`}
+    </div></div>`;
+  triggerKatex(el); el.scrollIntoView({ behavior: "smooth" });
+}
+function printStudentMistakes(id) {
+  const r = allDashboardRecords.find(x => x.studentId === id); if (!r) return;
+  const ver = document.querySelector('input[name="pm-ver"]:checked').value, sf = document.getElementById("pm-stage").value;
+  const ms = (r.mistakes || []).map(normMistake).filter(m => sf === "all" || m.stage === +sf).filter(m => findQuestionData(m.modIdx, m.q)).sort((a, b) => a.modIdx - b.modIdx);
+  if (!ms.length) { alert("這個範圍沒有錯題。"); return; }
+  const items = ms.map(m => ({ q: findQuestionData(m.modIdx, m.q), unit: unitLabel(m.modIdx), unitTag: `${BOOKS[MODS[m.modIdx].book].short}冊 ${MODS[m.modIdx].title}` }));
+  const who = `${String(r.studentSeat).padStart(2, "0")} 號 ${r.studentName}`;
+  renderSheets([{ title: `${escapeHtml(who)}　個人錯題練習單`, subtitle: `${SITE_LABEL}・${sf === "all" ? "目前所有錯題" : STAGE_INFO[+sf].name}・共 ${items.length} 題（${new Date().toLocaleDateString("zh-TW")}）`, items }], ver,
+    document.getElementById("pm-opts").checked, document.getElementById("pm-key").checked, `${who} 個人錯題 ${items.length} 題`);
+}
+function exitTeacherPanel() { if (studentName) { currentView = "overview"; renderOverview(); renderNav(); } else renderNameEntry(); }
+
+// ---------- 列印學習單 ----------
+function openPrintSetup(only, ver) {
+  const sel = only === undefined ? null : [].concat(only);
+  closeMobileMenu();
+  const box = document.getElementById("ps-units");
+  box.innerHTML = [1, 2, 3, 4, 5, 6].map(b => `<div class="rounded-2xl border border-stone-100 p-3">
+    <label class="flex items-center gap-2 text-sm font-black mb-2" style="color:${BOOKS[b].hex}"><input type="checkbox" class="ps-book" data-b="${b}" onchange="document.querySelectorAll('.ps-unit[data-b=\\'${b}\\']').forEach(x=>x.checked=this.checked)"> ${BOOKS[b].name}（${BOOKS[b].grade}）全選</label>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${bookUnits(b).map(i => `<label class="flex items-center gap-2 p-2.5 rounded-xl border-2 border-stone-200 cursor-pointer text-sm font-bold text-stone-700 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+    <input type="checkbox" value="${i}" data-b="${b}" class="ps-unit" ${sel && sel.includes(i) ? "checked" : ""}> <span class="min-w-0">${MODS[i].title}<span class="block text-[10px] text-stone-400 font-normal">${MODS[i].practice.length} 題・出現 ${MODS[i].freq} 題</span></span></label>`).join("")}</div></div>`).join("");
+  if (ver) document.querySelector(`input[name="ps-ver"][value="${ver}"]`).checked = true;
+  document.getElementById("ps-error").classList.add("hidden");
+  document.getElementById("print-setup").classList.remove("hidden");
+}
+function closePrintSetup() { document.getElementById("print-setup").classList.add("hidden"); }
+function closeWorksheet() { document.getElementById("print-overlay").classList.add("hidden"); document.body.style.overflow = ""; }
+
+const VERSION_INFO = {
+  A: { name: "A 版", guide: "請在作答區寫出完整的計算過程，最後把答案寫在「答：」後面。", work: 36 },
+  B: { name: "B 版", guide: "每題都有「第一步」提示，先照著提示起頭，再自己完成後面的計算。", work: 30 },
+  C: { name: "C 版", guide: "每題都有「第一步」和「第二步」提示，照著步驟做，最後一步請自己完成並寫出答案。", work: 20 }
+};
+function buildWorksheet() {
+  const units = [...document.querySelectorAll(".ps-unit:checked")].map(e => +e.value);
+  if (!units.length) { document.getElementById("ps-error").classList.remove("hidden"); return; }
+  const ver = document.querySelector('input[name="ps-ver"]:checked').value;
+  const withAdv = document.getElementById("ps-adv").checked;
+  const groups = units.map(mi => { const m = MODS[mi]; return { title: `${m.code} ${m.title}　單元學習單`, subtitle: `九年級會考複習・${m.chap}・${m.subtitle}`, items: m.practice.filter(q => withAdv || q.lv !== 2).map(q => ({ q, unit: unitLabel(mi) })) }; });
+  closePrintSetup();
+  renderSheets(groups, ver, document.getElementById("ps-opts").checked, document.getElementById("ps-key").checked, units.map(i => MODS[i].code).join("、"));
+}
+
+// groups: [{ title, subtitle, items: [{ q, unit, wrongN?, unitTag? }] }]
+function renderSheets(groups, ver, withOpts, withKey, summary) {
+  const vi = VERSION_INFO[ver];
+  const nh = ver === "A" ? 0 : ver === "B" ? 1 : 2;
+  const stepNames = ["第一步", "第二步"];
+  const letters = ["(A)", "(B)", "(C)", "(D)"];
+  const hasWrong = groups.some(g => g.items.some(it => it.wrongN !== undefined));
+  let html = "", keyRows = [];
+  groups.forEach(g => {
+    const body = g.items.map((it, n) => {
+      const q = it.q;
+      const ordered = withOpts ? seededShuffle(q.options, q.q) : null; // 選項順序以題目為種子，每次列印都一樣
+      keyRows.push({ unit: it.unit, n: n + 1, ans: ordered ? `${letters[ordered.indexOf(q.correctStr)]} ${q.correctStr}` : q.correctStr, how: q.hints[2], wrongN: it.wrongN });
+      return `<div class="pq ${q.fig ? "pq-g" : ""}"><div class="pq-main">
+        <div class="pq-head"><span class="pq-no">${n + 1}.</span><div>${it.unitTag ? `<span class="pq-adv" style="margin:0 6px 0 0">${it.unitTag}</span>` : ""}${q.q}${q.lv === 2 ? `<span class="pq-adv">★進階</span>` : ""}</div></div>
+        ${ordered ? `<div class="pq-opts">${ordered.map((o, k) => `<span>${letters[k]} ${o}</span>`).join("")}</div>` : ""}
+        ${q.hints.slice(0, nh).map((h, k) => `<div class="pq-hint"><b>${stepNames[k]}</b>${h}</div>`).join("")}
+        <div class="pq-work" style="height:${q.fig && vi.work < 30 ? 30 : vi.work}mm">${ver === "C" ? `<span style="font-size:10pt;color:#555">最後一步：</span>` : ""}<div class="ans">答：<span>&nbsp;</span></div></div>
+      </div>${q.fig ? `<div class="pq-fig">${figSVG(q.fig, true)}</div>` : ""}</div>`;
+    }).join("");
+    html += `<section class="sheet">
+      <div class="sheet-head">
+        <div><div class="sheet-title">${g.title}<span class="ver-tag">${vi.name}</span></div>
+        <div class="sheet-sub">${g.subtitle}</div></div>
+        <div class="sheet-fields">班級 <span></span> 座號 <span style="min-width:10mm"></span> 姓名 <span style="min-width:26mm"></span></div>
+      </div>
+      <div class="sheet-guide">📝 ${vi.guide}${withOpts ? "（請把選項代號寫在「答：」後面）" : ""}</div>
+      ${body}
+    </section>`;
+  });
+  if (withKey) {
+    html += `<section class="sheet"><div class="sheet-head"><div><div class="sheet-title">解答（教師用）<span class="ver-tag">${vi.name}</span></div><div class="sheet-sub">關鍵步驟即網站上的第 3 個提示${hasWrong ? "；「答錯人數」為曾答錯（或用完提示）的學生數" : ""}</div></div></div>
+      <table class="key-table"><thead><tr><th style="width:16%">單元</th><th style="width:6%">題</th>${hasWrong ? `<th style="width:9%">答錯人數</th>` : ""}<th style="width:28%">答案</th><th>關鍵步驟</th></tr></thead><tbody>
+      ${keyRows.map(r => `<tr><td>${r.unit}</td><td>${r.n}</td>${hasWrong ? `<td>${r.wrongN ?? ""} 人</td>` : ""}<td>${r.ans}</td><td>${r.how}</td></tr>`).join("")}</tbody></table></section>`;
+  }
+  const root = document.getElementById("print-root");
+  root.innerHTML = html;
+  document.getElementById("print-summary").textContent = `學習單預覽｜${vi.name}｜${summary}`;
+  document.getElementById("print-overlay").classList.remove("hidden");
+  document.getElementById("print-overlay").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  triggerKatex(root);
+}
+
+// ---------- 教師：列印全班常錯題 ----------
+let classWrongList = [];
+function printClassMistakes() {
+  const nSel = document.getElementById("cw-count").value;
+  const ver = document.querySelector('input[name="cw-ver"]:checked').value;
+  const list = nSel === "all" ? classWrongList : classWrongList.slice(0, +nSel);
+  if (!list.length) return;
+  const items = list.map(w => ({ q: w.data, unit: unitLabel(w.modIdx), unitTag: `${BOOKS[MODS[w.modIdx].book].short}冊 ${MODS[w.modIdx].title}`, wrongN: w.n }));
+  const today = new Date().toLocaleDateString("zh-TW");
+  renderSheets([{ title: "全班常錯題　補強學習單", subtitle: `九年級會考複習（第一～六冊）・依全班作答紀錄統計最常錯的 ${items.length} 題（${today}）`, items }], ver,
+    document.getElementById("cw-opts").checked, document.getElementById("cw-key").checked, `全班常錯題 ${items.length} 題`);
+}
+
+function seededShuffle(arr, seedStr) {
+  let h = 2166136261; for (const c of seedStr) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  const rnd = () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; };
+  const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a;
+}
+
+// ---------- 錯題重練：消滅健忘怪物 ----------
+function renderReviewHub() {
+  isQuizActive = false;
+  const t = nowTs(), b = stageBuckets(mistakes, t), killed = Object.keys(slain).length;
+  const card = s => {
+    const I = STAGE_INFO[s], r = b[s].ready.length, l = b[s].locked.length;
+    const c = { rose: ["bg-rose-50", "border-rose-200", "text-rose-700", "bg-rose-500"], amber: ["bg-amber-50", "border-amber-200", "text-amber-700", "bg-amber-500"], violet: ["bg-violet-50", "border-violet-200", "text-violet-700", "bg-violet-500"] }[I.color];
+    return `<section class="rounded-[28px] border-2 ${c[1]} ${c[0]} p-5 flex flex-col">
+      <div class="flex items-center gap-3"><span class="text-4xl">${I.icon}</span><div><div class="font-black ${c[2]} text-lg">${I.name}</div>
+        <div class="text-xs text-stone-500">${s === 1 ? "答錯的題目先來這裡，答對就移到第二關" : s === 2 ? "從第一關答對後，等 2 天才解鎖" : "第二關答對後，等 5 天才解鎖；答對就消滅怪物"}</div></div></div>
+      <div class="flex gap-3 mt-4 text-center">
+        <div class="flex-1 bg-white rounded-2xl py-3"><div class="text-[11px] font-bold text-stone-400">可以挑戰</div><div class="text-3xl font-black ${c[2]} tabular-nums">${r}</div></div>
+        <div class="flex-1 bg-white rounded-2xl py-3"><div class="text-[11px] font-bold text-stone-400">還沒解鎖</div><div class="text-3xl font-black text-stone-400 tabular-nums">${l}</div></div>
+      </div>
+      ${l ? `<div class="mt-3 text-xs text-stone-500 space-y-1 max-h-28 overflow-y-auto">${b[s].locked.slice(0, 6).map(m => `<div class="flex justify-between gap-2"><span class="truncate">🔒 ${escapeHtml(MODS[m.modIdx] ? `${BOOKS[MODS[m.modIdx].book].short}冊 ${MODS[m.modIdx].title}` : "")}</span><span class="whitespace-nowrap tabular-nums">${fmtTime(m.due)}（${fmtLeft(m.due - t)}）</span></div>`).join("")}${l > 6 ? `<div>……還有 ${l - 6} 題</div>` : ""}</div>` : ""}
+      <button ${r ? `onclick="switchView('review${s}')"` : "disabled"} class="mt-4 py-3 rounded-2xl font-black text-white ${r ? c[3] + " hover:opacity-90" : "bg-stone-300 cursor-not-allowed"}">${r ? `開始${I.short}（${r} 題）` : l ? `等待解鎖中` : "目前沒有題目"}</button>
+    </section>`;
+  };
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-6">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div><h1 class="text-3xl sm:text-4xl font-black text-stone-800">👾 錯題重練：消滅健忘怪物</h1>
+        <p class="text-stone-500 mt-2 leading-relaxed">每一題錯題都是一隻健忘怪物。要在<b>當下、兩天後、五天後</b>都獨立答對（沒看完 3 步提示），才能真正消滅牠！<br><span class="text-sm">任何一關答錯或看完提示，怪物會逃回第一關。</span></p></div>
+      <div class="bg-emerald-500 text-white rounded-[24px] px-6 py-4 text-center flex-shrink-0"><div class="text-xs font-black opacity-90">已消滅健忘怪物</div><div class="text-4xl font-black tabular-nums">🏆 ${killed}</div></div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">${card(1)}${card(2)}${card(3)}</div>
+    ${!mistakes.length ? `<div class="text-center py-6 text-stone-500 font-bold">🎉 目前沒有錯題！繼續挑戰各單元吧。</div>` : ""}
+    <div class="text-center"><button onclick="switchView('overview')" class="px-6 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">回儀表板</button></div>
+  </div>`;
+}
+
+function monsterPanel() {
+  const t = nowTs(), b = stageBuckets(mistakes, t), killed = Object.keys(slain).length;
+  if (!mistakes.length && !killed) return "";
+  const nextLock = [1, 2, 3].flatMap(s => b[s].locked).sort((x, y) => x.due - y.due)[0];
+  const cell = s => `<div class="bg-white rounded-2xl px-3 py-3 text-center"><div class="text-2xl">${STAGE_INFO[s].icon}</div><div class="text-xs font-black text-stone-500 mt-1">${STAGE_INFO[s].short}</div><div class="text-xl font-black text-stone-800 tabular-nums">${b[s].ready.length + b[s].locked.length}</div><div class="text-[11px] ${b[s].ready.length ? "text-rose-600 font-bold" : "text-stone-400"}">${b[s].ready.length ? `可挑戰 ${b[s].ready.length}` : b[s].locked.length ? "鎖定中" : "—"}</div></div>`;
+  return `<section class="rounded-[36px] bg-rose-50 border border-rose-100 p-6 sm:p-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4"><h2 class="text-2xl font-black text-rose-900 flex items-center gap-3"><span>👾</span>消滅健忘怪物</h2>
+      <div class="text-sm font-bold text-emerald-700 bg-white rounded-2xl px-4 py-2">🏆 已消滅 ${killed} 隻</div></div>
+    <p class="text-sm text-rose-900/80 mb-4">錯題要在當下、2 天後、5 天後都獨立答對，才算真正記住。${nextLock ? `下一隻怪物 ${fmtTime(nextLock.due)} 解鎖（${fmtLeft(nextLock.due - t)}）。` : ""}</p>
+    <div class="grid grid-cols-3 gap-3 max-w-xl">${cell(1)}${cell(2)}${cell(3)}</div>
+    <button onclick="switchView('review')" class="mt-5 px-5 py-3 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">前往錯題重練區 →</button>
+  </section>`;
+}
+
+// ---------- 啟動 ----------
+window.addEventListener("beforeunload", e => { if (isQuizActive) { e.preventDefault(); e.returnValue = ""; } });
+(function boot() {
+  const cur = lsGet(LS_PREFIX + "current_student", null);
+  if (cur && cur.seat && cur.name) { studentSeat = normSeat(cur.seat) || cur.seat; studentName = normName(cur.name) || cur.name; migrateLocal(cur.seat, cur.name); loadLocal(); renderOverview(); renderNav(); }
+  else renderNameEntry();
+  initFirebase();
+})();
+
+</script>
+</body>
+</html>

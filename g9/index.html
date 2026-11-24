@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>段考戰力儀表板：九年級 1-4~2-2 綜合複習</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  body { font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; background:#fafaf9; color:#292524; }
+  .fade-in { animation: fadeIn .25s ease-out; }
+  @keyframes fadeIn { from { opacity:.3; transform: translateY(4px);} to {opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce) { .fade-in { animation:none; } }
+  .btn-correct { background:#dcfce7 !important; border-color:#22c55e !important; color:#166534 !important; }
+  .btn-wrong { background:#fee2e2 !important; border-color:#ef4444 !important; color:#991b1b !important; }
+  .katex { font-size: 1.08em; }
+  .fig svg { max-width:100%; height:auto; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+
+  /* ===== 學習單預覽與列印 ===== */
+  #print-overlay { position: fixed; inset: 0; z-index: 80; background: #57534e; overflow-y: auto; }
+  .sheet { background: #fff; color:#111; width: 210mm; max-width: calc(100% - 24px); margin: 16px auto; padding: 14mm 14mm 12mm; box-shadow: 0 6px 24px rgba(0,0,0,.35); font-size: 11.5pt; line-height: 1.55; }
+  .sheet-head { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; border-bottom: 2px solid #111; padding-bottom: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .sheet-title { font-size: 16pt; font-weight: 800; letter-spacing: .02em; }
+  .sheet-sub { font-size: 9.5pt; color:#444; }
+  .sheet-fields { font-size: 10.5pt; display:flex; gap: 14px; white-space: nowrap; }
+  .sheet-fields span { border-bottom: 1px solid #111; display:inline-block; min-width: 18mm; }
+  .ver-tag { display:inline-block; border:1.5px solid #111; border-radius: 4px; padding: 0 6px; font-size: 9pt; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .sheet-guide { font-size: 9.5pt; color:#333; background:#f5f5f4; border-radius: 6px; padding: 5px 9px; margin-bottom: 8px; }
+  .pq { break-inside: avoid; page-break-inside: avoid; padding: 8px 0 10px; border-bottom: 1px dashed #bbb; display: flow-root; }
+  .pq-head { display:flex; gap: 6px; align-items:flex-start; }
+  .pq-no { font-weight: 800; min-width: 1.8em; }
+  .pq-adv { font-size: 8.5pt; border: 1px solid #111; border-radius: 3px; padding: 0 4px; margin-left: 4px; white-space: nowrap; }
+  .pq-g { display: grid; grid-template-columns: minmax(0, 1fr) 40mm; gap: 10px; align-items: start; }
+  .pq-fig { padding-top: 4px; }
+  .pq-fig svg { width: 100%; height: auto; max-height: 44mm; }
+  .pq-opts { display:flex; flex-wrap: wrap; gap: 4px 22px; margin: 4px 0 2px 2em; font-size: 10.5pt; }
+  .pq-hint { margin: 5px 0 0 2em; border: 1.5px dashed #777; border-radius: 6px; padding: 3px 8px; font-size: 10.5pt; background: #fafafa; }
+  .pq-hint b { margin-right: 4px; }
+  .pq-work { margin: 6px 0 0 2em; position: relative; }
+  .pq-work .ans { position:absolute; right: 0; bottom: 0; font-size: 10.5pt; }
+  .pq-work .ans span { display:inline-block; border-bottom: 1px solid #111; min-width: 34mm; }
+  .key-table { width:100%; border-collapse: collapse; font-size: 10pt; }
+  .key-table td, .key-table th { border: 1px solid #999; padding: 3px 6px; vertical-align: top; text-align:left; }
+  .page-break { break-before: page; page-break-before: always; }
+  @page { size: A4; margin: 12mm 12mm 12mm 12mm; }
+  @media print {
+    body > *:not(#print-overlay) { display: none !important; }
+    #print-overlay { position: static !important; background: none !important; overflow: visible !important; }
+    .no-print { display: none !important; }
+    .sheet { box-shadow: none; margin: 0; padding: 0; width: auto; max-width: none; }
+    .sheet + .sheet { break-before: page; page-break-before: always; }
+    .pq-hint { background: none; }
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- 手機頂部列 -->
+<header class="lg:hidden sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-stone-200 flex items-center justify-between px-4 py-3">
+  <div class="font-black text-stone-800">九年級幾何戰士</div>
+  <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-xl bg-stone-100 text-stone-700 text-xl" aria-label="開啟選單">☰</button>
+</header>
+
+<div class="flex">
+  <!-- 側邊欄 -->
+  <aside id="sidebar" class="hidden lg:flex fixed lg:sticky top-0 left-0 z-40 lg:z-10 h-screen w-80 bg-white border-r border-stone-200 flex-col overflow-y-auto">
+    <div class="px-7 pt-8 pb-6 bg-amber-50 border-b border-amber-100">
+      <div class="text-3xl font-black tracking-wide text-amber-600">GEOMETRY</div>
+      <div class="text-lg font-black text-stone-600 mt-1">九年級 1-4~2-2 複習</div>
+    </div>
+    <nav id="nav-list" class="flex-1 px-4 pt-5 space-y-1"></nav>
+    <div class="p-4 space-y-2 border-t border-stone-100">
+      <button onclick="openPrintSetup()" class="w-full text-left px-4 py-3 rounded-2xl bg-stone-800 text-white font-bold hover:bg-stone-700">🖨️ 列印紙本學習單</button>
+      <div id="user-info" class="text-sm"></div>
+      <button onclick="openTeacherVerification()" class="w-full text-left px-4 py-2.5 rounded-2xl text-stone-500 hover:bg-stone-100 text-sm font-bold">👨‍🏫 教師後台</button>
+    </div>
+  </aside>
+  <div id="sidebar-backdrop" class="hidden fixed inset-0 bg-black/40 z-30 lg:hidden" onclick="toggleMobileMenu()"></div>
+
+  <main id="main-content" class="flex-1 min-w-0 px-4 sm:px-8 lg:px-12 py-6 lg:py-10 max-w-7xl mx-auto w-full"></main>
+</div>
+
+<!-- 離開確認 -->
+<div id="leave-modal" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-7 max-w-sm w-full shadow-xl">
+    <div class="text-lg font-black text-stone-800 mb-2">還沒寫完喔！</div>
+    <p class="text-stone-600 text-sm mb-6">現在離開，這一回的作答不會記錄成績。確定要離開嗎？</p>
+    <div class="flex gap-3">
+      <button onclick="closeLeaveModal()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">繼續作答</button>
+      <button onclick="confirmLeave()" class="flex-1 py-3 rounded-2xl bg-rose-500 font-bold text-white">離開</button>
+    </div>
+  </div>
+</div>
+
+<!-- 教師密碼 -->
+<div id="password-modal" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-7 max-w-sm w-full shadow-xl">
+    <div class="text-lg font-black text-stone-800 mb-4">教師後台驗證</div>
+    <input id="teacher-pw" type="password" class="w-full border-2 border-stone-200 rounded-2xl px-4 py-3 mb-2" placeholder="請輸入教師密碼" onkeydown="if(event.key==='Enter')verifyTeacherPassword()">
+    <div id="pw-error" class="hidden text-sm text-rose-600 mb-2">密碼不正確，請再試一次。</div>
+    <div class="flex gap-3 mt-3">
+      <button onclick="closePasswordModal()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">取消</button>
+      <button onclick="verifyTeacherPassword()" class="flex-1 py-3 rounded-2xl bg-amber-500 font-bold text-white">進入</button>
+    </div>
+  </div>
+</div>
+
+<!-- 學習單設定 -->
+<div id="print-setup" class="hidden fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[28px] p-6 sm:p-7 max-w-lg w-full shadow-xl max-h-[92vh] overflow-y-auto">
+    <div class="text-lg font-black text-stone-800">🖨️ 列印紙本學習單</div>
+    <p class="text-sm text-stone-500 mb-5">選好單元與版本後按「預覽」，確認版面再列印（也可在列印視窗選「另存為 PDF」）。</p>
+
+    <div class="font-bold text-stone-700 mb-2">1. 單元（可複選）</div>
+    <div id="ps-units" class="grid grid-cols-2 gap-2 mb-5"></div>
+
+    <div class="font-bold text-stone-700 mb-2">2. 版本</div>
+    <div class="space-y-2 mb-5" id="ps-versions">
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="A" class="mt-1" checked>
+        <span><b>A 版｜挑戰</b><span class="block text-xs text-stone-500">只有題目，沒有提示，作答空間最大。</span></span>
+      </label>
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="B" class="mt-1">
+        <span><b>B 版｜引導</b><span class="block text-xs text-stone-500">每題附「第一步」提示，幫忙起頭。</span></span>
+      </label>
+      <label class="flex gap-3 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+        <input type="radio" name="ps-ver" value="C" class="mt-1">
+        <span><b>C 版｜鷹架</b><span class="block text-xs text-stone-500">每題附「第一步＋第二步」提示，答案幾乎呼之欲出，只差最後一步。</span></span>
+      </label>
+    </div>
+
+    <div class="font-bold text-stone-700 mb-2">3. 其他設定</div>
+    <div class="space-y-2 mb-6 text-sm text-stone-700">
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-adv" checked> 包含 ★進階題（段考題型）</label>
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-opts"> 附選項（改成選擇題形式）</label>
+      <label class="flex items-center gap-2"><input type="checkbox" id="ps-key"> 最後附解答頁（教師用）</label>
+    </div>
+    <div id="ps-error" class="hidden text-sm text-rose-600 mb-3">請至少選一個單元。</div>
+    <div class="flex gap-3">
+      <button onclick="closePrintSetup()" class="flex-1 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">取消</button>
+      <button onclick="buildWorksheet()" class="flex-1 py-3 rounded-2xl bg-amber-500 font-bold text-white">預覽學習單</button>
+    </div>
+  </div>
+</div>
+
+<!-- 學習單預覽 -->
+<div id="print-overlay" class="hidden">
+  <div class="no-print sticky top-0 z-10 bg-stone-900 text-white px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+    <div class="font-bold" id="print-summary">學習單預覽</div>
+    <div class="flex gap-2">
+      <button onclick="closeWorksheet()" class="px-4 py-2 rounded-xl bg-stone-700 font-bold">← 返回</button>
+      <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-amber-500 font-bold">🖨️ 列印</button>
+    </div>
+  </div>
+  <div id="print-root" class="pb-10"></div>
+</div>
+
+<script>
+// ===== 題庫：九年級 1-4 ~ 2-2（對齊基礎講義：概念、例題、牛刀小試；★進階題取材東南國中第二次段考 A 卷） =====
+// 格式：q 題目、o 選項（第一個是正確答案，網站會自動打亂）、h 三層提示（h[0] 第一步、h[1] 第二步、h[2] 答案與說明）
+// fig 圖形（可省略；本範圍用 t:"geo" 通用幾何圖）、lv: 2 代表 ★進階（段考題型）
+// 數學式巨集：\seg{AB} = 線段 AB，\arc{AB} = 弧 AB
+const R = String.raw;
+// 幾何小工具（座標為數學座標，y 向上；圓的半徑為 1）
+const pol = (d, k = 1) => [k * Math.cos(d * Math.PI / 180), k * Math.sin(d * Math.PI / 180)];
+const inter = (p1, p2, p3, p4) => { const d = (p1[0]-p2[0])*(p3[1]-p4[1])-(p1[1]-p2[1])*(p3[0]-p4[0]); const a = p1[0]*p2[1]-p1[1]*p2[0], b = p3[0]*p4[1]-p3[1]*p4[0]; return [(a*(p3[0]-p4[0])-(p1[0]-p2[0])*b)/d, (a*(p3[1]-p4[1])-(p1[1]-p2[1])*b)/d]; };
+const ext = (p, q, t) => [q[0] + (q[0]-p[0])*t, q[1] + (q[1]-p[1])*t];
+const SIMF = (sl1, sl2) => ({
+  t: "geo",
+  pts: { A: [0.6, 1.8], B: [0, 0], C: [1.5, 0], H: [0.6, 0], D: [2.95, 2.4], E: [2.15, 0], F: [4.15, 0], G: [2.95, 0] },
+  seg: ["AB", "BC", "CA", "AH", "DE", "EF", "FD", "DG"], ra: [["A", "H", "C"], ["D", "G", "F"]], sl: [...(sl1 || []), ...(sl2 || [])]
+});
+
+const RAW_MODULES = [
+  {
+    id: 1, title: "1-4 相似形的應用", subtitle: "相似三角形的高與面積、測量、特殊直角三角形、三角比",
+    practice: [
+      { q: R`如圖，已知 $\triangle ABC\sim\triangle DEF$，$\seg{AH}$、$\seg{DG}$ 分別為 $\seg{BC}$、$\seg{EF}$ 上的高。若 $\seg{BC}=15$，$\seg{EF}=20$，則 $\seg{AH}:\seg{DG}=$？`,
+        o: [R`$3:4$`, R`$9:16$`, R`$4:3$`, R`$16:9$`],
+        h: [R`兩相似三角形：<b>對應高的比＝對應邊的比</b>。`, R`$\seg{AH}:\seg{DG}=\seg{BC}:\seg{EF}=15:20$，再化成最簡整數比。`, R`$15:20=3:4$，所以 $\seg{AH}:\seg{DG}=3:4$。（$9:16$ 是面積比，不是高的比）`],
+        fig: SIMF([["BC", "15", 2.1]], [["EF", "20", 2.1]]) },
+      { q: R`已知 $\triangle ABC\sim\triangle DEF$，且 $\seg{AB}=8$，$\seg{DE}=12$，則 $\triangle ABC$ 與 $\triangle DEF$ 的面積比為何？`,
+        o: [R`$4:9$`, R`$2:3$`, R`$16:81$`, R`$9:4$`],
+        h: [R`兩相似三角形：<b>面積比＝邊長比的平方</b>。`, R`邊長比 $\seg{AB}:\seg{DE}=8:12=2:3$，面積比 $=2^2:3^2$。`, R`面積比 $=4:9$。（$2:3$ 是邊長比，忘了平方；$16:81$ 是平方了兩次）`] },
+      { q: R`已知 $\triangle ABC\sim\triangle DEF$，$\seg{AC}=5$，$\seg{DF}=7$。若 $\triangle ABC$ 的面積是 $50$，則 $\triangle DEF$ 的面積是多少？`,
+        o: [R`$98$`, R`$70$`, R`$140$`, R`$\frac{250}{7}$`],
+        h: [R`邊長比 $5:7$，面積比 $=5^2:7^2=25:49$。`, R`設 $\triangle DEF$ 面積為 $x$，則 $25:49=50:x$，所以 $25x=49\times 50$。`, R`$x=\frac{49\times 50}{25}=98$。`] },
+      { q: R`如圖，同一時間，羅澤的身高 $\seg{AC}=1.7$ 公尺，影子 $\seg{BC}=1$ 公尺；旗桿的影子 $\seg{EF}=2$ 公尺。則旗桿高 $\seg{DF}$ 是多少公尺？`,
+        o: [R`$3.4$`, R`$0.85$`, R`$3.7$`, R`$2.7$`],
+        h: [R`同一時間陽光角度相同，$\triangle ABC\sim\triangle DEF$（AA 相似），所以<b>對應邊成比例</b>。`, R`身高：影長 ＝ 旗桿高：旗桿影長，$1.7:1=\seg{DF}:2$。`, R`$\seg{DF}=1.7\times 2=3.4$ 公尺。`],
+        fig: { t: "geo", pts: { A: [1, 1.7], B: [0, 0], C: [1, 0], D: [4.2, 3.4], E: [2.2, 0], F: [4.2, 0] }, seg: ["AB", "BC", "CA", "DE", "EF", "FD"], ra: [["A", "C", "B"], ["D", "F", "E"]], sl: [["AC", "1.7", -1.2], ["BC", "1"], ["EF", "2"], ["DF", "?"]] } },
+      { q: R`東蓁測得一棵樹的影長為 $350$ 公分，同一時間，一根長 $1$ 公尺的標桿影長為 $0.7$ 公尺。這棵樹高多少公尺？`,
+        o: [R`$5$`, R`$500$`, R`$2.45$`, R`$245$`],
+        h: [R`先<b>換成同單位</b>：$350$ 公分 $=3.5$ 公尺。`, R`樹高：樹影 ＝ 標桿：標桿影，$x:3.5=1:0.7$。`, R`$0.7x=3.5$，$x=5$ 公尺。（$500$ 是公分不是公尺）`] },
+      { q: R`如圖，$\triangle ABC$ 中，$\angle A=\angle B=45^\circ$，$\angle C=90^\circ$。若 $\seg{AC}=4$，則 $\seg{AB}=$？`,
+        o: [R`$4\sqrt{2}$`, R`$8$`, R`$2\sqrt{2}$`, R`$4\sqrt{3}$`],
+        h: [R`$45^\circ-45^\circ-90^\circ$ 直角三角形的邊長比：<b>股：股：斜邊 $=1:1:\sqrt{2}$</b>。`, R`$\seg{AC}:\seg{AB}=1:\sqrt{2}$，所以 $\seg{AB}=4\times\sqrt{2}$。`, R`$\seg{AB}=4\sqrt{2}$。`],
+        fig: { t: "geo", pts: { A: [0, 2], C: [0, 0], B: [2, 0] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], sl: [["AC", "4"]], txt: [[0.18, 1.45, "45°"], [1.45, 0.15, "45°"]] } },
+      { q: R`等腰直角三角形的斜邊長為 $3\sqrt{2}$，則一股長為多少？`,
+        o: [R`$3$`, R`$6$`, R`$\frac{3}{2}$`, R`$3\sqrt{2}$`],
+        h: [R`股：股：斜邊 $=1:1:\sqrt{2}$。`, R`股長 $=$ 斜邊 $\div\sqrt{2}=3\sqrt{2}\div\sqrt{2}$。`, R`股長 $=3$。`] },
+      { q: R`如圖，$\angle A=30^\circ$，$\angle B=60^\circ$，$\angle C=90^\circ$，則 $\seg{BC}:\seg{AC}:\seg{AB}=$？`,
+        o: [R`$1:\sqrt{3}:2$`, R`$1:2:\sqrt{3}$`, R`$\sqrt{3}:1:2$`, R`$1:1:\sqrt{2}$`],
+        h: [R`$30^\circ$ 角的對邊最短（$1$），斜邊是它的 $2$ 倍，$60^\circ$ 角的對邊是 $\sqrt{3}$。`, R`$\seg{BC}$ 對 $30^\circ$，$\seg{AC}$ 對 $60^\circ$，$\seg{AB}$ 是斜邊。`, R`$\seg{BC}:\seg{AC}:\seg{AB}=1:\sqrt{3}:2$。`],
+        fig: { t: "geo", pts: { A: [0, 1.732], C: [0, 0], B: [1, 0] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], txt: [[0.13, 1.25, "30°"], [0.72, 0.15, "60°"]] } },
+      { q: R`$30^\circ-60^\circ-90^\circ$ 的直角三角形 $ABC$ 中，$\angle A=30^\circ$，$\angle C=90^\circ$，斜邊 $\seg{AB}=10$，則 $\seg{BC}$、$\seg{AC}$ 分別為多少？`,
+        o: [R`$\seg{BC}=5$，$\seg{AC}=5\sqrt{3}$`, R`$\seg{BC}=5\sqrt{3}$，$\seg{AC}=5$`, R`$\seg{BC}=5$，$\seg{AC}=5\sqrt{2}$`, R`$\seg{BC}=20$，$\seg{AC}=10\sqrt{3}$`],
+        h: [R`$\seg{BC}:\seg{AC}:\seg{AB}=1:\sqrt{3}:2$（$\seg{BC}$ 是 $30^\circ$ 的對邊）。`, R`斜邊 $2$ 份 $=10$，所以 $1$ 份 $=5$。`, R`$\seg{BC}=5$，$\seg{AC}=5\sqrt{3}$。`] },
+      { q: R`如圖，$\angle A=30^\circ$，$\angle C=90^\circ$，$\seg{AC}=6\sqrt{3}$，則斜邊 $\seg{AB}=$？`,
+        o: [R`$12$`, R`$6$`, R`$12\sqrt{3}$`, R`$18$`],
+        h: [R`$\seg{BC}:\seg{AC}:\seg{AB}=1:\sqrt{3}:2$。`, R`$\seg{AC}$ 是 $\sqrt{3}$ 份 $=6\sqrt{3}$，所以 $1$ 份 $=6$。`, R`$\seg{AB}=2\times 6=12$。`],
+        fig: { t: "geo", pts: { A: [0, 0], C: [1.732, 0], B: [1.732, 1] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], sl: [["AC", "6√3"]], txt: [[0.42, 0.1, "30°"]] } },
+      { q: R`如圖，$\angle C=90^\circ$，$\seg{BC}=3$，$\seg{AC}=4$，$\seg{AB}=5$，則 $\sin A=$？`,
+        o: [R`$\frac{3}{5}$`, R`$\frac{4}{5}$`, R`$\frac{3}{4}$`, R`$\frac{5}{3}$`],
+        h: [R`$\sin A=\dfrac{\angle A\text{ 的對邊}}{\text{斜邊}}$。`, R`$\angle A$ 的對邊是 $\seg{BC}=3$，斜邊是 $\seg{AB}=5$。`, R`$\sin A=\frac{3}{5}$。（$\frac{4}{5}$ 是 $\cos A$，$\frac{3}{4}$ 是 $\tan A$）`],
+        fig: { t: "geo", pts: { A: [0, 0], C: [4, 0], B: [4, 3] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], sl: [["AC", "4"], ["CB", "3"], ["AB", "5"]] } },
+      { q: R`如圖，$\angle C=90^\circ$，$\seg{AC}=15$，$\seg{BC}=8$，$\seg{AB}=17$，則 $\tan B=$？`,
+        o: [R`$\frac{15}{8}$`, R`$\frac{8}{15}$`, R`$\frac{15}{17}$`, R`$\frac{8}{17}$`],
+        h: [R`$\tan B=\dfrac{\angle B\text{ 的對邊}}{\angle B\text{ 的鄰邊}}$。站在 $B$ 點看！`, R`$\angle B$ 的對邊是 $\seg{AC}=15$，鄰邊是 $\seg{BC}=8$。`, R`$\tan B=\frac{15}{8}$。`],
+        fig: { t: "geo", pts: { C: [0, 0], B: [8, 0], A: [0, 15] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], sl: [["AC", "15"], ["CB", "8"], ["AB", "17"]] } },
+      { q: R`直角三角形 $ABC$ 中，$\angle C=90^\circ$，若 $\sin B=\frac{12}{13}$，則 $\tan B=$？`,
+        o: [R`$\frac{12}{5}$`, R`$\frac{5}{12}$`, R`$\frac{5}{13}$`, R`$\frac{13}{12}$`],
+        h: [R`$\sin B=\frac{\text{對邊}}{\text{斜邊}}=\frac{12}{13}$，可設對邊 $\seg{AC}=12$、斜邊 $\seg{AB}=13$。`, R`用畢氏定理求鄰邊：$\seg{BC}=\sqrt{13^2-12^2}=\sqrt{25}$。`, R`$\seg{BC}=5$，$\tan B=\frac{\text{對邊}}{\text{鄰邊}}=\frac{12}{5}$。`] },
+      { q: R`下列哪一個特殊角的三角比是<b>正確</b>的？`,
+        o: [R`$\sin 30^\circ=\frac{1}{2}$`, R`$\cos 30^\circ=\frac{1}{2}$`, R`$\tan 45^\circ=\frac{\sqrt{2}}{2}$`, R`$\sin 60^\circ=\frac{\sqrt{2}}{2}$`],
+        h: [R`畫出 $30^\circ-60^\circ-90^\circ$（$1:\sqrt{3}:2$）和 $45^\circ-45^\circ-90^\circ$（$1:1:\sqrt{2}$）三角形來看。`, R`$\sin 30^\circ=\frac{1}{2}$，$\cos 30^\circ=\frac{\sqrt{3}}{2}$，$\tan 45^\circ=\frac{1}{1}$，$\sin 60^\circ=\frac{\sqrt{3}}{2}$。`, R`只有 $\sin 30^\circ=\frac{1}{2}$ 正確。`] },
+      { q: R`無障礙坡道的坡度 $=\dfrac{\text{高度}}{\text{水平距離}}=\dfrac{1}{12}$。若坡道高度 $\seg{BC}=30$ 公分，則水平距離至少要多少公分？`,
+        o: [R`$360$`, R`$2.5$`, R`$390$`, R`$42$`],
+        h: [R`坡度就是 $\tan A=\frac{\text{高度}}{\text{水平距離}}$。`, R`$\frac{30}{\text{水平距離}}=\frac{1}{12}$。`, R`水平距離 $=30\times 12=360$ 公分。`],
+        fig: { t: "geo", pts: { A: [0, 0], C: [6, 0], B: [6, 1.4] }, seg: ["AC", "CB", "BA"], ra: [["A", "C", "B"]], sl: [["CB", "30"], ["AC", "?"]] } },
+      { q: R`如圖，$\triangle ABC$ 中，$\seg{AD}\perp\seg{BC}$，$\angle B=45^\circ$，$\angle C=60^\circ$，$\seg{AD}=6$，則 $\seg{BC}=$？`,
+        o: [R`$6+2\sqrt{3}$`, R`$6+6\sqrt{3}$`, R`$12$`, R`$6+3\sqrt{3}$`],
+        h: [R`把 $\triangle ABC$ 用高 $\seg{AD}$ 切成兩個特殊直角三角形：$\triangle ABD$（$45^\circ-45^\circ-90^\circ$）、$\triangle ACD$（$30^\circ-60^\circ-90^\circ$）。`, R`$\seg{BD}=\seg{AD}=6$；$\triangle ACD$ 中 $\seg{CD}:\seg{AD}=1:\sqrt{3}$，$\seg{CD}=\frac{6}{\sqrt{3}}$。`, R`$\seg{CD}=2\sqrt{3}$，$\seg{BC}=6+2\sqrt{3}$。`],
+        fig: { t: "geo", pts: { A: [6, 6], B: [0, 0], D: [6, 0], C: [9.46, 0] }, seg: ["AB", "BC", "CA", "AD"], ra: [["A", "D", "C"]], sl: [["AD", "6"]], txt: [[1.6, 0.55, "45°"], [8.2, 0.6, "60°"]] }, lv: 2 },
+      { q: R`如圖，$\triangle ABC$ 中，$\angle B=90^\circ$，$\seg{AB}=15$，$\seg{AC}=17$，則 $\sin C=$？`,
+        o: [R`$\frac{15}{17}$`, R`$\frac{8}{17}$`, R`$\frac{15}{8}$`, R`$\frac{8}{15}$`],
+        h: [R`$\sin C=\dfrac{\angle C\text{ 的對邊}}{\text{斜邊}}$，直角在 $B$，所以斜邊是 $\seg{AC}$。`, R`$\angle C$ 的對邊是 $\seg{AB}=15$，斜邊 $\seg{AC}=17$。（$\seg{BC}=\sqrt{17^2-15^2}=8$ 用不到）`, R`$\sin C=\frac{15}{17}$。`],
+        fig: { t: "geo", pts: { C: [0, 0], B: [8, 0], A: [8, 15] }, seg: ["AB", "BC", "CA"], ra: [["A", "B", "C"]], sl: [["AB", "15"], ["AC", "17"]] }, lv: 2 },
+      { q: R`如圖，台北 101 大樓高 $\seg{DE}=510$ 公尺，前方 $400$ 公尺處有另一棟大樓 $\seg{BC}$。某一時刻兩棟大樓影子頂端重疊在 $A$ 點，已知 101 的影長 $\seg{EA}=600$ 公尺，則 $\seg{BC}$ 高多少公尺？`,
+        o: [R`$170$`, R`$340$`, R`$85$`, R`$255$`],
+        h: [R`$\seg{BC}\parallel\seg{DE}$，所以 $\triangle ACB\sim\triangle AED$，對應邊成比例。`, R`$\seg{AC}=600-400=200$，$\seg{BC}:\seg{DE}=\seg{AC}:\seg{AE}=200:600$。`, R`$\seg{BC}=510\times\frac{200}{600}=170$ 公尺。`],
+        fig: { t: "geo", pts: { E: [0, 0], D: [0, 5.1], C: [4, 0], B: [4, 1.7], A: [6, 0] }, seg: ["DE", "EA", "AD", "BC"], ra: [["D", "E", "A"], ["B", "C", "A"]], sl: [["DE", "510"]], txt: [[2, -0.5, "400"], [5, -0.5, "200"]] }, lv: 2 }
+    ]
+  },
+  {
+    id: 2, title: "2-1 點、直線與圓的位置關係", subtitle: "弦與弧、弧長與扇形、點與圓、直線與圓、弦心距、切線",
+    practice: [
+      { q: R`下列關於圓的敘述，哪一項<b>不正確</b>？`,
+        o: [R`半徑是弦`, R`直徑是最長的弦`, R`通過圓心的弦叫作直徑`, R`垂直於弦的直徑必平分此弦`],
+        h: [R`<b>弦</b>：圓上任意<b>兩點</b>連成的線段。`, R`半徑的一端是圓心，圓心不在圓上，所以半徑不是弦。`, R`「半徑是弦」不正確；其他三項都正確。`] },
+      { q: R`如圖，圓 $O$ 的半徑是 $6$，$\arc{AB}$ 所對的圓心角為 $150^\circ$，則 $\arc{AB}$ 的長度為多少？`,
+        o: [R`$5\pi$`, R`$15\pi$`, R`$10\pi$`, R`$\frac{5}{2}\pi$`],
+        h: [R`弧長 $=$ 圓周長 $\times\dfrac{\text{圓心角}}{360^\circ}$。`, R`$2\pi\times 6\times\frac{150}{360}=12\pi\times\frac{5}{12}$。`, R`弧長 $=5\pi$。（$15\pi$ 是扇形面積）`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(165), B: pol(15) }, seg: ["OA", "OB"], sector: [15, 165], sl: [["OA", "6"]], txt: [[0, 0.3, "150°"]] } },
+      { q: R`圓 $O$ 的半徑是 $6$，扇形 $AOB$ 的圓心角為 $120^\circ$，則扇形 $AOB$ 的面積為多少？`,
+        o: [R`$12\pi$`, R`$4\pi$`, R`$24\pi$`, R`$36\pi$`],
+        h: [R`扇形面積 $=$ 圓面積 $\times\dfrac{\text{圓心角}}{360^\circ}$。`, R`$\pi\times 6^2\times\frac{120}{360}=36\pi\times\frac{1}{3}$。`, R`扇形面積 $=12\pi$。（$4\pi$ 是弧長）`] },
+      { q: R`圓 $O$ 的半徑是 $12$，$\arc{AB}=8\pi$，則 $\angle AOB$ 是幾度？`,
+        o: [R`$120^\circ$`, R`$60^\circ$`, R`$240^\circ$`, R`$30^\circ$`],
+        h: [R`先算圓周長，再看 $\arc{AB}$ 占圓周長的幾分之幾。`, R`圓周長 $=2\pi\times 12=24\pi$，$\frac{8\pi}{24\pi}=\frac{1}{3}$。`, R`$\angle AOB=360^\circ\times\frac{1}{3}=120^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(100), B: pol(220) }, seg: ["OA", "OB"], sector: [100, 220], sl: [["OA", "12"]] } },
+      { q: R`如圖，扇形 $OPQ$ 中，半徑為 $12$，$\triangle OPQ$ 為正三角形，求<b>弓形</b>（著色區域）的面積。`,
+        o: [R`$24\pi-36\sqrt{3}$`, R`$24\pi-72\sqrt{3}$`, R`$24\pi-72$`, R`$4\pi-36\sqrt{3}$`],
+        h: [R`弓形面積 $=$ 扇形面積 $-$ 三角形面積。正三角形的每個角都是 $60^\circ$。`, R`扇形 $=\pi\times 12^2\times\frac{60}{360}=24\pi$；正三角形面積 $=\frac{\sqrt{3}}{4}\times 12^2$。`, R`正三角形面積 $=36\sqrt{3}$，弓形面積 $=24\pi-36\sqrt{3}$。`],
+        fig: { t: "geo", circle: 0, pts: { O: [0, 0], P: pol(120), Q: pol(60) }, seg: ["OP", "OQ", "PQ"], segfill: [60, 120], arc: [60, 120], sl: [["OP", "12"]] } },
+      { q: R`承上題（半徑 $12$、圓心角 $60^\circ$ 的扇形 $OPQ$），弓形的<b>周長</b>是多少？`,
+        o: [R`$4\pi+12$`, R`$4\pi+24$`, R`$24\pi+12$`, R`$4\pi$`],
+        h: [R`弓形周長 $=$ 弧長 $+$ 弦長。`, R`弧長 $=2\pi\times 12\times\frac{60}{360}=4\pi$；$\triangle OPQ$ 是正三角形，弦 $\seg{PQ}=12$。`, R`弓形周長 $=4\pi+12$。（$4\pi+24$ 是把兩條半徑也加進去，那是扇形周長）`] },
+      { q: R`圓 $O$ 的半徑是 $5$，有 $A$、$B$、$C$ 三點，$\seg{OA}=2$，$\seg{OB}=5$，$\seg{OC}=8$，下列何者正確？`,
+        o: [R`$A$ 在圓內，$B$ 在圓上，$C$ 在圓外`, R`$A$ 在圓外，$B$ 在圓上，$C$ 在圓內`, R`$A$、$B$ 在圓內，$C$ 在圓外`, R`$A$ 在圓內，$B$、$C$ 在圓外`],
+        h: [R`比較「點到圓心的距離」和「半徑 $r$」：小於 $r$ 在圓內，等於 $r$ 在圓上，大於 $r$ 在圓外。`, R`$2\lt 5$，$5=5$，$8\gt 5$。`, R`$A$ 在圓內，$B$ 在圓上，$C$ 在圓外。`] },
+      { q: R`圓 $O$ 外有一點 $A$ 到圓心的距離是 $7$，圓 $O$ 內有一點 $B$ 到圓心的距離是 $4$。若圓 $O$ 的半徑是 $r$，則 $r$ 的範圍是？`,
+        o: [R`$4\lt r\lt 7$`, R`$4\le r\le 7$`, R`$r\gt 7$`, R`$3\lt r\lt 11$`],
+        h: [R`$A$ 在圓外：$\seg{OA}\gt r$；$B$ 在圓內：$\seg{OB}\lt r$。`, R`$7\gt r$ 且 $4\lt r$。`, R`$4\lt r\lt 7$（不能取等號，取等號就變成「在圓上」）。`] },
+      { q: R`已知圓 $O$ 的直徑為 $13$ 公分，直線 $L$ 與圓 $O$ 有<b>兩個</b>交點，則下列哪一個長度<b>不可能</b>是圓心 $O$ 到直線 $L$ 的距離？`,
+        o: [R`$13$ 公分`, R`$2$ 公分`, R`$4$ 公分`, R`$6$ 公分`],
+        h: [R`直線與圓交於兩點（割線）$\Leftrightarrow$ 圓心到直線的距離 $d\lt $ 半徑 $r$。`, R`注意題目給的是<b>直徑</b> $13$，所以半徑 $r=6.5$，需要 $d\lt 6.5$。`, R`$13\gt 6.5$，不可能；答案是 $13$ 公分。`] },
+      { q: R`在坐標平面上，以 $(1,-1)$ 為圓心、$6$ 為<b>直徑</b>畫圓，則 $(2,0)$、$(-2,2)$、$(1,3)$、$(-1,-2)$、$(4,-1)$ 五個點中，有幾個點在圓內？`,
+        o: [R`$2$ 個`, R`$3$ 個`, R`$1$ 個`, R`$4$ 個`],
+        h: [R`直徑 $6$，半徑 $r=3$。算每一點到圓心 $(1,-1)$ 的距離，和 $3$ 比較。`, R`距離平方分別是 $1^2+1^2=2$、$3^2+3^2=18$、$0^2+4^2=16$、$2^2+1^2=5$、$3^2+0^2=9$，和 $r^2=9$ 比。`, R`小於 $9$ 的有 $(2,0)$、$(-1,-2)$ 兩點在圓內；$(4,-1)$ 剛好在圓上。答案 $2$ 個。`], lv: 2 },
+      { q: R`如圖，在半徑為 $5$ 的圓 $O$ 中，弦 $\seg{PQ}=8$，$\seg{OM}$ 為弦心距，則 $\seg{OM}=$？`,
+        o: [R`$3$`, R`$4$`, R`$\sqrt{41}$`, R`$\sqrt{39}$`],
+        h: [R`<b>弦心距把弦垂直平分</b>：$\seg{PM}=\frac{1}{2}\seg{PQ}$，且 $\angle OMP=90^\circ$。`, R`$\seg{PM}=4$，連 $\seg{OP}=5$（半徑），$\seg{OM}=\sqrt{5^2-4^2}$。`, R`$\seg{OM}=\sqrt{9}=3$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], P: pol(216.87), Q: pol(323.13), M: [0, -0.6] }, seg: ["PQ", "OM", "OP"], ra: [["O", "M", "Q"]], sl: [["OP", "5"]] } },
+      { q: R`在半徑為 $17$ 的圓 $O$ 中，弦 $\seg{AB}$ 的弦心距 $\seg{OM}=8$，則弦 $\seg{AB}$ 的長是多少？`,
+        o: [R`$30$`, R`$15$`, R`$2\sqrt{353}$`, R`$18$`],
+        h: [R`弦心距垂直平分弦，$\triangle OMA$ 是直角三角形，斜邊 $\seg{OA}=17$。`, R`$\seg{AM}=\sqrt{17^2-8^2}=\sqrt{225}=15$。`, R`$\seg{AB}=2\times 15=30$。（$15$ 只是半條弦）`] },
+      { q: R`在半徑為 $5$ 的圓 $O$ 中，$\seg{OM}$、$\seg{ON}$ 分別是弦 $\seg{AB}$、$\seg{CD}$ 的弦心距。若 $\seg{OM}=\seg{ON}=3$，則 $\seg{CD}=$？`,
+        o: [R`$8$`, R`$4$`, R`$6$`, R`$2\sqrt{34}$`],
+        h: [R`同圓中，<b>弦心距相等 $\Rightarrow$ 弦長相等</b>，所以只要算一條。`, R`$\seg{CN}=\sqrt{5^2-3^2}=4$。`, R`$\seg{CD}=2\times 4=8$。`] },
+      { q: R`在半徑為 $5$ 的圓 $O$ 中，弦 $\seg{AB}=8$，弦 $\seg{CD}=6$，弦心距分別為 $\seg{OM}$、$\seg{ON}$。下列何者正確？`,
+        o: [R`$\seg{OM}=3$，$\seg{ON}=4$，$\seg{OM}\lt \seg{ON}$`, R`$\seg{OM}=4$，$\seg{ON}=3$，$\seg{OM}\gt \seg{ON}$`, R`$\seg{OM}=\seg{ON}$`, R`$\seg{OM}=3$，$\seg{ON}=4$，$\seg{OM}\gt \seg{ON}$`],
+        h: [R`<b>大弦對小弦心距</b>：弦越長，離圓心越近。`, R`$\seg{OM}=\sqrt{5^2-4^2}$，$\seg{ON}=\sqrt{5^2-3^2}$。`, R`$\seg{OM}=3$，$\seg{ON}=4$，弦 $\seg{AB}$ 較長，弦心距 $\seg{OM}$ 較短。`] },
+      { q: R`如圖，直線 $PQ$ 是圓 $O$ 的切線，$P$ 是切點。若圓 $O$ 的半徑是 $5$，$\seg{PQ}=12$，則 $\seg{OQ}=$？`,
+        o: [R`$13$`, R`$17$`, R`$7$`, R`$\sqrt{119}$`],
+        h: [R`<b>圓心和切點的連線垂直切線</b>：$\seg{OP}\perp\seg{PQ}$。`, R`$\triangle OPQ$ 是直角三角形，$\seg{OQ}=\sqrt{5^2+12^2}$。`, R`$\seg{OQ}=\sqrt{169}=13$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], P: [0, -1], Q: [-2.4, -1] }, seg: ["OP", "OQ"], line: [[-2.8, -1], [0.8, -1]], ra: [["O", "P", "Q"]], sl: [["OP", "5"], ["PQ", "12"]] } },
+      { q: R`如圖，$P$ 是圓 $O$ 外一點，$\overleftrightarrow{PA}$、$\overleftrightarrow{PB}$ 是切線，$A$、$B$ 為切點。已知圓 $O$ 半徑為 $1$，$\seg{OP}=2$，則 $\angle APB=$？`,
+        o: [R`$60^\circ$`, R`$30^\circ$`, R`$120^\circ$`, R`$90^\circ$`],
+        h: [R`$\seg{OA}\perp\seg{PA}$，$\triangle OAP$ 是直角三角形，斜邊 $\seg{OP}=2$、股 $\seg{OA}=1$。`, R`斜邊是短股的 $2$ 倍 $\Rightarrow$ $30^\circ-60^\circ-90^\circ$ 三角形，$\angle APO=30^\circ$。`, R`$\angle APB=2\angle APO=60^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(60), B: pol(-60), P: [2, 0] }, seg: ["OA", "OB", "OP", "PA", "PB"], ra: [["O", "A", "P"], ["O", "B", "P"]] } },
+      { q: R`如圖，$\overleftrightarrow{PA}$、$\overleftrightarrow{PB}$ 分別與圓 $O$ 相切於 $A$、$B$。已知圓 $O$ 的半徑為 $5$，$\seg{OP}=10$，則 $\seg{PA}=$？`,
+        o: [R`$5\sqrt{3}$`, R`$5\sqrt{5}$`, R`$5$`, R`$10$`],
+        h: [R`$\seg{OA}\perp\seg{PA}$，$\triangle OAP$ 是直角三角形，斜邊是 $\seg{OP}$。`, R`$\seg{PA}=\sqrt{\seg{OP}^2-\seg{OA}^2}=\sqrt{10^2-5^2}$。`, R`$\seg{PA}=\sqrt{75}=5\sqrt{3}$。（$5\sqrt{5}$ 是把平方相加了）`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(60), B: pol(-60), P: [2, 0] }, seg: ["OA", "OB", "OP", "PA", "PB"], ra: [["O", "A", "P"]], sl: [["OA", "5"]] }, lv: 2 },
+      { q: R`已知圓 $O$ 的半徑為 $8$，圓外有一點 $P$，$P$ 點到圓上最近的距離為 $5$，則 $P$ 點到圓上最遠的距離為多少？`,
+        o: [R`$21$`, R`$13$`, R`$16$`, R`$26$`],
+        h: [R`最近點和最遠點都在直線 $OP$ 上：最近 $=\seg{OP}-r$，最遠 $=\seg{OP}+r$。`, R`$\seg{OP}-8=5$，所以 $\seg{OP}=13$。`, R`最遠距離 $=13+8=21$（也就是 $5+$ 直徑 $16$）。`], lv: 2 }
+    ]
+  },
+  {
+    id: 3, title: "2-2 弧與圓周角", subtitle: "弧的度數、等弧等弦、圓周角、平行線截等弧、半圓的圓周角、圓內接四邊形",
+    practice: [
+      { q: R`如圖，兩同心圓的圓心為 $O$，半徑分別是 $6$ 和 $9$，$\angle AOB=60^\circ$。關於小圓的 $\arc{AB}$ 和大圓的 $\arc{CD}$，下列何者正確？`,
+        o: [R`度數都是 $60^\circ$；長度分別是 $2\pi$、$3\pi$`, R`度數都是 $60^\circ$；長度都是 $2\pi$`, R`度數分別是 $60^\circ$、$90^\circ$；長度分別是 $2\pi$、$3\pi$`, R`度數都是 $60^\circ$；長度分別是 $6\pi$、$9\pi$`],
+        h: [R`<b>弧的度數＝所對圓心角的度數</b>，和半徑大小無關；弧長才和半徑有關。`, R`兩弧的度數都是 $60^\circ$；長度分別是 $2\pi\times 6\times\frac{60}{360}$、$2\pi\times 9\times\frac{60}{360}$。`, R`度數都是 $60^\circ$；長度分別是 $2\pi$、$3\pi$。`],
+        fig: { t: "geo", circle: 1, circle2: 1.5, pts: { O: [0, 0], A: pol(135), B: pol(75), C: pol(135, 1.5), D: pol(75, 1.5) }, seg: ["OC", "OD"], txt: [[0, 0.35, "60°"]] } },
+      { q: R`正五邊形 $ABCDE$ 的頂點都在圓 $O$ 上，則 $\arc{AB}$ 是幾度？`,
+        o: [R`$72^\circ$`, R`$108^\circ$`, R`$60^\circ$`, R`$36^\circ$`],
+        h: [R`<b>等弦對等弧</b>：五條邊（弦）一樣長，所以把圓周 $360^\circ$ 平分成 $5$ 段弧。`, R`$\arc{AB}=360^\circ\div 5$。`, R`$\arc{AB}=72^\circ$。（$108^\circ$ 是正五邊形的內角）`] },
+      { q: R`如圖，正三角形 $ABC$ 的頂點都在圓 $O$ 上，則 $\angle BOC=$？`,
+        o: [R`$120^\circ$`, R`$60^\circ$`, R`$90^\circ$`, R`$240^\circ$`],
+        h: [R`三邊等長 $\Rightarrow$ 三段弧等長（等弦對等弧），每段弧 $=360^\circ\div 3$。`, R`$\arc{BC}=120^\circ$，而圓心角 $\angle BOC$ 的度數 $=\arc{BC}$ 的度數。`, R`$\angle BOC=120^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(90), B: pol(210), C: pol(330) }, seg: ["AB", "BC", "CA", "OB", "OC"] } },
+      { q: R`若一圓弧所對的圓周角是 $28^\circ$，則此圓弧所對的圓心角是幾度？`,
+        o: [R`$56^\circ$`, R`$28^\circ$`, R`$14^\circ$`, R`$152^\circ$`],
+        h: [R`<b>圓周角的度數＝所對弧度數的一半</b>；圓心角的度數＝所對弧的度數。`, R`弧的度數 $=2\times 28^\circ$。`, R`圓心角 $=56^\circ$（對同弧的圓心角是圓周角的 $2$ 倍）。`] },
+      { q: R`如圖，$\angle PBQ=55^\circ$ 是圓周角，$O$ 為圓心，則 $\angle POQ=$？`,
+        o: [R`$110^\circ$`, R`$55^\circ$`, R`$27.5^\circ$`, R`$125^\circ$`],
+        h: [R`$\angle PBQ$ 和 $\angle POQ$ 都對 $\arc{PQ}$。`, R`對同弧的圓心角是圓周角的 $2$ 倍：$\angle POQ=2\times 55^\circ$。`, R`$\angle POQ=110^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], B: pol(90), P: pol(215), Q: pol(325) }, seg: ["BP", "BQ", "OP", "OQ"], txt: [[0, 0.62, "55°"]] } },
+      { q: R`$\angle P$、$\angle Q$ 都是對 $\arc{AB}$ 的圓周角，且 $\angle P=48^\circ$，則下列何者正確？`,
+        o: [R`$\angle Q=48^\circ$，$\arc{AB}=96^\circ$`, R`$\angle Q=48^\circ$，$\arc{AB}=48^\circ$`, R`$\angle Q=96^\circ$，$\arc{AB}=96^\circ$`, R`$\angle Q=132^\circ$，$\arc{AB}=96^\circ$`],
+        h: [R`<b>對同弧的圓周角相等</b>（圓內的蝴蝶形）。`, R`$\angle Q=\angle P=48^\circ$；弧的度數是圓周角的 $2$ 倍。`, R`$\angle Q=48^\circ$，$\arc{AB}=96^\circ$。`] },
+      { q: R`如圖，$A$、$B$、$C$、$D$ 四點在圓上，$\angle ACB=30^\circ$，$\arc{AD}=110^\circ$，則 $\angle ABD=$？`,
+        o: [R`$55^\circ$`, R`$110^\circ$`, R`$30^\circ$`, R`$60^\circ$`],
+        h: [R`$\angle ABD$ 是圓周角，它對的弧是 $\arc{AD}$。（$\angle ACB=30^\circ$ 用不到，小心被干擾）`, R`圓周角 $=$ 所對弧度數的一半 $=\frac{110^\circ}{2}$。`, R`$\angle ABD=55^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { A: pol(150), B: pol(90), C: pol(-10), D: pol(260) }, seg: ["AC", "BC", "BD", "AB"] } },
+      { q: R`$\seg{AB}$、$\seg{CD}$ 是圓的兩弦，$\seg{AB}\parallel\seg{CD}$（$A$ 與 $D$ 同側、$B$ 與 $C$ 同側）。若 $\arc{AB}=40^\circ$，$\arc{CD}=130^\circ$，則 $\arc{AD}=$？`,
+        o: [R`$95^\circ$`, R`$85^\circ$`, R`$190^\circ$`, R`$45^\circ$`],
+        h: [R`<b>平行線截等弧</b>：兩平行弦之間夾的兩段弧相等，$\arc{AD}=\arc{BC}$。`, R`$\arc{AD}+\arc{BC}=360^\circ-40^\circ-130^\circ=190^\circ$。`, R`$\arc{AD}=190^\circ\div 2=95^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { A: pol(110), B: pol(70), D: pol(205), C: pol(335) }, seg: ["AB", "DC"] } },
+      { q: R`已知 $\seg{AB}\parallel\seg{CD}$ 是圓的兩弦，$\arc{CD}=126^\circ$，$\arc{AD}=75^\circ$（$\arc{AD}$ 為兩弦之間的弧），則 $\arc{AB}=$？`,
+        o: [R`$84^\circ$`, R`$159^\circ$`, R`$51^\circ$`, R`$105^\circ$`],
+        h: [R`平行線截等弧：另一側兩弦之間的弧 $\arc{BC}=\arc{AD}=75^\circ$。`, R`$\arc{AB}=360^\circ-126^\circ-75^\circ-75^\circ$。`, R`$\arc{AB}=84^\circ$。`] },
+      { q: R`如圖，$\seg{BC}$ 為圓 $O$ 的直徑，$A$ 在圓上，$\angle B=30^\circ$，則 $\angle C=$？`,
+        o: [R`$60^\circ$`, R`$30^\circ$`, R`$90^\circ$`, R`$120^\circ$`],
+        h: [R`<b>半圓的圓周角是 $90^\circ$</b>：$\angle BAC=90^\circ$。`, R`$\triangle ABC$ 內角和 $180^\circ$：$\angle C=180^\circ-90^\circ-30^\circ$。`, R`$\angle C=60^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], B: pol(180), C: pol(0), A: pol(60) }, seg: ["BC", "AB", "AC"], ra: [["B", "A", "C"]], txt: [[-0.62, 0.12, "30°"]] } },
+      { q: R`如圖，$\seg{AB}$ 是直徑，$P$ 在圓上，$\angle PAB=38^\circ$，則 $\angle ABP=$？`,
+        o: [R`$52^\circ$`, R`$38^\circ$`, R`$142^\circ$`, R`$76^\circ$`],
+        h: [R`直徑所對的圓周角 $\angle APB=90^\circ$。`, R`$\angle ABP=180^\circ-90^\circ-38^\circ$。`, R`$\angle ABP=52^\circ$。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(180), B: pol(0), P: pol(76) }, seg: ["AB", "AP", "BP"], txt: [[-0.62, 0.11, "38°"]] } },
+      { q: R`若圓周角 $\angle P$ 所對的弧是<b>劣弧</b>（小於半圓），則 $\angle P$ 是什麼角？`,
+        o: [R`銳角`, R`直角`, R`鈍角`, R`無法判斷`],
+        h: [R`圓周角 $=$ 所對弧度數的一半。劣弧的度數小於 $180^\circ$。`, R`$\angle P\lt 180^\circ\div 2=90^\circ$。`, R`$\angle P$ 是銳角。（對半圓是直角，對優弧是鈍角）`] },
+      { q: R`如圖，四邊形 $ABCD$ 是圓內接四邊形，$\angle A=80^\circ$，延長 $\seg{BC}$ 到 $E$，則 $\angle DCE=$？`,
+        o: [R`$80^\circ$`, R`$100^\circ$`, R`$160^\circ$`, R`$40^\circ$`],
+        h: [R`<b>圓內接四邊形對角互補</b>：$\angle A+\angle BCD=180^\circ$。`, R`$\angle BCD=100^\circ$，$\angle DCE=180^\circ-\angle BCD$。`, R`$\angle DCE=80^\circ$，也就是「外角＝內對角」$\angle A$。`],
+        fig: { t: "geo", circle: 1, pts: { A: pol(130), B: pol(215), C: pol(305), D: pol(20), E: ext(pol(215), pol(305), 0.45) }, seg: ["AB", "BC", "CD", "DA", "CE"], txt: [[-0.42, 0.55, "80°"]] } },
+      { q: R`圓內接四邊形 $ABCD$ 中，$\angle B=100^\circ$，$\angle C=75^\circ$，則 $\angle D=$？`,
+        o: [R`$80^\circ$`, R`$105^\circ$`, R`$100^\circ$`, R`$75^\circ$`],
+        h: [R`對角互補：$\angle B$ 和 $\angle D$ 是對角，$\angle A$ 和 $\angle C$ 是對角。`, R`$\angle D=180^\circ-\angle B=180^\circ-100^\circ$。`, R`$\angle D=80^\circ$（$\angle A=105^\circ$）。`] },
+      { q: R`如圖，$A$、$B$、$C$ 三點都在圓 $O$ 上，$\angle AOB=60^\circ$，則 $\angle OBA=$？`,
+        o: [R`$60^\circ$`, R`$30^\circ$`, R`$120^\circ$`, R`$90^\circ$`],
+        h: [R`$\seg{OA}=\seg{OB}$（都是半徑），$\triangle OAB$ 是等腰三角形。`, R`頂角 $60^\circ$，兩底角 $=(180^\circ-60^\circ)\div 2$。`, R`$\angle OBA=60^\circ$（$\triangle OAB$ 是正三角形）。`],
+        fig: { t: "geo", circle: 1, pts: { O: [0, 0], A: pol(120), B: pol(60), C: pol(250) }, seg: ["OA", "OB", "AB", "CA", "CB"], txt: [[0, 0.28, "60°"]] } },
+      { q: R`如圖，弦 $\seg{AC}$ 與弦 $\seg{BD}$ 交於圓內一點 $P$。若 $\arc{AB}=86^\circ$，$\arc{CD}=100^\circ$，則 $\angle APB=$？`,
+        o: [R`$93^\circ$`, R`$186^\circ$`, R`$87^\circ$`, R`$7^\circ$`],
+        h: [R`連 $\seg{AD}$，$\angle APB$ 是 $\triangle APD$ 的外角 $=\angle PAD+\angle PDA$。`, R`$\angle CAD=\frac{1}{2}\arc{CD}=50^\circ$，$\angle BDA=\frac{1}{2}\arc{AB}=43^\circ$。`, R`$\angle APB=50^\circ+43^\circ=93^\circ$，即 $(86^\circ+100^\circ)\div 2$。`],
+        fig: { t: "geo", circle: 1, pts: { A: pol(150), B: pol(64), C: pol(-10), D: pol(250), P: inter(pol(150), pol(-10), pol(64), pol(250)) }, seg: ["AC", "BD"] }, lv: 2 },
+      { q: R`正六邊形 $ABCDEF$ 的頂點都在圓 $O$ 上，則 $\angle ACD=$？`,
+        o: [R`$90^\circ$`, R`$120^\circ$`, R`$60^\circ$`, R`$30^\circ$`],
+        h: [R`每段弧 $=360^\circ\div 6=60^\circ$。$\angle ACD$ 是圓周角，對的是不含 $C$ 的 $\arc{AD}$。`, R`不含 $C$ 的 $\arc{AD}$ 經過 $F$、$E$，共 $3$ 段 $=180^\circ$（$\seg{AD}$ 其實是直徑）。`, R`$\angle ACD=180^\circ\div 2=90^\circ$。`], lv: 2 }
+    ]
+  }
+];
+
+// 選項中的分數用 \dfrac 顯示較清楚
+RAW_MODULES.forEach(m => m.practice.forEach(p => { p.o = p.o.map(t => t.replace(/\\frac/g, "\\dfrac")); }));
+
+</script>
+
+<script>
+// ================== 設定區（部署前請修改） ==================
+// 1) Firebase：把 Firebase 專案設定貼進來即可啟用雲端成績同步與教師後台（可沿用舊網站的同一組設定）。
+//    沒填的話網站仍可使用，成績只會存在該台裝置的瀏覽器裡。
+const MY_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAy2wm_OLhsfBin9Dmx598yKD3qTJVSr_c",
+  authDomain: "nine-1st-semester-exam1.firebaseapp.com",
+  projectId: "nine-1st-semester-exam1",
+  storageBucket: "nine-1st-semester-exam1.firebasestorage.app",
+  messagingSenderId: "270707443925",
+  appId: "1:270707443925:web:2d59d3d9c9ccbfbc907a5c"
+};
+// 2) 這一份網站的資料存放位置（和其他複習網站分開，避免成績混在一起）
+const appId = "math9-review-1-4to2-2";
+const COLLECTION_NAME = "student_scores";
+// 3) 教師後台密碼（請改成自己的）
+const TEACHER_PASSWORD = "520";
+// ============================================================
+
+const SITE_LABEL = "九年級數學 1-4～2-2";
+const LS_PREFIX = "m9c_";
+let db = null, fs = null, auth = null, cloudStatus = "connecting";
+
+const appData = {
+  modules: RAW_MODULES.map(m => ({
+    ...m,
+    practice: m.practice.map(p => ({ q: p.q, options: p.o.slice(), correctStr: p.o[0], hints: p.h, fig: p.fig || null, lv: p.lv || 1 }))
+  }))
+};
+
+// ---------- 學生狀態 ----------
+let studentSeat = "", studentName = "";
+let scores = {}, mistakes = [], mistakeLog = {}, studentHistory = [];
+let currentView = "overview", currentModuleData = [], currentModuleCorrectCount = 0, qState = [], isQuizActive = false, pendingView = null;
+let allDashboardRecords = [];
+
+function lsGet(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch (e) { return fb; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+// 座號、姓名統一格式：全形轉半形、座號去掉前面的 0、姓名去掉空白 →「07」「7」「０７」都是同一人
+function normSeat(s) { const d = String(s || "").normalize("NFKC").replace(/\D/g, ""); return d ? String(parseInt(d, 10)) : ""; }
+function normName(n) { return String(n || "").normalize("NFKC").replace(/\s+/g, ""); }
+function canonKey(seat, name) { return `${normSeat(seat)}_${normName(name)}`; }
+function getStudentId() { return canonKey(studentSeat, studentName); }
+// 舊版用原樣輸入當代號（例如 07_王小明），把那份本機紀錄搬到新代號
+function migrateLocal(rawSeat, rawName) {
+  const oldId = `${String(rawSeat).trim()}_${String(rawName).trim()}`, id = getStudentId();
+  if (oldId === id) return;
+  ["scores_", "mistakes_", "mistakelog_", "history_", "slain_"].forEach(k => {
+    const old = lsGet(LS_PREFIX + k + oldId, null); if (old === null) return;
+    if (lsGet(LS_PREFIX + k + id, null) === null) lsSet(LS_PREFIX + k + id, old);
+  });
+}
+function showToast(html, kind = "info", ms = 6000) {
+  let el = document.getElementById("toast");
+  if (!el) { el = document.createElement("div"); el.id = "toast"; document.body.appendChild(el); }
+  const c = { ok: "bg-emerald-600", info: "bg-stone-800", warn: "bg-rose-600" }[kind];
+  el.className = `fixed z-[90] left-1/2 -translate-x-1/2 top-4 max-w-[92vw] w-max ${c} text-white font-bold text-sm rounded-2xl shadow-2xl px-5 py-3 fade-in`;
+  el.innerHTML = html; clearTimeout(el._t); el._t = setTimeout(hideToast, ms);
+}
+function hideToast() { const el = document.getElementById("toast"); if (el) el.remove(); }
+function nowTs() { return Date.now() + (window.__timeShift || 0); }   // __timeShift 只供測試用
+function getStudentLabel() { return `${studentSeat} 號 ${studentName}`; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function shuffleArray(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function triggerKatex(el) {
+  const go = () => { try { renderMathInElement(el || document.body, { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false, strict: false, macros: { "\\seg": "\\overline{#1}", "\\arc": "\\overset{\\frown}{#1}" } }); } catch (e) {} };
+  if (window.renderMathInElement) go(); else window.addEventListener("load", go, { once: true });
+}
+function findQuestionData(modIdx, qText) { const m = appData.modules[modIdx]; return m ? m.practice.find(p => p.q === qText) : null; }
+
+function loadLocal() {
+  const id = getStudentId();
+  scores = lsGet(LS_PREFIX + "scores_" + id, {});
+  mistakes = lsGet(LS_PREFIX + "mistakes_" + id, []).filter(m => findQuestionData(m.modIdx, m.q)).map(normMistake);
+  mistakeLog = lsGet(LS_PREFIX + "mistakelog_" + id, {});
+  studentHistory = lsGet(LS_PREFIX + "history_" + id, []);
+  slain = lsGet(LS_PREFIX + "slain_" + id, {});
+}
+// 錯題格式：stage 1 第一關（馬上重做）／2 第二關（兩天後）／3 第三關（五天後）；due 解鎖時間；upd 最後變動時間
+function normMistake(m) { return { modIdx: m.modIdx, q: m.q, stage: m.stage || 1, due: m.due || 0, upd: m.upd || 0 }; }
+let slain = {};   // 已消滅的健忘怪物：{ 題目: 消滅時間 }，也用來避免雲端把已消滅的錯題又加回來
+function saveLocalAll() {
+  const id = getStudentId();
+  lsSet(LS_PREFIX + "scores_" + id, scores);
+  lsSet(LS_PREFIX + "mistakes_" + id, mistakes);
+  lsSet(LS_PREFIX + "mistakelog_" + id, mistakeLog);
+  lsSet(LS_PREFIX + "history_" + id, studentHistory);
+  lsSet(LS_PREFIX + "slain_" + id, slain);
+}
+
+// ---------- 雲端 ----------
+async function initFirebase() {
+  if (!MY_FIREBASE_CONFIG.apiKey || MY_FIREBASE_CONFIG.apiKey === "請貼上") { cloudStatus = "not_configured"; renderNav(); return; }
+  try {
+    const fbApp = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
+    const fbAuth = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
+    const fsMod = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+    const app = fbApp.initializeApp(MY_FIREBASE_CONFIG);
+    auth = fbAuth.getAuth(app);
+    await fbAuth.signInAnonymously(auth);
+    fs = fsMod; db = fs.getFirestore(app);   // 登入完成才啟用資料庫，避免未登入時讀取失敗
+    cloudStatus = "connected";
+    if (studentName) syncDataToCloud();
+  } catch (e) { console.error("Firebase 連線失敗：", e); cloudStatus = "error"; db = null; if (studentName) showToast("⚠️ 連不上雲端（可能是網路被擋），這次的成績先存在這台裝置。", "warn", 10000); }
+  renderNav();
+}
+function studentDocRef(id) { return fs.doc(db, "artifacts", appId, "public", "data", COLLECTION_NAME, id); }
+function mergeCloudIntoLocal(c) {
+  if (c.scores) for (const k in c.scores) {
+    const l = scores[k], r = c.scores[k];
+    if (!l) scores[k] = r;
+    else if ((l.v === 2) !== (r.v === 2)) { const nw = l.v === 2 ? l : r; scores[k] = { ...nw, n: Math.max(l.n || 1, r.n || 1) }; }
+    else scores[k] = { ...l, first: l.first ?? r.first, best: Math.max(l.best || 0, r.best || 0), n: Math.max(l.n || 0, r.n || 0) };
+  }
+  if (c.slain) for (const q in c.slain) slain[q] = Math.max(slain[q] || 0, c.slain[q]);
+  if (Array.isArray(c.mistakes)) c.mistakes.forEach(raw => {
+    if (!findQuestionData(raw.modIdx, raw.q)) return;
+    const r = normMistake(raw), i = mistakes.findIndex(x => x.q === r.q);
+    if (i === -1) mistakes.push(r); else if (r.upd > mistakes[i].upd) mistakes[i] = r;
+  });
+  // 已消滅（且之後沒有再錯）的題目，不要被舊資料加回來
+  mistakes = mistakes.filter(m => !(slain[m.q] && slain[m.q] >= m.upd));
+  if (c.mistakeLog) for (const k in c.mistakeLog) { if (!mistakeLog[k] || (c.mistakeLog[k].count || 0) > (mistakeLog[k].count || 0)) mistakeLog[k] = c.mistakeLog[k]; }
+  if (Array.isArray(c.history)) { const seen = new Set(studentHistory.map(h => h.timestamp)); c.history.forEach(h => { if (!seen.has(h.timestamp)) studentHistory.push(h); }); studentHistory.sort((a, b) => a.timestamp - b.timestamp); }
+  saveLocalAll();
+}
+let syncChain = Promise.resolve();
+function syncDataToCloud() { syncChain = syncChain.then(doSyncDataToCloud); return syncChain; }
+async function doSyncDataToCloud() {
+  if (!db || !studentName) return;
+  const idAtStart = getStudentId();
+  try {
+    const ref = studentDocRef(idAtStart);
+    const snap = await fs.getDoc(ref);
+    if (idAtStart !== getStudentId()) return;
+    const sig = () => JSON.stringify([scores, mistakes, studentHistory.length, Object.keys(slain).length]);
+    const before = sig(), histBefore = studentHistory.length;
+    if (snap.exists()) mergeCloudIntoLocal(snap.data());
+    // 第一次同步：把雲端上「同一位學生、代號寫法不同」的舊紀錄一起找回來（例如 07_王小明、7_王 小明）
+    if (!legacyChecked[idAtStart]) {
+      legacyChecked[idAtStart] = true;
+      let found = snap.exists();
+      try {
+        const all = await fs.getDocs(fs.collection(db, "artifacts", appId, "public", "data", COLLECTION_NAME));
+        const olds = []; all.forEach(d => { const r = d.data(); if (r && r.studentId !== idAtStart && !r.mergedInto && canonKey(r.studentSeat, r.studentName) === idAtStart) olds.push(r); });
+        for (const r of olds) { mergeCloudIntoLocal(r); found = true; await fs.setDoc(studentDocRef(r.studentId), { ...r, mergedInto: idAtStart }); }
+      } catch (e) { console.warn("舊紀錄搜尋失敗：", e); }
+      const who = `${String(normSeat(studentSeat)).padStart(2, "0")} 號 ${escapeHtml(normName(studentName))}`;
+      if (found || studentHistory.length) showToast(`☁️ 歡迎回來，${who}！已載入你的紀錄：完成 ${studentHistory.length} 回。`, "ok", 5000);
+      else if (!histBefore) showToast(`☁️ 雲端還沒有「${who}」的紀錄。<br><span class="text-xs">如果你以前練過，請確認座號和姓名跟上次一樣。</span>`, "info", 8000);
+    }
+    const changed = before !== sig();
+    await fs.setDoc(ref, { studentId: idAtStart, studentSeat: normSeat(studentSeat), studentName: normName(studentName), scores, mistakes, mistakesCount: mistakes.length, slain, mistakeLog, history: studentHistory, lastUpdated: Date.now() });
+    if (changed) { renderNav(); if (!isQuizActive) { if (currentView === "overview") renderOverview(); else if (currentView === "review") renderReviewHub(); } }
+  } catch (e) {
+    console.error("雲端同步異常：", e);
+    if (!legacyChecked.__err) { legacyChecked.__err = true; showToast(`⚠️ 讀不到雲端紀錄，這次的成績先存在這台裝置。<button onclick="legacyChecked={};syncDataToCloud();hideToast()" class="underline ml-2">再試一次</button>`, "warn", 12000); }
+  }
+}
+let legacyChecked = {};
+
+// ---------- 成績與錯題 ----------
+function getModuleMaxScore(i) { return i === "review" ? mistakes.length : appData.modules[i].practice.length; }
+// 成績一律只算「獨立答對」：答對而且沒有看完 3 步提示
+function saveScore(i, s) {
+  const cur = scores[i];
+  if (!cur) scores[i] = { first: s, best: s, n: 1, v: 2 };
+  else if (cur.v !== 2) scores[i] = { first: cur.first, best: s, n: (cur.n || 1) + 1, v: 2, oldBest: cur.best };   // 改版前的最佳（含看完提示）不再沿用
+  else scores[i] = { first: cur.first, best: Math.max(cur.best, s), n: (cur.n || 1) + 1, v: 2 };
+  saveLocalAll();
+}
+// 答錯或看完提示才答對 → 放進（或退回）第一關
+function addToMistakes(modIdx, qData) {
+  const ex = mistakes.find(m => m.q === qData.q);
+  const realMod = ex ? ex.modIdx : (typeof modIdx === "number" ? modIdx : (SKILL_OF[qData.q] || {}).modIdx);
+  const t = nowTs();
+  if (ex) { ex.stage = 1; ex.due = 0; ex.upd = t; }
+  else mistakes.push({ modIdx: realMod, q: qData.q, stage: 1, due: 0, upd: t });
+  const k = qData.q; mistakeLog[k] = { modIdx: realMod, count: ((mistakeLog[k] || {}).count || 0) + 1, last: Date.now() };
+  saveLocalAll();
+}
+const STAGE_INFO = {
+  1: { name: "第一關：馬上重做", short: "第一關", icon: "👾", wait: 0, color: "rose" },
+  2: { name: "第二關：兩天後再戰", short: "第二關", icon: "👹", wait: 2 * 864e5, color: "amber" },
+  3: { name: "第三關：五天後決戰", short: "第三關", icon: "🐲", wait: 5 * 864e5, color: "violet" }
+};
+// 錯題重練答對（沒看完提示）→ 往下一關；第三關也答對 → 消滅健忘怪物
+function promoteMistake(qText) {
+  const m = mistakes.find(x => x.q === qText); if (!m) return null;
+  const t = nowTs();
+  if (m.stage >= 3) { mistakes = mistakes.filter(x => x.q !== qText); slain[qText] = t; saveLocalAll(); return "slain"; }
+  m.stage += 1; m.due = t + STAGE_INFO[m.stage].wait; m.upd = t; saveLocalAll(); return m.stage;
+}
+function removeFromMistakes(qText) { mistakes = mistakes.filter(m => m.q !== qText); slain[qText] = nowTs(); saveLocalAll(); }
+function stageBuckets(list = mistakes, t = nowTs()) {
+  const b = { 1: { ready: [], locked: [] }, 2: { ready: [], locked: [] }, 3: { ready: [], locked: [] } };
+  list.map(normMistake).forEach(m => { const s = Math.min(3, Math.max(1, m.stage)); (m.due <= t ? b[s].ready : b[s].locked).push(m); });
+  [1, 2, 3].forEach(s => b[s].locked.sort((a, c) => a.due - c.due));
+  return b;
+}
+function fmtLeft(ms) { if (ms <= 0) return "已解鎖"; const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), mi = Math.ceil(ms % 36e5 / 6e4); return d ? `還要 ${d} 天 ${h} 小時` : h ? `還要 ${h} 小時 ${mi} 分` : `還要 ${mi} 分鐘`; }
+function fmtTime(t) { return new Date(t).toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
+function readyCount() { const b = stageBuckets(); return b[1].ready.length + b[2].ready.length + b[3].ready.length; }
+
+// ---------- 導覽 ----------
+function toggleMobileMenu() {
+  const sb = document.getElementById("sidebar"), bd = document.getElementById("sidebar-backdrop");
+  const open = sb.classList.contains("hidden");
+  sb.classList.toggle("hidden", !open); sb.classList.toggle("flex", open); bd.classList.toggle("hidden", !open);
+}
+function closeMobileMenu() { if (window.innerWidth < 1024) { document.getElementById("sidebar").classList.add("hidden"); document.getElementById("sidebar").classList.remove("flex"); document.getElementById("sidebar-backdrop").classList.add("hidden"); } }
+
+// ---------- 弱點分類（每題對應的觀念，用於儀表板診斷） ----------
+const SKILL_MAP = [
+  ["相似△高的比", "相似△面積比", "相似△面積比", "影子測量", "影子測量", "45-45-90", "45-45-90", "30-60-90", "30-60-90", "30-60-90", "三角比", "三角比", "三角比", "特殊角三角比", "坡度應用", "30-60-90", "三角比", "影子測量"],
+  ["弦與直徑", "弧長與扇形面積", "弧長與扇形面積", "弧長與扇形面積", "弓形", "弓形", "點與圓", "點與圓", "直線與圓", "點與圓", "弦心距", "弦心距", "弦心距", "弦心距", "切線性質", "切線性質", "切線性質", "點與圓"],
+  ["弧的度數", "等弦等弧", "等弦等弧", "圓周角", "圓周角", "圓周角", "圓周角", "平行線截等弧", "平行線截等弧", "半圓的圓周角", "半圓的圓周角", "圓周角", "圓內接四邊形", "圓內接四邊形", "圓周角", "圓周角", "半圓的圓周角"]
+];
+
+const SKILL_TIPS = {
+  "相似△高的比": "對應高的比＝對應邊的比（講義 1-4 牛刀小試 1）",
+  "相似△面積比": "面積比＝邊長比的「平方」，別忘了平方（1-4 牛刀小試 1）",
+  "影子測量": "同一時間影子與物高成比例：身高：影長＝物高：物影，先換同單位（1-4 牛刀小試 2）",
+  "45-45-90": "等腰直角三角形 股：股：斜邊＝1：1：√2（1-4 牛刀小試 3）",
+  "30-60-90": "30°的對邊：60°的對邊：斜邊＝1：√3：2，先找出 1 份是多少（1-4 牛刀小試 4、5）",
+  "三角比": "站在角上看：sin＝對/斜，cos＝鄰/斜，tan＝對/鄰（1-4 牛刀小試 6、7）",
+  "特殊角三角比": "畫出 1：√3：2 和 1：1：√2 兩個三角形再讀值（1-4 牛刀小試 8）",
+  "坡度應用": "坡度＝高度÷水平距離＝tan A（1-4 牛刀小試 9）",
+  "弦與直徑": "弦是圓上兩點的連線；半徑一端是圓心，不是弦（2-1 牛刀小試 2）",
+  "弧長與扇形面積": "弧長＝2πr×圓心角/360，扇形面積＝πr²×圓心角/360，別搞混（2-1 牛刀小試 5、6）",
+  "弓形": "弓形面積＝扇形－三角形；弓形周長＝弧長＋弦長（2-1 牛刀小試 7）",
+  "點與圓": "比較點到圓心距離和半徑：小於在內、等於在上、大於在外（2-1 牛刀小試 8）",
+  "直線與圓": "圓心到直線距離 d 和半徑 r 比：d<r 割線、d=r 切線、d>r 不相交；注意題目給直徑還是半徑（2-1 牛刀小試 9）",
+  "弦心距": "弦心距垂直平分弦，用「半弦、弦心距、半徑」直角三角形；大弦對小弦心距（2-1 牛刀小試 11～13）",
+  "切線性質": "圓心和切點的連線垂直切線，找出直角三角形用畢氏定理（2-1 牛刀小試 17～19）",
+  "弧的度數": "弧的度數＝圓心角度數，和半徑無關；弧長才和半徑有關（2-2 牛刀小試 2）",
+  "等弦等弧": "同圓中等弦對等弧、等弧對等弦；正 n 邊形每段弧＝360°÷n（2-2 牛刀小試 3、4）",
+  "圓周角": "圓周角＝所對弧度數的一半；對同弧的圓周角相等、圓心角是圓周角的 2 倍（2-2 牛刀小試 6～8）",
+  "平行線截等弧": "兩平行弦之間夾的兩段弧相等（2-2 牛刀小試 9、10）",
+  "半圓的圓周角": "直徑所對的圓周角是 90°（2-2 牛刀小試 11、12）",
+  "圓內接四邊形": "圓內接四邊形對角互補，外角＝內對角（2-2 牛刀小試 13、14）"
+};
+// 依題目文字找觀念
+const SKILL_OF = {};
+RAW_MODULES.forEach((m, mi) => m.practice.forEach((p, qi) => { SKILL_OF[p.q] = { modIdx: mi, skill: (SKILL_MAP[mi] || [])[qi] || m.title }; }));
+
+// ---------- 導覽 ----------
+function renderNav() {
+  const nav = document.getElementById("nav-list"), ui = document.getElementById("user-info");
+  if (!studentName) {
+    nav.innerHTML = `<div class="text-sm text-stone-400 px-3 py-4">🔒 請先輸入座號與姓名以啟用單元特訓</div>`;
+    ui.innerHTML = ""; return;
+  }
+  const act = v => String(currentView) === String(v) || (v === "review" && /^review/.test(String(currentView)));
+  let html = `<button onclick="switchView('overview')" class="w-full flex items-center gap-3 px-5 py-4 rounded-2xl text-left font-black text-lg transition-colors ${act("overview") ? "bg-amber-100 text-amber-900 shadow-sm" : "text-stone-600 hover:bg-stone-100"}"><span>📊</span>學習儀表板</button>
+    <div class="text-xs font-black text-stone-400 tracking-wider px-3 pt-5 pb-2">單元測驗區</div>`;
+  appData.modules.forEach((m, i) => {
+    const s = scores[i], max = m.practice.length, [no, ...rest] = m.title.split(" ");
+    html += `<button onclick="switchView(${i})" class="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left transition-colors ${act(i) ? "bg-amber-100" : "hover:bg-stone-100"}">
+      <span class="w-11 h-11 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 ${act(i) ? "bg-amber-500 text-white" : "bg-stone-100 text-stone-500"}">${no}</span>
+      <span class="min-w-0"><span class="block font-bold text-stone-800 truncate">${rest.join(" ")}</span><span class="block text-xs text-stone-400 tabular-nums">最佳獨立答對: ${s ? s.best : 0}/${max}${s && s.n ? `・練 ${s.n} 次` : ""}</span></span></button>`;
+  });
+  const rc = readyCount();
+  html += `<button onclick="switchView('review')" class="w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left transition-colors ${act("review") ? "bg-rose-100" : "hover:bg-stone-100"}">
+      <span class="w-11 h-11 rounded-full flex items-center justify-center text-lg flex-shrink-0 ${rc ? "bg-rose-100" : "bg-stone-100"}">👾</span>
+      <span class="min-w-0"><span class="block font-bold text-stone-800">錯題重練區</span><span class="block text-xs ${rc ? "text-rose-500 font-bold" : "text-stone-400"}">${mistakes.length ? `可挑戰 ${rc} 題・共 ${mistakes.length} 隻健忘怪物` : "目前沒有錯題"}</span></span></button>`;
+  nav.innerHTML = html;
+  const st = { connected: ["☁️ 成績已連線雲端", "text-green-600"], not_configured: ["💾 成績僅存本機", "text-stone-400"], error: ["⚠️ 雲端連線失敗（暫存本機）", "text-rose-500"], connecting: ["⏳ 雲端連線中…", "text-stone-400"] }[cloudStatus];
+  ui.innerHTML = `<div class="text-center space-y-1.5 py-2">
+      <div class="font-bold text-stone-600">目前學生：<span class="text-amber-600 font-black">${escapeHtml(String(studentSeat).padStart(2, "0"))} 號 ${escapeHtml(studentName)}</span></div>
+      <div class="text-xs font-bold ${st[1]}">${st[0]}</div>
+      <button onclick="changeStudentName()" class="block mx-auto text-xs text-stone-400 underline hover:text-stone-600">修改座號／姓名</button>
+      <button onclick="changeStudentName()" class="block mx-auto text-xs text-stone-400 hover:text-stone-600 pt-1">登出（換人使用）</button></div>`;
+}
+
+function switchView(v) {
+  if (isQuizActive && String(v) !== String(currentView)) { pendingView = v; openLeaveModal(); return; }
+  closeMobileMenu();
+  currentView = v;
+  if (v === "overview") renderOverview();
+  else if (v === "teacher") renderTeacherDashboard();
+  else if (v === "review") renderReviewHub();
+  else renderModule(v);
+  renderNav();
+  window.scrollTo(0, 0);
+}
+function openLeaveModal() { document.getElementById("leave-modal").classList.remove("hidden"); }
+function closeLeaveModal() { document.getElementById("leave-modal").classList.add("hidden"); pendingView = null; }
+function confirmLeave() { const v = pendingView; document.getElementById("leave-modal").classList.add("hidden"); isQuizActive = false; pendingView = null; switchView(v); }
+function abandonQuiz() { pendingView = /^review/.test(String(currentView)) ? "review" : "overview"; openLeaveModal(); }
+
+// ---------- 登入 ----------
+function renderNameEntry() {
+  currentView = "name";
+  document.getElementById("main-content").innerHTML = `
+  <div class="max-w-md mx-auto mt-6 lg:mt-16 bg-white rounded-[36px] border border-stone-100 shadow-sm p-8 text-center fade-in">
+    <div class="text-5xl mb-3">📐</div>
+    <h1 class="text-2xl font-black text-stone-800">九年級幾何戰士</h1>
+    <p class="text-sm text-stone-500 mt-1">1-4 相似形的應用・2-1 點、直線與圓・2-2 弧與圓周角</p>
+    <p class="text-sm font-bold text-stone-600 mt-5">開始前，請輸入你的座號與姓名以同步成績紀錄：</p>
+    <p class="text-xs text-stone-400 mb-5">換電腦或手機時輸入同樣的座號姓名，紀錄會自動接續</p>
+    <div class="flex gap-3 mb-3">
+      <input id="seat-input" inputmode="numeric" class="w-24 border-2 border-stone-200 rounded-2xl px-3 py-3 text-center" placeholder="座號">
+      <input id="name-input" class="flex-1 min-w-0 border-2 border-stone-200 rounded-2xl px-4 py-3 text-center" placeholder="例如：王小明" onkeydown="if(event.key==='Enter')setStudentName()">
+    </div>
+    <div id="name-error" class="hidden text-sm text-rose-600 mb-2">請填寫座號和姓名。</div>
+    <button onclick="setStudentName()" class="w-full py-4 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black text-lg shadow-sm">開始特訓 🚀</button>
+    <div class="mt-6 pt-5 border-t border-stone-100 flex flex-col sm:flex-row gap-2 justify-center">
+      <button onclick="openPrintSetup()" class="px-4 py-2.5 rounded-2xl bg-stone-800 text-white text-sm font-bold">🖨️ 列印紙本學習單</button>
+      <button onclick="openTeacherVerification()" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-600 text-sm font-bold">👨‍🏫 教師後台</button>
+    </div>
+  </div>`;
+  renderNav();
+}
+function setStudentName() {
+  const rawSeat = document.getElementById("seat-input").value, rawName = document.getElementById("name-input").value;
+  const seat = normSeat(rawSeat), name = normName(rawName);
+  if (!seat || !name) { const e = document.getElementById("name-error"); e.textContent = !seat && rawSeat.trim() ? "座號請填數字。" : "請填寫座號和姓名。"; e.classList.remove("hidden"); return; }
+  studentSeat = seat; studentName = name;
+  migrateLocal(rawSeat, rawName);
+  lsSet(LS_PREFIX + "current_student", { seat, name });
+  loadLocal(); currentView = "overview"; renderOverview(); renderNav(); syncDataToCloud();
+}
+function changeStudentName() {
+  if (isQuizActive) { pendingView = "overview"; openLeaveModal(); return; }
+  try { localStorage.removeItem(LS_PREFIX + "current_student"); } catch (e) {}
+  studentSeat = ""; studentName = ""; scores = {}; mistakes = []; mistakeLog = {}; studentHistory = []; slain = {};
+  closeMobileMenu(); renderNameEntry();
+}
+
+// ---------- 總覽：段考戰力儀表板 ----------
+function computeWeakSkills() {
+  const tally = {};
+  mistakes.forEach(m => {
+    const info = SKILL_OF[m.q]; if (!info) return;
+    const k = info.skill; tally[k] = tally[k] || { skill: k, modIdx: info.modIdx, now: 0, total: 0 };
+    tally[k].now++;
+  });
+  Object.entries(mistakeLog).forEach(([q, v]) => {
+    const info = SKILL_OF[q]; if (!info || !tally[info.skill]) return;
+    tally[info.skill].total += v.count || 1;
+  });
+  return Object.values(tally).sort((a, b) => b.now - a.now || b.total - a.total);
+}
+function progressChartSVG() {
+  const mods = appData.modules, W = 620, H = 330, L = 46, R = 12, T = 18, B = 286;
+  const pw = W - L - R, gw = pw / mods.length, bw = Math.min(34, gw * 0.28);
+  const y = v => B - (B - T) * v / 100;
+  let g = "";
+  for (let v = 0; v <= 100; v += 20) g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#e7e5e4" stroke-width="1"/><text x="${L - 8}" y="${y(v) + 4}" font-size="14" fill="#78716c" text-anchor="end">${v}</text>`;
+  mods.forEach((m, i) => {
+    const s = scores[i], max = m.practice.length, cx = L + gw * i + gw / 2;
+    const f = s ? Math.round(s.first / max * 100) : 0, b = s ? Math.round(s.best / max * 100) : 0;
+    const bar = (x, v, c) => `<rect x="${x}" y="${y(v)}" width="${bw}" height="${B - y(v)}" rx="5" fill="${c}"/>${s ? `<text x="${x + bw / 2}" y="${y(v) - 6}" font-size="13" font-weight="700" fill="#57534e" text-anchor="middle">${v}</text>` : ""}`;
+    g += bar(cx - bw - 3, f, "#d6d3d1") + bar(cx + 3, b, "#10b981");
+    g += `<text x="${cx}" y="${B + 22}" font-size="16" font-weight="700" fill="#57534e" text-anchor="middle">${m.title.split(" ")[0]}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" role="img" aria-label="各單元首次與最佳答對率">
+    ${g}
+    <line x1="${L}" x2="${W - R}" y1="${B}" y2="${B}" stroke="#a8a29e" stroke-width="1.2"/></svg>
+    <div class="flex justify-center gap-6 text-sm font-bold text-stone-600 mt-1">
+      <span class="flex items-center gap-2"><span class="w-10 h-3 rounded bg-stone-300"></span>首次挑戰</span>
+      <span class="flex items-center gap-2"><span class="w-10 h-3 rounded bg-emerald-500"></span>最佳表現</span></div>`;
+}
+function renderOverview() {
+  const mods = appData.modules;
+  const totalMax = mods.reduce((a, m) => a + m.practice.length, 0);
+  const totalBest = mods.reduce((a, m, i) => a + ((scores[i] || {}).best || 0), 0);
+  const pct = Math.round(totalBest / totalMax * 100);
+  const weak = computeWeakSkills();
+  const weakUnits = mods.map((m, i) => ({ i, m, s: scores[i] })).filter(u => u.s && u.s.best / u.m.practice.length < 0.7);
+  const untouched = mods.findIndex((m, i) => !scores[i]);
+  const nextIdx = untouched === -1 ? 0 : untouched;
+  const badgeColor = pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : "bg-green-600";
+
+  let diag;
+  if (!mistakes.length) {
+    const msg = studentHistory.length
+      ? `你已經清空所有錯題！<br>${weakUnits.length ? `不過 <b>${weakUnits.map(u => u.m.title).join("、")}</b> 的最佳紀錄還不到 7 成，再挑戰一次吧！` : "挑戰還沒滿分的單元，衝刺全對吧！"}`
+      : `你的觀念非常扎實，或者才剛開始練習。<br>請點擊下方單元開始挑戰吧！`;
+    diag = `<div class="flex items-center gap-5 p-6 rounded-[24px] bg-emerald-50 border-l-[6px] border-emerald-500">
+      <div class="text-5xl">🌟</div>
+      <div><div class="text-2xl font-black text-emerald-800">太棒了！目前無錯題</div><div class="text-emerald-700 font-bold mt-2 leading-relaxed">${msg}</div></div></div>`;
+  } else {
+    diag = `<div class="p-6 rounded-[24px] bg-rose-50 border-l-[6px] border-rose-500">
+      <div class="flex items-center gap-3 mb-4"><span class="text-3xl">🩺</span><div><div class="text-xl font-black text-rose-800">發現 ${mistakes.length} 題待複習，弱點集中在：</div></div></div>
+      <ol class="space-y-3">${weak.slice(0, 3).map((w, k) => `<li class="bg-white rounded-2xl p-4 shadow-sm">
+        <div class="flex flex-wrap items-center gap-2"><span class="w-6 h-6 rounded-full bg-rose-500 text-white text-xs font-black flex items-center justify-center">${k + 1}</span>
+          <span class="font-black text-stone-800">${w.skill}</span><span class="text-xs font-bold text-stone-500 bg-stone-100 rounded-lg px-2 py-0.5">${mods[w.modIdx].title}</span>
+          <span class="text-xs font-bold text-rose-600 ml-auto">錯題 ${w.now} 題</span></div>
+        <div class="text-sm text-stone-600 mt-2 leading-relaxed">💡 ${SKILL_TIPS[w.skill] || "回講義複習這個觀念的例題。"}</div></li>`).join("")}</ol>
+      ${weakUnits.length ? `<div class="text-sm font-bold text-rose-700 mt-4">📌 最佳紀錄未達 7 成的單元：${weakUnits.map(u => `${u.m.title}（${Math.round(u.s.best / u.m.practice.length * 100)}%）`).join("、")}</div>` : ""}
+      <button onclick="switchView('review')" class="mt-4 px-5 py-3 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">前往錯題重練區 →</button></div>`;
+  }
+
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-8">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+      <div class="min-w-0">
+        <h1 class="text-4xl sm:text-5xl font-black text-stone-900 tracking-tight">段考戰力儀表板</h1>
+        <p class="text-stone-500 text-base sm:text-lg mt-3 leading-relaxed">針對九年級 1-4～2-2（相似形的應用、點直線與圓的位置關係、弧與圓周角）專屬設計</p>
+      </div>
+      <div class="${badgeColor} text-white rounded-[28px] px-7 py-5 flex items-center gap-6 shadow-lg flex-shrink-0 self-start">
+        <div><div class="text-xs font-black tracking-wider opacity-90">綜合熟練度</div><div class="text-5xl font-black tabular-nums leading-tight">${pct}%</div><div class="text-[11px] font-bold opacity-90 mt-1">只計算獨立答對<br>（看完 3 步提示不算）</div></div>
+        <div class="text-5xl">🎯</div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <section class="bg-white rounded-[36px] border border-stone-100 shadow-sm p-6 sm:p-8 min-w-0">
+        <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-3"><span>💡</span>自我分析與弱點診斷</h2>
+        ${diag}
+        <div class="mt-6 p-6 rounded-[24px] bg-stone-50 border border-stone-100">
+          <div class="font-black text-stone-500 mb-3">🔮 當個預言家！</div>
+          <p class="text-stone-700 leading-relaxed">考前預測自己最常犯的錯：「相似形面積比忘了平方、sin／cos／tan 的對邊鄰邊站錯角、弧長和扇形面積公式搞混、弦心距忘了把弦對半、圓周角忘了是弧度數的一半、圓內接四邊形對角是互補不是相等」。</p>
+          <div class="mt-4 bg-white rounded-2xl px-5 py-4 font-bold text-stone-700 shadow-sm">💡 點擊左側「錯題重練區」，立刻消滅這些弱點吧！</div>
+        </div>
+      </section>
+      <section class="bg-white rounded-[36px] border border-stone-100 shadow-sm p-6 sm:p-8 min-w-0">
+        <h2 class="text-xl font-black text-stone-800 mb-5 flex items-center gap-3"><span>📈</span>各單元實力演進（首次 vs 最佳）</h2><div class="text-xs text-stone-400 -mt-3 mb-3">只計算獨立答對的題數（答對且沒看完 3 步提示）</div>
+        <div class="text-xs text-stone-400 mb-2">縱軸為答對率（%）</div>
+        ${progressChartSVG()}
+        <div class="grid grid-cols-2 gap-2 mt-5">${mods.map((m, i) => `<button onclick="switchView(${i})" class="text-left px-4 py-3 rounded-2xl bg-stone-50 hover:bg-amber-50 border border-stone-100">
+          <span class="block text-sm font-black text-stone-700">${m.title}</span><span class="block text-xs text-stone-400 tabular-nums">${scores[i] ? `首次 ${scores[i].first}／最佳 ${scores[i].best}／共 ${m.practice.length} 題・練 ${scores[i].n || 1} 次` : `尚未挑戰・共 ${m.practice.length} 題`}</span></button>`).join("")}</div>
+      </section>
+    </div>
+
+    ${monsterPanel()}
+
+    <section class="rounded-[36px] bg-indigo-50 border border-indigo-100 p-6 sm:p-8">
+      <h2 class="text-2xl font-black text-indigo-950 mb-4 flex items-center gap-3"><span>📝</span>專項弱點補強區</h2>
+      <p class="text-indigo-900 leading-loose"><span class="inline-block bg-indigo-200 text-indigo-900 font-black rounded-lg px-3 py-0.5 mr-2">學習建議</span>請觀察上方的「弱點診斷」，針對較不熟悉的單元，回到講義 1-4～2-2 重做「牛刀小試」（弱點診斷的提示會告訴你是第幾組）。</p>
+      <p class="text-indigo-900 leading-loose mt-1">⚠️ <b class="text-rose-600">小叮嚀：</b>練習過程中，請務必將不熟的概念及計算過程，確實記錄在你的<b>白本筆記</b>上喔！</p>
+      <div class="flex flex-wrap gap-3 mt-5">
+        <button onclick="openPrintSetup(${JSON.stringify(weakUnits.length ? weakUnits.map(u => u.i) : mods.map((m, i) => i))}, 'B')" class="px-5 py-3 rounded-2xl bg-white text-indigo-900 font-bold shadow-sm hover:bg-indigo-100">🖨️ 列印${weakUnits.length ? "弱點單元" : ""}學習單</button>
+        ${mistakes.length ? `<button onclick="switchView('review')" class="px-5 py-3 rounded-2xl bg-indigo-600 text-white font-bold hover:bg-indigo-700">👾 錯題重練（可挑戰 ${readyCount()} 題）</button>` : ""}
+      </div>
+    </section>
+
+    <section class="rounded-[36px] bg-amber-500 text-white p-7 sm:p-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
+      <div class="min-w-0">
+        <div class="text-3xl sm:text-4xl font-black italic tracking-tight">READY TO GO?</div>
+        <p class="font-bold text-lg mt-3 leading-relaxed opacity-95">${untouched === -1 ? "三個單元都挑戰過了！回到最佳紀錄最低的單元，把分數補滿。" : `從${mods[nextIdx].title.split(" ").slice(1).join(" ")}開始，透過漸進式三步驟提示，扎實掌握九年級 1-4～2-2 的段考重點。`}</p>
+      </div>
+      <button onclick="switchView(${untouched === -1 ? mods.map((m, i) => i).sort((a, b) => scores[a].best / mods[a].practice.length - scores[b].best / mods[b].practice.length)[0] : nextIdx})" class="bg-white text-amber-600 font-black text-xl px-8 py-5 rounded-[24px] shadow-lg hover:bg-amber-50 flex-shrink-0">${untouched === -1 ? "挑戰最弱單元" : untouched === 0 ? "進入第一單元" : `進入 ${mods[nextIdx].title.split(" ")[0]} 單元`}</button>
+    </section>
+  </div>`;
+  triggerKatex(document.getElementById("main-content"));
+}
+
+// ---------- 作答 ----------
+function renderModule(modIdx) {
+  const rv = /^review([123])$/.exec(String(modIdx)), isReview = !!rv, stage = rv ? +rv[1] : 0;
+  if (isReview) {
+    const t = nowTs();
+    currentModuleData = shuffleArray(mistakes.filter(m => m.stage === stage && m.due <= t).map(m => findQuestionData(m.modIdx, m.q)).filter(Boolean));
+    if (!currentModuleData.length) { currentView = "review"; renderReviewHub(); renderNav(); return; }
+  } else currentModuleData = appData.modules[modIdx].practice;
+  currentModuleData = currentModuleData.map(q => ({ ...q, shuffled: shuffleArray(q.options) }));
+  currentModuleCorrectCount = 0; qState = [];
+  const title = isReview ? `${STAGE_INFO[stage].icon} 錯題重練・${STAGE_INFO[stage].name}` : appData.modules[modIdx].title;
+  const sub = isReview ? (stage < 3 ? `獨立答對（沒看完 3 步提示）→ 移到${STAGE_INFO[stage + 1].short}，${stage === 1 ? "2" : "5"} 天後解鎖；答錯或看完提示 → 退回第一關` : "獨立答對 → 消滅健忘怪物！答錯或看完提示 → 退回第一關")
+    : appData.modules[modIdx].subtitle;
+  const MA = typeof modIdx === "number" ? modIdx : `'${modIdx}'`;
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in">
+    <div class="flex flex-wrap items-start justify-between gap-3 mb-6">
+      <div class="min-w-0">
+        <h1 class="text-3xl font-black text-stone-800">${title}</h1>
+        <div class="text-sm text-stone-500 mt-1">${sub}</div>
+        ${isReview ? "" : `<div class="text-xs text-stone-400 mt-1">計分方式：答對而且<b>沒有看完 3 步提示</b>才算分；看完提示才答對不計分，會放進錯題重練。</div>`}
+      </div>
+      <div class="flex gap-2 items-center">
+        ${isReview ? "" : `<button onclick="openPrintSetup(${modIdx})" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-700 text-sm font-bold">🖨️ 學習單</button>`}
+        <div id="score-badge" class="px-4 py-2.5 rounded-2xl bg-amber-100 text-amber-900 font-black text-sm">獨立答對: 0/${currentModuleData.length}</div>
+      </div>
+    </div>
+    ${renderHintQuizUI(modIdx)}
+    <div id="retry-footer" class="hidden mt-10 text-center bg-white border border-stone-100 rounded-[28px] p-8 shadow-sm">
+      <div class="text-2xl font-black text-stone-800" id="final-msg"></div>
+      <div class="text-sm text-stone-500 mt-3 leading-relaxed" id="final-detail"></div>
+      <div class="flex gap-3 justify-center mt-5 flex-wrap">
+        <button onclick="isQuizActive=false;switchView('overview')" class="px-6 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">回總覽</button>
+        ${isReview ? `<button onclick="isQuizActive=false;switchView('review')" class="px-6 py-3 rounded-2xl bg-stone-800 font-bold text-white">回錯題重練區</button>`
+          : `<button onclick="renderModule(${MA});window.scrollTo(0,0)" class="px-6 py-3 rounded-2xl bg-amber-500 font-bold text-white">再練一次</button>
+             <button onclick="isQuizActive=false;switchView('review')" class="px-6 py-3 rounded-2xl bg-stone-800 font-bold text-white">錯題重練</button>`}
+      </div>
+    </div>
+    <div class="text-center mt-8"><button id="abandon-btn" onclick="abandonQuiz()" class="text-sm text-stone-400 font-bold hover:text-stone-600">放棄本回作答</button></div>
+  </div>`;
+  isQuizActive = true;
+  triggerKatex(document.getElementById("main-content"));
+}
+
+function figSVG(f, forPrint) {
+  if (!f) return "";
+  if (f.t === "geo") return geoSVG(f, forPrint);
+  const ink = forPrint ? "#111" : "#44403c", fill = forPrint ? "none" : "#fef3c7", lab = forPrint ? "#111" : "#b45309";
+  const T = (x, y, s, anchor = "middle") => `<text x="${x}" y="${y}" font-size="15" font-weight="700" fill="${lab}" text-anchor="${anchor}" font-family="Times New Roman, serif" font-style="italic">${s}</text>`;
+  if (f.t === "rt") {
+    const k = 120 / Math.max(f.na, f.nb), w = f.nb * k, h = f.na * k, x0 = 30, y0 = 20;
+    const B = [x0, y0 + h], C = [x0 + w, y0 + h], A = [x0 + w, y0];
+    return `<svg viewBox="0 0 ${w + 70} ${h + 50}"><polygon points="${A} ${B} ${C}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <polyline points="${C[0] - 12},${C[1]} ${C[0] - 12},${C[1] - 12} ${C[0]},${C[1] - 12}" fill="none" stroke="${ink}" stroke-width="1.5"/>
+      ${T(A[0] + 10, y0 + h / 2 + 5, f.a, "start")}${T(x0 + w / 2, y0 + h + 22, f.b)}${T(x0 + w / 2 - 12, y0 + h / 2 - 4, f.c, "end")}</svg>`;
+  }
+  if (f.t === "rth") {
+    const k = 120 / Math.max(f.na, f.nb), w = f.nb * k, h = f.na * k, x0 = 30, y0 = 20;
+    const A = [x0, y0], B = [x0, y0 + h], C = [x0 + w, y0 + h];
+    const ux = C[0] - A[0], uy = C[1] - A[1], t = ((B[0] - A[0]) * ux + (B[1] - A[1]) * uy) / (ux * ux + uy * uy);
+    const D = [A[0] + t * ux, A[1] + t * uy];
+    return `<svg viewBox="0 0 ${w + 60} ${h + 50}"><polygon points="${A} ${B} ${C}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <polyline points="${B[0]},${B[1] - 12} ${B[0] + 12},${B[1] - 12} ${B[0] + 12},${B[1]}" fill="none" stroke="${ink}" stroke-width="1.5"/>
+      <line x1="${B[0]}" y1="${B[1]}" x2="${D[0]}" y2="${D[1]}" stroke="${ink}" stroke-width="1.8" stroke-dasharray="5 4"/>
+      ${T(x0 - 8, y0 + h / 2 + 5, f.a, "end")}${T(x0 + w / 2, y0 + h + 22, f.b)}${T((B[0] + D[0]) / 2 + 4, (B[1] + D[1]) / 2 + 16, "h", "start")}</svg>`;
+  }
+  if (f.t === "eq") {
+    const s = 130, h = s * Math.sqrt(3) / 2, x0 = 25, y0 = 15, A = [x0 + s / 2, y0], B = [x0, y0 + h], C = [x0 + s, y0 + h];
+    return `<svg viewBox="0 0 ${s + 50} ${h + 45}"><polygon points="${A} ${B} ${C}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <line x1="${A[0]}" y1="${A[1]}" x2="${A[0]}" y2="${B[1]}" stroke="${ink}" stroke-width="1.6" stroke-dasharray="5 4"/>
+      ${T(x0 + s / 4 - 10, y0 + h / 2 + 4, f.s, "end")}${T(x0 + 3 * s / 4 + 10, y0 + h / 2 + 4, f.s, "start")}${T(x0 + s / 2, y0 + h + 22, f.s)}${T(A[0] + 6, y0 + h * 0.7, "h", "start")}</svg>`;
+  }
+  if (f.t === "sq") {
+    const s = 110, x0 = 30, y0 = 25;
+    return `<svg viewBox="0 0 ${s + 60} ${s + 45}"><rect x="${x0}" y="${y0}" width="${s}" height="${s}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <line x1="${x0}" y1="${y0 + s}" x2="${x0 + s}" y2="${y0}" stroke="${ink}" stroke-width="1.8"/>
+      ${T(x0 + s / 2, y0 - 8, f.s)}${T(x0 - 8, y0 + s / 2 + 5, f.s, "end")}${T(x0 + s / 2 + 12, y0 + s / 2 + 14, f.d, "start")}</svg>`;
+  }
+  if (f.t === "rect") {
+    const k = 150 / f.nw, w = f.nw * k, h = f.nh * k, x0 = 30, y0 = 25;
+    return `<svg viewBox="0 0 ${w + 60} ${h + 45}"><rect x="${x0}" y="${y0}" width="${w}" height="${h}" fill="${fill}" stroke="${ink}" stroke-width="2"/>
+      <line x1="${x0}" y1="${y0 + h}" x2="${x0 + w}" y2="${y0}" stroke="${ink}" stroke-width="1.8"/>
+      ${T(x0 + w / 2, y0 - 8, f.w)}${T(x0 - 8, y0 + h / 2 + 5, f.h, "end")}${T(x0 + w / 2 + 10, y0 + h / 2 + 18, f.d, "start")}</svg>`;
+  }
+  return "";
+}
+
+// 通用幾何圖（數學座標，y 向上）：pts 點、seg 線段、circle/circle2 圓半徑、sector/segfill/arc 扇形/弓形/弧（角度）、
+// line 直線、ra 直角記號 [邊點, 頂點, 邊點]、sl 邊長標示 [線段, 文字, 位移倍數]、txt [x, y, 文字]
+function geoSVG(f, forPrint, W = 220) {
+  const ink = forPrint ? "#111" : "#44403c", lab = forPrint ? "#111" : "#78350f", sideC = forPrint ? "#111" : "#1d4ed8", angC = forPrint ? "#111" : "#be123c";
+  const secFill = forPrint ? "#e7e5e4" : "#fde68a", segFill = forPrint ? "#d6d3d1" : "#93c5fd";
+  const P = f.pts || {}; let all = Object.values(P).slice();
+  const R1 = Math.max(f.circle || 0, f.circle2 || 0);
+  const arcPts = (a1, a2, r = 1, n = 40) => { const o = []; for (let i = 0; i <= n; i++) { const d = (a1 + (a2 - a1) * i / n) * Math.PI / 180; o.push([r * Math.cos(d), r * Math.sin(d)]); } return o; };
+  if (R1) all.push([-R1, -R1], [R1, R1]);
+  if (f.arc) all = all.concat(arcPts(f.arc[0], f.arc[1]));
+  if (f.line) all = all.concat(f.line);
+  let x0 = Math.min(...all.map(p => p[0])), x1 = Math.max(...all.map(p => p[0])), y0 = Math.min(...all.map(p => p[1])), y1 = Math.max(...all.map(p => p[1]));
+  const span = Math.max(x1 - x0, y1 - y0) || 1, pad = Math.max(span * 0.17, (f.sl || []).some(x => x[2] > 1) ? span * 0.26 : 0);
+  x0 -= pad; x1 += pad; y0 -= pad; y1 += pad;
+  const sw = x1 - x0, sh = y1 - y0; let w = W, h = W * sh / sw; if (h > W * 1.15) { h = W * 1.15; w = h * sw / sh; }
+  const u = sw / w, X = p => p[0].toFixed(4), Y = p => (-p[1]).toFixed(4), poly = pts => pts.map(p => X(p) + "," + Y(p)).join(" ");
+  const ctr = R1 || f.arc ? [0, 0] : (() => { const v = Object.values(P); return [v.reduce((a, p) => a + p[0], 0) / v.length, v.reduce((a, p) => a + p[1], 0) / v.length]; })();
+  const st = `stroke="${ink}" stroke-width="2" vector-effect="non-scaling-stroke" fill="none"`;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" width="${w.toFixed(0)}" height="${h.toFixed(0)}" viewBox="${x0} ${-y1} ${sw} ${sh}">`;
+  if (f.sector) s += `<polygon points="0,0 ${poly(arcPts(f.sector[0], f.sector[1]))}" fill="${secFill}" stroke="none"/>`;
+  if (f.segfill) s += `<polygon points="${poly(arcPts(f.segfill[0], f.segfill[1]))}" fill="${segFill}" stroke="none"/>`;
+  if (f.circle) s += `<circle cx="0" cy="0" r="${f.circle}" ${st}/>`;
+  if (f.circle2) s += `<circle cx="0" cy="0" r="${f.circle2}" ${st}/>`;
+  if (f.arc) s += `<polyline points="${poly(arcPts(f.arc[0], f.arc[1]))}" ${st}/>`;
+  if (f.line) s += `<line x1="${X(f.line[0])}" y1="${Y(f.line[0])}" x2="${X(f.line[1])}" y2="${Y(f.line[1])}" ${st}/>`;
+  (f.seg || []).forEach(g => { const a = P[g[0]], b = P[g[1]]; if (a && b) s += `<line x1="${X(a)}" y1="${Y(a)}" x2="${X(b)}" y2="${Y(b)}" ${st}/>`; });
+  (f.ra || []).forEach(([pa, pv, pb]) => {
+    const V = P[pv], A = P[pa], B = P[pb]; if (!V || !A || !B) return;
+    const n = q => { const dx = q[0] - V[0], dy = q[1] - V[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
+    const e1 = n(A), e2 = n(B), k = 9 * u;
+    s += `<polyline points="${poly([[V[0] + e1[0] * k, V[1] + e1[1] * k], [V[0] + (e1[0] + e2[0]) * k, V[1] + (e1[1] + e2[1]) * k], [V[0] + e2[0] * k, V[1] + e2[1] * k]])}" stroke="${ink}" stroke-width="1.3" vector-effect="non-scaling-stroke" fill="none"/>`;
+  });
+  const fs = 15 * u, txt = (x, y, t, c, sz, it) => `<text x="${x.toFixed(4)}" y="${(-y + sz * 0.35).toFixed(4)}" font-size="${sz.toFixed(4)}" text-anchor="middle" fill="${c}" font-weight="700" font-family="Times New Roman, serif"${it ? ' font-style="italic"' : ""}>${t}</text>`;
+  Object.entries(P).forEach(([nm, p]) => {
+    s += `<circle cx="${X(p)}" cy="${Y(p)}" r="${2.2 * u}" fill="${ink}"/>`;
+    let dx = p[0] - ctr[0], dy = p[1] - ctr[1], l = Math.hypot(dx, dy); if (l < 1e-6) { dx = -0.7; dy = -0.7; l = 1; }
+    s += txt(p[0] + dx / l * 11 * u, p[1] + dy / l * 11 * u, nm, lab, fs, true);
+  });
+  (f.sl || []).forEach(([g, t, km]) => {
+    const a = P[g[0]], b = P[g[1]]; if (!a || !b) return;
+    const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; let nx = -(b[1] - a[1]), ny = b[0] - a[0]; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
+    if ((m[0] + nx - ctr[0]) ** 2 + (m[1] + ny - ctr[1]) ** 2 < (m[0] - nx - ctr[0]) ** 2 + (m[1] - ny - ctr[1]) ** 2) { nx = -nx; ny = -ny; }
+    const off = 10 * u * (km || 1); s += txt(m[0] + nx * off, m[1] + ny * off, t, sideC, fs * 0.9, false);
+  });
+  (f.txt || []).forEach(([x, y, t]) => { s += txt(x, y, t, angC, fs * 0.85, false); });
+  return s + "</svg>";
+}
+
+function renderHintQuizUI(modIdx) {
+  const MA = typeof modIdx === "number" ? modIdx : `'${modIdx}'`;
+  let html = `<div class="space-y-8" id="quiz-container">`;
+  currentModuleData.forEach((q, qIdx) => {
+    qState[qIdx] = { hintsShown: 0, selectedOption: null, answered: false, correct: false, isMistake: false };
+    html += `
+    <div class="p-6 sm:p-8 rounded-[32px] bg-white border border-stone-100 shadow-sm" id="q-block-${qIdx}">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1 min-w-0">
+          <div class="text-lg sm:text-xl font-bold text-stone-800 mb-5 flex items-start">
+            <span class="w-9 h-9 bg-stone-100 text-stone-600 rounded-2xl text-sm font-black flex items-center justify-center mr-4 flex-shrink-0">${qIdx + 1}</span>
+            <div class="pt-1 leading-relaxed min-w-0">${q.lv === 2 ? `<span class="inline-block text-xs font-black text-rose-600 bg-rose-50 rounded-lg px-2 py-0.5 mr-2 align-middle">★進階</span>` : ""}${q.q}</div>
+          </div>
+        </div>
+        ${q.fig ? `<div class="fig w-44 sm:w-48 mx-auto sm:mx-0 flex-shrink-0">${figSVG(q.fig, false)}</div>` : ""}
+      </div>
+      <div class="mb-5 space-y-2" id="hints-${qIdx}"></div>
+      <div class="mb-6">
+        <button onclick="showHint(${MA}, ${qIdx})" id="hint-btn-${qIdx}" class="text-sm font-bold text-amber-800 bg-amber-100 px-5 py-3 rounded-2xl hover:bg-amber-200 transition-colors">💡 看提示 (0/3)</button>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        ${q.shuffled.map((o, oIdx) => `<button id="btn-${qIdx}-${oIdx}" onclick="selectHintOption(${MA}, ${qIdx}, ${oIdx})" class="opt-btn-${qIdx} text-left px-5 py-4 rounded-2xl border-2 border-stone-200 bg-stone-50 hover:border-amber-400 hover:bg-amber-50 font-medium text-stone-700 transition-colors">${o}</button>`).join("")}
+      </div>
+      <div id="feedback-${qIdx}" class="hidden"></div>
+    </div>`;
+  });
+  return html + `</div>`;
+}
+
+function showHint(modIdx, qIdx) {
+  const st = qState[qIdx]; if (st.answered || st.hintsShown >= 3) return;
+  st.hintsShown++; if (st.hintsShown === 3) st.isMistake = true;
+  updateQuestionUI(qIdx);
+}
+function updateQuestionUI(qIdx) {
+  const st = qState[qIdx], qd = currentModuleData[qIdx];
+  const box = document.getElementById(`hints-${qIdx}`);
+  const labels = ["第一步", "第二步", "最後一步"];
+  box.innerHTML = qd.hints.slice(0, st.hintsShown).map((h, i) => `
+    <div class="p-4 bg-amber-50 text-amber-900 rounded-2xl text-sm border-l-[6px] border-amber-400 fade-in flex items-start">
+      <span class="mr-3 font-black whitespace-nowrap">💡 ${labels[i]}</span><span class="leading-relaxed font-medium min-w-0">${h}</span></div>`).join("");
+  triggerKatex(box);
+  const btn = document.getElementById(`hint-btn-${qIdx}`);
+  if (st.answered || st.hintsShown >= 3) { btn.disabled = true; btn.classList.add("opacity-50", "cursor-not-allowed"); }
+  btn.textContent = st.hintsShown >= 3 ? "💡 提示已全部顯示 (3/3)" : `💡 看提示 (${st.hintsShown}/3)`;
+}
+// 每題結果分成：solo 沒看提示答對／hinted 看 1～2 步答對（以上兩種＝獨立答對，計分）
+//              full 看完 3 步才答對（不計分）／wrongNo 沒看提示答錯／wrongHint 有看提示答錯
+function selectHintOption(modIdx, qIdx, oIdx) {
+  const st = qState[qIdx]; if (st.answered) return;
+  const qd = currentModuleData[qIdx], isCorrect = qd.shuffled[oIdx] === qd.correctStr;
+  const used = st.hintsShown;
+  st.answered = true; st.selectedOption = oIdx; st.correct = isCorrect; st.hintsUsed = used;
+  st.cat = isCorrect ? (used === 0 ? "solo" : used < 3 ? "hinted" : "full") : (used === 0 ? "wrongNo" : "wrongHint");
+  const indep = st.cat === "solo" || st.cat === "hinted";
+  const fb = document.getElementById(`feedback-${qIdx}`);
+  fb.classList.remove("hidden");
+  document.getElementById(`btn-${qIdx}-${oIdx}`).classList.add(isCorrect ? "btn-correct" : "btn-wrong");
+  const isReview = /^review/.test(String(modIdx));
+  let extra = "";
+  if (indep) {
+    currentModuleCorrectCount++;
+    if (isReview) { const r = promoteMistake(qd.q); extra = r === "slain" ? "💥 健忘怪物被你消滅了！這題從錯題清單移除。" : r ? `👍 移到${STAGE_INFO[r].short}，${fmtTime(nowTs() + STAGE_INFO[r].wait)} 解鎖再戰。` : ""; }
+    fb.innerHTML = `✅ 答對了！${used ? `（看了 ${used} 步提示，仍算獨立答對）` : ""}<span class="text-xs block mt-1 opacity-80">${extra || "上方已列出完整的三步驟解法，對照看看你的想法是不是一樣。"}</span>`;
+    fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-green-100 text-green-800 fade-in";
+  } else if (isCorrect) {
+    addToMistakes(modIdx, qd);
+    fb.innerHTML = `✅ 答案正確，但因為看完 3 步提示，<b>不計入得分</b>。<span class="text-xs block mt-1 opacity-80">${isReview ? "怪物逃回第一關，再練一次吧！" : "已放進錯題重練第一關。"}</span>`;
+    fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-amber-100 text-amber-800 fade-in";
+  } else {
+    addToMistakes(modIdx, qd);
+    const ci = qd.shuffled.indexOf(qd.correctStr);
+    document.getElementById(`btn-${qIdx}-${ci}`).classList.add("btn-correct");
+    fb.innerHTML = `❌ 再想想！正確答案已標示為綠色，上面有完整解題步驟。<span class="text-xs block mt-1 opacity-80">${isReview ? "怪物逃回第一關。" : "已放進錯題重練第一關。"}</span>`;
+    fb.className = "mt-6 text-base font-bold text-center py-4 rounded-2xl bg-rose-100 text-rose-800 fade-in";
+  }
+  st.hintsShown = 3; // 作答後顯示完整解題步驟（不影響計分）
+  document.querySelectorAll(`.opt-btn-${qIdx}`).forEach(b => { b.disabled = true; b.classList.remove("hover:border-amber-400", "hover:bg-amber-50"); });
+  updateQuestionUI(qIdx);
+  document.getElementById("score-badge").textContent = `獨立答對: ${currentModuleCorrectCount}/${currentModuleData.length}`;
+  checkModuleCompletion(modIdx);
+}
+function checkModuleCompletion(modIdx) {
+  if (!qState.every(s => s.answered)) return;
+  isQuizActive = false;
+  const max = currentModuleData.length, cnt = k => qState.filter(s => s.cat === k).length;
+  const rec = { solo: cnt("solo"), hinted: cnt("hinted"), full: cnt("full"), wrongNo: cnt("wrongNo"), wrongHint: cnt("wrongHint") };
+  const isReview = /^review/.test(String(modIdx));
+  if (!isReview) saveScore(modIdx, currentModuleCorrectCount);
+  const title = isReview ? `錯題重練・${STAGE_INFO[+String(modIdx).slice(-1)].short}` : appData.modules[modIdx].title;
+  studentHistory.push({ moduleId: modIdx, moduleTitle: title, score: currentModuleCorrectCount, maxScore: max, timestamp: Date.now(), v: 2, ...rec });
+  saveLocalAll(); syncDataToCloud();
+  const p = currentModuleCorrectCount / max;
+  document.getElementById("final-msg").textContent = `完成！獨立答對 ${currentModuleCorrectCount}/${max} ${p === 1 ? "🏆 全對！" : p >= .8 ? "👍 很棒！" : "💪 再接再厲！"}`;
+  document.getElementById("final-detail").innerHTML = `沒看提示答對 <b>${rec.solo}</b>・看 1～2 步提示答對 <b>${rec.hinted}</b>・看完提示才答對 <b>${rec.full}</b>（不計分）<br>答錯：沒看提示 <b>${rec.wrongNo}</b>・有看提示 <b>${rec.wrongHint}</b>${isReview ? `<br>👾 目前錯題：第一關 ${mistakes.filter(m => m.stage === 1).length}・第二關 ${mistakes.filter(m => m.stage === 2).length}・第三關 ${mistakes.filter(m => m.stage === 3).length}・已消滅 ${Object.keys(slain).length}` : ""}`;
+  document.getElementById("retry-footer").classList.remove("hidden");
+  const ab = document.getElementById("abandon-btn"); if (ab) ab.style.display = "none";
+  renderNav();
+}
+
+// ---------- 教師後台 ----------
+function openTeacherVerification() { closeMobileMenu(); document.getElementById("pw-error").classList.add("hidden"); document.getElementById("teacher-pw").value = ""; document.getElementById("password-modal").classList.remove("hidden"); setTimeout(() => document.getElementById("teacher-pw").focus(), 50); }
+function closePasswordModal() { document.getElementById("password-modal").classList.add("hidden"); }
+function verifyTeacherPassword() {
+  if (document.getElementById("teacher-pw").value === TEACHER_PASSWORD) { closePasswordModal(); isQuizActive = false; currentView = "teacher"; renderTeacherDashboard(); renderNav(); }
+  else document.getElementById("pw-error").classList.remove("hidden");
+}
+async function fetchAllStudentRecords() {
+  if (!db) return null;
+  const snap = await fs.getDocs(fs.collection(db, "artifacts", appId, "public", "data", COLLECTION_NAME));
+  const groups = {};
+  snap.forEach(d => { const r = d.data(); if (!r || r.mergedInto) return; const k = canonKey(r.studentSeat, r.studentName); (groups[k] = groups[k] || []).push(r); });
+  // 同一位學生如果有不同寫法的紀錄（學生尚未重新登入），先在後台合併顯示
+  const out = Object.values(groups).map(rs => rs.length === 1 ? { ...rs[0], studentSeat: normSeat(rs[0].studentSeat), studentName: normName(rs[0].studentName) } : mergeRecords(rs));
+  return out.sort((a, b) => (parseInt(a.studentSeat) || 0) - (parseInt(b.studentSeat) || 0));
+}
+function mergeRecords(rs) {
+  const out = { studentId: rs[0].studentId, studentSeat: normSeat(rs[0].studentSeat), studentName: normName(rs[0].studentName), scores: {}, mistakes: [], slain: {}, mistakeLog: {}, history: [], lastUpdated: 0 };
+  rs.forEach(r => {
+    Object.entries(r.scores || {}).forEach(([k, v]) => { const l = out.scores[k]; out.scores[k] = l ? { first: Math.min(l.first, v.first), best: Math.max(l.best, v.best), n: (l.n || 1) + (v.n || 1) } : v; });
+    Object.assign(out.slain, r.slain || {});
+    (r.mistakes || []).forEach(m => { if (!out.mistakes.some(x => x.q === m.q)) out.mistakes.push(m); });
+    Object.entries(r.mistakeLog || {}).forEach(([q, v]) => { if (!out.mistakeLog[q] || (v.count || 0) > out.mistakeLog[q].count) out.mistakeLog[q] = v; });
+    out.history.push(...(r.history || [])); out.lastUpdated = Math.max(out.lastUpdated, r.lastUpdated || 0);
+  });
+  out.history.sort((a, b) => a.timestamp - b.timestamp); out.mistakesCount = out.mistakes.length;
+  return out;
+}
+// 學生作答統計（只算改版後有細項的紀錄）
+function recStats(r, modFilter) {
+  // 沒指定單元時只統計單元測驗（不含錯題重練）
+  const hs = (r.history || []).filter(h => modFilter === undefined ? typeof h.moduleId === "number" : String(h.moduleId) === String(modFilter));
+  const v2 = hs.filter(h => h.v === 2), sum = k => v2.reduce((a, h) => a + (h[k] || 0), 0);
+  return { tries: hs.length, v2: v2.length, old: hs.length - v2.length, q: v2.reduce((a, h) => a + h.maxScore, 0), indep: sum("solo") + sum("hinted"), solo: sum("solo"), hinted: sum("hinted"), full: sum("full"), wrongNo: sum("wrongNo"), wrongHint: sum("wrongHint") };
+}
+async function renderTeacherDashboard() {
+  const main = document.getElementById("main-content");
+  main.innerHTML = `<div class="fade-in"><div class="flex flex-wrap justify-between items-center gap-3 mb-6"><h1 class="text-3xl font-black text-stone-800">👨‍🏫 教師後台</h1>
+    <div class="flex gap-2"><button onclick="openPrintSetup()" class="px-4 py-2.5 rounded-2xl bg-stone-800 text-white text-sm font-bold">🖨️ 列印學習單</button><button onclick="exitTeacherPanel()" class="px-4 py-2.5 rounded-2xl bg-stone-100 text-stone-700 text-sm font-bold">離開後台</button></div></div>
+    <div id="teacher-body" class="text-stone-500">讀取中…</div></div>`;
+  let recs = null;
+  try { recs = await fetchAllStudentRecords(); } catch (e) { console.error(e); }
+  const body = document.getElementById("teacher-body");
+  if (!recs) { body.innerHTML = `<div class="bg-amber-50 border border-amber-100 rounded-2xl p-5 text-amber-900 text-sm leading-relaxed">目前沒有連上雲端資料庫，所以看不到全班成績。請在程式最上方的「設定區」確認 Firebase 設定，並確認 Firebase 已開啟「匿名登入」。<br>學習單列印功能不需要雲端，可以直接使用。</div>`; return; }
+  allDashboardRecords = recs;
+  const mods = appData.modules;
+  const avg = mods.map((m, i) => { const v = recs.filter(r => r.scores && r.scores[i]); return v.length ? v.reduce((a, r) => a + r.scores[i].best, 0) / v.length / m.practice.length : 0; });
+  const doneCnt = mods.map((m, i) => recs.filter(r => r.scores && r.scores[i]).length);
+  const tries = mods.map((m, i) => recs.reduce((a, r) => a + recStats(r, i).tries, 0));
+  const wrong = {};
+  recs.forEach(r => {
+    Object.entries(r.mistakeLog || {}).forEach(([q, v]) => { wrong[q] = wrong[q] || { modIdx: v.modIdx, n: 0, open: 0 }; wrong[q].n++; });
+    (r.mistakes || []).forEach(m => { if (wrong[m.q]) wrong[m.q].open++; });
+  });
+  classWrongList = Object.entries(wrong).map(([q, v]) => ({ q, ...v, data: findQuestionData(v.modIdx, q) })).filter(w => w.data)
+    .sort((a, b) => b.n - a.n || b.open - a.open);
+  const topWrong = classWrongList.slice(0, 10);
+  body.innerHTML = `
+    <div class="bg-sky-50 border border-sky-100 rounded-2xl px-4 py-3 text-sm text-sky-900 mb-5 leading-relaxed"><b>計分說明：</b>「獨立答對」＝答對且沒有看完 3 步提示（含只看 1～2 步）。看完 3 步提示才答對不計分，和答錯一樣會進入錯題重練。<br><span class="text-xs text-sky-700">改版前的紀錄沒有記錄提示使用情形，標示為「改版前」，只顯示當時的答對題數。</span></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-${Math.min(mods.length, 4)} gap-3 mb-6">${mods.map((m, i) => `<div class="bg-white rounded-2xl border border-stone-100 p-4">
+      <div class="text-xs font-bold text-stone-400">${m.title}</div><div class="text-2xl font-black text-stone-800 mt-1">${Math.round(avg[i] * 100)}%</div>
+      <div class="h-1.5 bg-stone-100 rounded-full mt-2 overflow-hidden"><div class="h-full bg-amber-400" style="width:${avg[i] * 100}%"></div></div>
+      <div class="text-xs text-stone-400 mt-2">平均最佳獨立答對率・${doneCnt[i]} 人完成・共練 ${tries[i]} 次</div></div>`).join("")}</div>
+    <div class="bg-white rounded-2xl border border-stone-100 p-5 mb-6">
+      <div class="font-black text-stone-800 mb-1">全班最常錯的題目</div>
+      <div class="text-xs text-stone-400 mb-4">依「曾答錯或看完 3 步提示」的人數排序；括號內為目前還沒消滅的人數。共 ${classWrongList.length} 題有人錯過。</div>
+      ${topWrong.length ? `<ol class="space-y-2 text-sm text-stone-700 mb-5">${topWrong.map((w, k) => `<li class="flex gap-3 items-start"><span class="w-5 text-stone-400 font-bold tabular-nums">${k + 1}.</span><span class="font-black text-rose-600 whitespace-nowrap tabular-nums">${w.n} 人<span class="text-xs text-stone-400 font-bold">（${w.open}）</span></span><span class="text-stone-400 whitespace-nowrap">${mods[w.modIdx].title.split(" ")[0]}</span><span class="min-w-0">${w.q}</span></li>`).join("")}</ol>
+      <div class="bg-stone-50 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-stone-700">
+        <label class="flex items-center gap-2 font-bold">題數
+          <select id="cw-count" class="border-2 border-stone-200 rounded-xl px-2 py-1.5 bg-white">
+            ${[5, 10, 15, 20].filter(n => n < classWrongList.length).map(n => `<option value="${n}" ${n === 10 ? "selected" : ""}>前 ${n} 題</option>`).join("")}
+            <option value="all" ${classWrongList.length <= 10 ? "selected" : ""}>全部 ${classWrongList.length} 題</option></select></label>
+        <span class="flex items-center gap-3 font-bold">版本
+          ${["A", "B", "C"].map(v => `<label class="flex items-center gap-1 font-normal"><input type="radio" name="cw-ver" value="${v}" ${v === "B" ? "checked" : ""}>${v}</label>`).join("")}</span>
+        <label class="flex items-center gap-2"><input type="checkbox" id="cw-opts"> 附選項</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="cw-key" checked> 附解答頁（含答錯人數）</label>
+        <button onclick="printClassMistakes()" class="ml-auto px-5 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">🖨️ 列印全班常錯題學習單</button>
+      </div>` : `<div class="text-sm text-stone-500">目前還沒有學生答錯，等學生作答後這裡會自動統計。</div>`}
+    </div>
+    <div class="flex flex-wrap gap-3 items-center mb-3"><div class="font-black text-stone-800">學生列表（${recs.length} 人）</div>
+      <input id="t-filter" oninput="filterTeacherStudents()" class="border-2 border-stone-200 rounded-xl px-3 py-1.5 text-sm" placeholder="搜尋座號或姓名">
+      <span class="text-xs text-stone-400">點學生看每一次的作答明細、錯題與列印個人錯題單</span></div>
+    <div class="overflow-x-auto bg-white rounded-2xl border border-stone-100"><table class="w-full text-sm"><thead class="bg-stone-50 text-stone-500 text-xs"><tr>
+      <th class="text-left px-4 py-3 sticky left-0 bg-stone-50">學生</th>${mods.map(m => `<th class="px-3 py-3 whitespace-nowrap">${m.title.split(" ")[0]}<span class="block text-[10px] font-normal">嘗試／首次／最佳</span></th>`).join("")}
+      <th class="px-3 py-3 whitespace-nowrap">獨立答對<span class="block text-[10px] font-normal">（改版後累計）</span></th>
+      <th class="px-3 py-3 whitespace-nowrap">看完提示<br>才答對</th>
+      <th class="px-3 py-3 whitespace-nowrap">答錯<span class="block text-[10px] font-normal">沒看提示／有看</span></th>
+      <th class="px-3 py-3 whitespace-nowrap">目前錯題<span class="block text-[10px] font-normal">一／二／三關</span></th>
+      <th class="px-3 py-3 whitespace-nowrap">已消滅</th>
+      <th class="px-3 py-3 whitespace-nowrap">最後更新</th></tr></thead>
+      <tbody id="t-rows"></tbody></table></div>
+    <div id="t-detail" class="mt-6"></div>`;
+  displayTeacherStudentList(recs);
+  triggerKatex(body);
+}
+function displayTeacherStudentList(list) {
+  const mods = appData.modules;
+  document.getElementById("t-rows").innerHTML = list.map(r => {
+    const S = recStats(r), ms = (r.mistakes || []).map(normMistake), stg = s => ms.filter(m => m.stage === s).length;
+    return `<tr class="border-t border-stone-100 hover:bg-amber-50 cursor-pointer" onclick="selectTeacherStudent('${escapeHtml(r.studentId)}')">
+    <td class="px-4 py-3 font-bold text-stone-700 whitespace-nowrap sticky left-0 bg-white">${escapeHtml(r.studentSeat)} 號 ${escapeHtml(r.studentName)}</td>
+    ${mods.map((m, i) => { const s = r.scores && r.scores[i], n = recStats(r, i).tries || (s ? s.n || 1 : 0); return `<td class="px-3 py-3 text-center tabular-nums whitespace-nowrap ${s && s.best / m.practice.length < .6 ? "text-rose-600 font-bold" : "text-stone-600"}">${s ? `<span class="text-stone-400">${n} 次・</span>${s.first}／${s.best}${s.v === 2 ? "" : `<span class="block text-[10px] text-stone-400 font-normal">改版前</span>`}` : "—"}</td>`; }).join("")}
+    <td class="px-3 py-3 text-center tabular-nums">${S.v2 ? `<b class="text-emerald-700">${S.indep}</b>/${S.q}` : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-amber-700">${S.v2 ? S.full : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-rose-600 whitespace-nowrap">${S.v2 ? `${S.wrongNo}／${S.wrongHint}` : "—"}</td>
+    <td class="px-3 py-3 text-center tabular-nums whitespace-nowrap">${ms.length ? `${stg(1)}／${stg(2)}／${stg(3)}` : "0"}</td>
+    <td class="px-3 py-3 text-center tabular-nums text-emerald-700">${Object.keys(r.slain || {}).length}</td>
+    <td class="px-3 py-3 text-xs text-stone-400 whitespace-nowrap">${r.lastUpdated ? new Date(r.lastUpdated).toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : ""}</td></tr>`; }).join("");
+}
+function filterTeacherStudents() { const k = document.getElementById("t-filter").value.trim(); displayTeacherStudentList(allDashboardRecords.filter(r => !k || String(r.studentSeat).includes(k) || (r.studentName || "").includes(k))); }
+function selectTeacherStudent(id) {
+  const r = allDashboardRecords.find(x => x.studentId === id); if (!r) return;
+  const mods = appData.modules, S = recStats(r), t = nowTs();
+  const hist = (r.history || []).slice().reverse();
+  const ms = (r.mistakes || []).map(normMistake).filter(m => findQuestionData(m.modIdx, m.q)).sort((a, b) => a.stage - b.stage || a.due - b.due);
+  const cell = (v, c = "") => `<td class="px-2 py-2 text-center tabular-nums ${c}">${v}</td>`;
+  const el = document.getElementById("t-detail");
+  el.innerHTML = `<div class="bg-white rounded-2xl border border-stone-100 p-5 space-y-6">
+    <div class="flex flex-wrap items-end justify-between gap-3"><div class="font-black text-stone-800 text-xl">${escapeHtml(r.studentSeat)} 號 ${escapeHtml(r.studentName)}</div>
+      <div class="text-sm text-stone-500">共作答 <b>${S.tries}</b> 次${S.old ? `（改版前 ${S.old} 次）` : ""}・改版後獨立答對 <b class="text-emerald-700">${S.indep}/${S.q}</b>（沒看提示 ${S.solo}、看 1～2 步 ${S.hinted}）・看完提示才答對 <b class="text-amber-700">${S.full}</b>・答錯 <b class="text-rose-600">沒看提示 ${S.wrongNo}／有看提示 ${S.wrongHint}</b></div></div>
+    <div>
+      <div class="font-bold text-stone-700 mb-2">📋 每一次的作答紀錄</div>
+      <div class="overflow-x-auto max-h-96 overflow-y-auto border border-stone-100 rounded-xl"><table class="w-full text-sm"><thead class="bg-stone-50 text-stone-500 text-xs sticky top-0"><tr>
+        <th class="text-left px-3 py-2">時間</th><th class="text-left px-3 py-2">單元</th><th class="px-2 py-2">獨立答對<br><span class="font-normal">（得分）</span></th><th class="px-2 py-2">其中看<br>1～2 步</th><th class="px-2 py-2">看完提示<br>才答對</th><th class="px-2 py-2">答錯<br>沒看提示</th><th class="px-2 py-2">答錯<br>有看提示</th></tr></thead>
+        <tbody>${hist.map(h => `<tr class="border-t border-stone-100"><td class="px-3 py-2 whitespace-nowrap text-stone-500 tabular-nums">${fmtTime(h.timestamp)}</td><td class="px-3 py-2 whitespace-nowrap">${escapeHtml(h.moduleTitle)}</td>
+          ${h.v === 2 ? cell(`<b>${h.score}</b>/${h.maxScore}`, "text-emerald-700") + cell(h.hinted) + cell(h.full, "text-amber-700") + cell(h.wrongNo, "text-rose-600") + cell(h.wrongHint, "text-rose-600")
+          : `<td class="px-2 py-2 text-center tabular-nums text-stone-500">${h.score}/${h.maxScore}</td><td colspan="4" class="px-2 py-2 text-center text-xs text-stone-400">改版前紀錄（答對題數含看完提示，無細項）</td>`}</tr>`).join("") || `<tr><td colspan="7" class="px-3 py-4 text-center text-stone-400">尚無紀錄</td></tr>`}</tbody></table></div>
+    </div>
+    <div>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2"><div class="font-bold text-stone-700">👾 目前錯題（${ms.length} 題）・已消滅 ${Object.keys(r.slain || {}).length} 隻</div></div>
+      ${ms.length ? `<ul class="text-sm space-y-2 text-stone-700 mb-4">${ms.map(m => `<li class="flex gap-2 items-start"><span class="text-[11px] font-black rounded-lg px-2 py-0.5 whitespace-nowrap ${m.stage === 1 ? "bg-rose-100 text-rose-700" : m.stage === 2 ? "bg-amber-100 text-amber-700" : "bg-violet-100 text-violet-700"}">${STAGE_INFO[m.stage].short}${m.due > t ? `・${fmtTime(m.due)} 解鎖` : ""}</span><span class="text-xs text-stone-400 whitespace-nowrap mt-0.5">${(mods[m.modIdx] || {}).title || ""}</span><span class="min-w-0">${m.q}</span></li>`).join("")}</ul>
+      <div class="bg-stone-50 rounded-2xl p-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-stone-700">
+        <span class="font-bold">🖨️ 列印個人錯題單</span>
+        <span class="flex items-center gap-3">版本 ${["A", "B", "C"].map(v => `<label class="flex items-center gap-1"><input type="radio" name="pm-ver" value="${v}" ${v === "B" ? "checked" : ""}>${v}</label>`).join("")}</span>
+        <label class="flex items-center gap-2">範圍 <select id="pm-stage" class="border-2 border-stone-200 rounded-xl px-2 py-1 bg-white"><option value="all">全部錯題</option><option value="1">只印第一關</option><option value="2">只印第二關</option><option value="3">只印第三關</option></select></label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pm-opts"> 附選項</label>
+        <label class="flex items-center gap-2"><input type="checkbox" id="pm-key" checked> 附解答頁</label>
+        <button onclick="printStudentMistakes('${escapeHtml(r.studentId)}')" class="ml-auto px-5 py-2.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">預覽個人錯題單</button>
+      </div>` : `<div class="text-sm text-stone-500">目前沒有錯題。</div>`}
+    </div></div>`;
+  triggerKatex(el); el.scrollIntoView({ behavior: "smooth" });
+}
+function printStudentMistakes(id) {
+  const r = allDashboardRecords.find(x => x.studentId === id); if (!r) return;
+  const ver = document.querySelector('input[name="pm-ver"]:checked').value, sf = document.getElementById("pm-stage").value;
+  const ms = (r.mistakes || []).map(normMistake).filter(m => sf === "all" || m.stage === +sf).filter(m => findQuestionData(m.modIdx, m.q)).sort((a, b) => a.modIdx - b.modIdx);
+  if (!ms.length) { alert("這個範圍沒有錯題。"); return; }
+  const items = ms.map(m => ({ q: findQuestionData(m.modIdx, m.q), unit: appData.modules[m.modIdx].title, unitTag: appData.modules[m.modIdx].title.split(" ")[0] }));
+  const who = `${String(r.studentSeat).padStart(2, "0")} 號 ${r.studentName}`;
+  renderSheets([{ title: `${escapeHtml(who)}　個人錯題練習單`, subtitle: `${SITE_LABEL}・${sf === "all" ? "目前所有錯題" : STAGE_INFO[+sf].name}・共 ${items.length} 題（${new Date().toLocaleDateString("zh-TW")}）`, items }], ver,
+    document.getElementById("pm-opts").checked, document.getElementById("pm-key").checked, `${who} 個人錯題 ${items.length} 題`);
+}
+function exitTeacherPanel() { if (studentName) { currentView = "overview"; renderOverview(); renderNav(); } else renderNameEntry(); }
+
+// ---------- 列印學習單 ----------
+function openPrintSetup(only, ver) {
+  const sel = only === undefined ? null : [].concat(only);
+  if (isQuizActive && only === undefined) {/* 可直接列印，不影響作答 */}
+  closeMobileMenu();
+  const box = document.getElementById("ps-units");
+  box.innerHTML = appData.modules.map((m, i) => `<label class="flex items-center gap-2 p-3 rounded-2xl border-2 border-stone-200 cursor-pointer text-sm font-bold text-stone-700 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+    <input type="checkbox" value="${i}" class="ps-unit" ${!sel || sel.includes(i) ? "checked" : ""}> ${m.title}</label>`).join("");
+  if (ver) document.querySelector(`input[name="ps-ver"][value="${ver}"]`).checked = true;
+  document.getElementById("ps-error").classList.add("hidden");
+  document.getElementById("print-setup").classList.remove("hidden");
+}
+function closePrintSetup() { document.getElementById("print-setup").classList.add("hidden"); }
+function closeWorksheet() { document.getElementById("print-overlay").classList.add("hidden"); document.body.style.overflow = ""; }
+
+const VERSION_INFO = {
+  A: { name: "A 版", guide: "請在作答區寫出完整的計算過程，最後把答案寫在「答：」後面。", work: 38 },
+  B: { name: "B 版", guide: "每題都有「第一步」提示，先照著提示起頭，再自己完成後面的計算。", work: 32 },
+  C: { name: "C 版", guide: "每題都有「第一步」和「第二步」提示，照著步驟做，最後一步請自己完成並寫出答案。", work: 22 }
+};
+function buildWorksheet() {
+  const units = [...document.querySelectorAll(".ps-unit:checked")].map(e => +e.value);
+  if (!units.length) { document.getElementById("ps-error").classList.remove("hidden"); return; }
+  const ver = document.querySelector('input[name="ps-ver"]:checked').value;
+  const withAdv = document.getElementById("ps-adv").checked;
+  const groups = units.map(mi => { const m = appData.modules[mi]; return { title: `${m.title}　單元學習單`, subtitle: `九年級數學・${m.subtitle}`, items: m.practice.filter(q => withAdv || q.lv !== 2).map(q => ({ q, unit: m.title })) }; });
+  closePrintSetup();
+  renderSheets(groups, ver, document.getElementById("ps-opts").checked, document.getElementById("ps-key").checked, units.map(i => appData.modules[i].title.split(" ")[0]).join("、"));
+}
+
+// groups: [{ title, subtitle, items: [{ q, unit, wrongN?, unitTag? }] }]
+function renderSheets(groups, ver, withOpts, withKey, summary) {
+  const vi = VERSION_INFO[ver];
+  const nh = ver === "A" ? 0 : ver === "B" ? 1 : 2;
+  const stepNames = ["第一步", "第二步"];
+  const letters = ["(A)", "(B)", "(C)", "(D)"];
+  const hasWrong = groups.some(g => g.items.some(it => it.wrongN !== undefined));
+  let html = "", keyRows = [];
+  groups.forEach(g => {
+    const body = g.items.map((it, n) => {
+      const q = it.q;
+      const ordered = withOpts ? seededShuffle(q.options, q.q) : null; // 選項順序以題目為種子，每次列印都一樣
+      keyRows.push({ unit: it.unit, n: n + 1, ans: ordered ? `${letters[ordered.indexOf(q.correctStr)]} ${q.correctStr}` : q.correctStr, how: q.hints[2], wrongN: it.wrongN });
+      return `<div class="pq ${q.fig ? "pq-g" : ""}"><div class="pq-main">
+        <div class="pq-head"><span class="pq-no">${n + 1}.</span><div>${it.unitTag ? `<span class="pq-adv" style="margin:0 6px 0 0">${it.unitTag}</span>` : ""}${q.q}${q.lv === 2 ? `<span class="pq-adv">★進階</span>` : ""}</div></div>
+        ${ordered ? `<div class="pq-opts">${ordered.map((o, k) => `<span>${letters[k]} ${o}</span>`).join("")}</div>` : ""}
+        ${q.hints.slice(0, nh).map((h, k) => `<div class="pq-hint"><b>${stepNames[k]}</b>${h}</div>`).join("")}
+        <div class="pq-work" style="height:${q.fig && vi.work < 30 ? 30 : vi.work}mm">${ver === "C" ? `<span style="font-size:10pt;color:#555">最後一步：</span>` : ""}<div class="ans">答：<span>&nbsp;</span></div></div>
+      </div>${q.fig ? `<div class="pq-fig">${figSVG(q.fig, true)}</div>` : ""}</div>`;
+    }).join("");
+    html += `<section class="sheet">
+      <div class="sheet-head">
+        <div><div class="sheet-title">${g.title}<span class="ver-tag">${vi.name}</span></div>
+        <div class="sheet-sub">${g.subtitle}</div></div>
+        <div class="sheet-fields">班級 <span></span> 座號 <span style="min-width:10mm"></span> 姓名 <span style="min-width:26mm"></span></div>
+      </div>
+      <div class="sheet-guide">📝 ${vi.guide}${withOpts ? "（請把選項代號寫在「答：」後面）" : ""}</div>
+      ${body}
+    </section>`;
+  });
+  if (withKey) {
+    html += `<section class="sheet"><div class="sheet-head"><div><div class="sheet-title">解答（教師用）<span class="ver-tag">${vi.name}</span></div><div class="sheet-sub">關鍵步驟即網站上的第 3 個提示${hasWrong ? "；「答錯人數」為曾答錯（或用完提示）的學生數" : ""}</div></div></div>
+      <table class="key-table"><thead><tr><th style="width:16%">單元</th><th style="width:6%">題</th>${hasWrong ? `<th style="width:9%">答錯人數</th>` : ""}<th style="width:28%">答案</th><th>關鍵步驟</th></tr></thead><tbody>
+      ${keyRows.map(r => `<tr><td>${r.unit}</td><td>${r.n}</td>${hasWrong ? `<td>${r.wrongN ?? ""} 人</td>` : ""}<td>${r.ans}</td><td>${r.how}</td></tr>`).join("")}</tbody></table></section>`;
+  }
+  const root = document.getElementById("print-root");
+  root.innerHTML = html;
+  document.getElementById("print-summary").textContent = `學習單預覽｜${vi.name}｜${summary}`;
+  document.getElementById("print-overlay").classList.remove("hidden");
+  document.getElementById("print-overlay").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  triggerKatex(root);
+}
+
+// ---------- 教師：列印全班常錯題 ----------
+let classWrongList = [];
+function printClassMistakes() {
+  const nSel = document.getElementById("cw-count").value;
+  const ver = document.querySelector('input[name="cw-ver"]:checked').value;
+  const list = nSel === "all" ? classWrongList : classWrongList.slice(0, +nSel);
+  if (!list.length) return;
+  const items = list.map(w => ({ q: w.data, unit: appData.modules[w.modIdx].title, unitTag: appData.modules[w.modIdx].title.split(" ")[0], wrongN: w.n }));
+  const today = new Date().toLocaleDateString("zh-TW");
+  renderSheets([{ title: "全班常錯題　補強學習單", subtitle: `九年級數學 1-4～2-2・依全班作答紀錄統計最常錯的 ${items.length} 題（${today}）`, items }], ver,
+    document.getElementById("cw-opts").checked, document.getElementById("cw-key").checked, `全班常錯題 ${items.length} 題`);
+}
+
+function seededShuffle(arr, seedStr) {
+  let h = 2166136261; for (const c of seedStr) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+  const rnd = () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); h ^= h >>> 16; return (h >>> 0) / 4294967296; };
+  const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a;
+}
+
+// ---------- 錯題重練：消滅健忘怪物 ----------
+function renderReviewHub() {
+  isQuizActive = false;
+  const t = nowTs(), b = stageBuckets(mistakes, t), killed = Object.keys(slain).length;
+  const card = s => {
+    const I = STAGE_INFO[s], r = b[s].ready.length, l = b[s].locked.length;
+    const c = { rose: ["bg-rose-50", "border-rose-200", "text-rose-700", "bg-rose-500"], amber: ["bg-amber-50", "border-amber-200", "text-amber-700", "bg-amber-500"], violet: ["bg-violet-50", "border-violet-200", "text-violet-700", "bg-violet-500"] }[I.color];
+    return `<section class="rounded-[28px] border-2 ${c[1]} ${c[0]} p-5 flex flex-col">
+      <div class="flex items-center gap-3"><span class="text-4xl">${I.icon}</span><div><div class="font-black ${c[2]} text-lg">${I.name}</div>
+        <div class="text-xs text-stone-500">${s === 1 ? "答錯的題目先來這裡，答對就移到第二關" : s === 2 ? "從第一關答對後，等 2 天才解鎖" : "第二關答對後，等 5 天才解鎖；答對就消滅怪物"}</div></div></div>
+      <div class="flex gap-3 mt-4 text-center">
+        <div class="flex-1 bg-white rounded-2xl py-3"><div class="text-[11px] font-bold text-stone-400">可以挑戰</div><div class="text-3xl font-black ${c[2]} tabular-nums">${r}</div></div>
+        <div class="flex-1 bg-white rounded-2xl py-3"><div class="text-[11px] font-bold text-stone-400">還沒解鎖</div><div class="text-3xl font-black text-stone-400 tabular-nums">${l}</div></div>
+      </div>
+      ${l ? `<div class="mt-3 text-xs text-stone-500 space-y-1 max-h-28 overflow-y-auto">${b[s].locked.slice(0, 6).map(m => `<div class="flex justify-between gap-2"><span class="truncate">🔒 ${escapeHtml((appData.modules[m.modIdx] || {}).title || "")}</span><span class="whitespace-nowrap tabular-nums">${fmtTime(m.due)}（${fmtLeft(m.due - t)}）</span></div>`).join("")}${l > 6 ? `<div>……還有 ${l - 6} 題</div>` : ""}</div>` : ""}
+      <button ${r ? `onclick="switchView('review${s}')"` : "disabled"} class="mt-4 py-3 rounded-2xl font-black text-white ${r ? c[3] + " hover:opacity-90" : "bg-stone-300 cursor-not-allowed"}">${r ? `開始${I.short}（${r} 題）` : l ? `等待解鎖中` : "目前沒有題目"}</button>
+    </section>`;
+  };
+  document.getElementById("main-content").innerHTML = `
+  <div class="fade-in space-y-6">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div><h1 class="text-3xl sm:text-4xl font-black text-stone-800">👾 錯題重練：消滅健忘怪物</h1>
+        <p class="text-stone-500 mt-2 leading-relaxed">每一題錯題都是一隻健忘怪物。要在<b>當下、兩天後、五天後</b>都獨立答對（沒看完 3 步提示），才能真正消滅牠！<br><span class="text-sm">任何一關答錯或看完提示，怪物會逃回第一關。</span></p></div>
+      <div class="bg-emerald-500 text-white rounded-[24px] px-6 py-4 text-center flex-shrink-0"><div class="text-xs font-black opacity-90">已消滅健忘怪物</div><div class="text-4xl font-black tabular-nums">🏆 ${killed}</div></div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">${card(1)}${card(2)}${card(3)}</div>
+    ${!mistakes.length ? `<div class="text-center py-6 text-stone-500 font-bold">🎉 目前沒有錯題！繼續挑戰各單元吧。</div>` : ""}
+    <div class="text-center"><button onclick="switchView('overview')" class="px-6 py-3 rounded-2xl bg-stone-100 font-bold text-stone-700">回總覽</button></div>
+  </div>`;
+}
+
+function monsterPanel() {
+  const t = nowTs(), b = stageBuckets(mistakes, t), killed = Object.keys(slain).length;
+  if (!mistakes.length && !killed) return "";
+  const nextLock = [1, 2, 3].flatMap(s => b[s].locked).sort((x, y) => x.due - y.due)[0];
+  const cell = s => `<div class="bg-white rounded-2xl px-3 py-3 text-center"><div class="text-2xl">${STAGE_INFO[s].icon}</div><div class="text-xs font-black text-stone-500 mt-1">${STAGE_INFO[s].short}</div><div class="text-xl font-black text-stone-800 tabular-nums">${b[s].ready.length + b[s].locked.length}</div><div class="text-[11px] ${b[s].ready.length ? "text-rose-600 font-bold" : "text-stone-400"}">${b[s].ready.length ? `可挑戰 ${b[s].ready.length}` : b[s].locked.length ? "鎖定中" : "—"}</div></div>`;
+  return `<section class="rounded-[36px] bg-rose-50 border border-rose-100 p-6 sm:p-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4"><h2 class="text-2xl font-black text-rose-900 flex items-center gap-3"><span>👾</span>消滅健忘怪物</h2>
+      <div class="text-sm font-bold text-emerald-700 bg-white rounded-2xl px-4 py-2">🏆 已消滅 ${killed} 隻</div></div>
+    <p class="text-sm text-rose-900/80 mb-4">錯題要在當下、2 天後、5 天後都獨立答對，才算真正記住。${nextLock ? `下一隻怪物 ${fmtTime(nextLock.due)} 解鎖（${fmtLeft(nextLock.due - t)}）。` : ""}</p>
+    <div class="grid grid-cols-3 gap-3 max-w-xl">${cell(1)}${cell(2)}${cell(3)}</div>
+    <button onclick="switchView('review')" class="mt-5 px-5 py-3 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold">前往錯題重練區 →</button>
+  </section>`;
+}
+
+// ---------- 啟動 ----------
+window.addEventListener("beforeunload", e => { if (isQuizActive) { e.preventDefault(); e.returnValue = ""; } });
+(function boot() {
+  const cur = lsGet(LS_PREFIX + "current_student", null);
+  if (cur && cur.seat && cur.name) { studentSeat = normSeat(cur.seat) || cur.seat; studentName = normName(cur.name) || cur.name; migrateLocal(cur.seat, cur.name); loadLocal(); renderOverview(); renderNav(); }
+  else renderNameEntry();
+  initFirebase();
+})();
+</script>
+</body>
+</html>
